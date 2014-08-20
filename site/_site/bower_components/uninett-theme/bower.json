@@ -1,0 +1,6 @@
+{
+	"name": "uninett-theme",
+	"dependencies": {
+		"bootstrap": "*"
+	}
+}

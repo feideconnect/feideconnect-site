@@ -1,0 +1,10 @@
+{
+	"name": "feideconnect-docs",
+	"dependencies": {
+		"bootstrap": "*",
+		"requirejs": "*",
+		"uninett-theme": "*"
+	},
+	"cwd": "site",
+	"directory": "site/bower_components"
+}
