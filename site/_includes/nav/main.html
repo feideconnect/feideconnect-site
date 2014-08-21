@@ -10,6 +10,7 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <a class="navbar-brand" href="#"><img src="http://core.app.bridge.uninett.no/_/bootstrap3-uninett/images/UNINETT_logo.svg" alt="Uninett logo" type="image/svg+xml"></a>
     </div>
+
     <div class="navbar-department">
       <a href="/"><div class="department">Feide Connect</div></a>
     </div>
@@ -18,11 +19,11 @@
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
         <li{% if page.slug == "getting-started" %} class="active"{% endif %}>
-          <a href="/getting-started">Getting started</a>
+          <a href="{{ site.gettingstarted }}">Getting started</a>
         </li>
 
         <li{% if page.slug == "css" %} class="active"{% endif %}>
-          <a href="../api">API</a>
+          <a href="{{ site.api }}">API</a>
         </li>
         <li{% if page.slug == "css" %} class="active"{% endif %}>
           <a href="{{ site.dev }}">Developer Dashboard</a>
@@ -36,10 +37,10 @@
 
 
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" style="">
         <li><a href="http://talk.uninettlabs.no">Community</a></li>
-        <li><a href="http://blog.uninettlabs.no">Blog</a></li>
-        <li style="width: 3em">&nbsp;</li>
+        <li><a href="{{ site.blog }}">Blog</a></li>
+        <li style="width: 3em"><a href="">&nbsp;</a></li>
       </ul>
     </nav>
   <!-- </div> -->
