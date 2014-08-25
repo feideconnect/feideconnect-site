@@ -1,0 +1,167 @@
+<div class="bs-docs-section">
+	<h1 id="auth" class="page-header">Obtaining an OAuth Token</h1>
+
+	<p>To access the Feide Connect APIs, you would need an <strong>OAuth Access Token</strong> that represent an authenticated and authorized session that both represents your client and the end&dash;user accesing the service. This way your client may obtain information on behalf of the end&dash;user accessing your service.</p>
+
+	<p>Feide Connect implements an OAuth 2.0 Server, a widely used open standard for issuing authorization tokens. Feide Connect also supports the OpenID Connect standard, which represent an thin identity layer for authentication on top OAuth.</p>
+
+	<p>Consult the OAuth 2.0 Specifications for details about the protocols.</p>
+
+	<ul>
+		<li><a href="http://tools.ietf.org/html/rfc6749" target="_blank">OAuth 2.0 Specification (RFC 6749)</a></li>
+		<li><a href="http://tools.ietf.org/html/rfc6750">OAuth 2.0 Bearer Token (RFC 6750)</a></li>
+		<li><a href="">OpenID Connect 1.0 Specifications</a></li>
+	</ul>
+
+
+<p>Depending on the application mode, Feide Connect supports three alternative authorization grant modes in OAuth 2.0:
+<ul>
+	<li>Authorization Code Grant, for traditional web services (with its own backend)</li>
+	<li>Implicit Grant, for (client&dash;side only) web applications, mobile and desktop applicaitons.</li>
+	<li>Client Credentials Grant, for special use when there is no end&dash;user represented.</li>
+</ul>
+</p>
+
+<p>Implementing OAuth 2.0 client side is a very simple protocol, and may very well be writte from scratch. However, there also <a href="http://oauth.net/2/">exists a bunch of OAuth 2.0 libraries</a> for a wide variety of programming languages that you may use if appropriate.</p>
+
+
+<h3 id="request">Authorization Request</h3>
+
+<p>We'll present an example of how to obtain an OAuth 2.0 Access Token using the authorization code flow.</p>
+
+<p>First, the client generates <a href="http://tools.ietf.org/html/rfc6749#section-4.1.1">an authorization request</a>, and redirects the user to this endpoint:
+
+{% highlight plaintext %}
+https://auth.{{ site.uwap.domain }}/oauth/authorization?
+	client_id=42934c73-6fae-4507-92a4-c67f87923aa9&
+	response_type=code&
+	redirect_uri=https://example.org/callback&
+	state=f47282ec-0a8b-450a-b0da-dddb393fbeca
+{% endhighlight %}
+
+
+</p>
+
+<h3 id="userauth">User authentication</h3>
+
+
+<p>Feide Connect is handling the authentication of the user, informing the user about the permissions that the client is requesting. </p>
+
+<div class="row bs-examples">
+
+    <div class="col-md-4">
+      <a class="thumbnail" href="#">
+        <img src="../media/docs/disco.png" alt="">
+      </a>
+      <h4>Provider Discovery</h4>
+      <p>First, user has to select which login provider to use for login. Typically, this means selecting the educational home institution of the user.</p>
+    </div>
+
+    <div class="col-md-4">
+      <a class="thumbnail" href="#">
+        <img src="../media/docs/login.png" alt="">
+      </a>
+      <h4>Feide Login</h4>
+      <p>User enter his/her username and password to login.</p>
+    </div>
+    <div class="clearfix visible-xs"></div>
+
+    <div class="col-md-4">
+      <a class="thumbnail" href="#">
+        <img src="../media/docs/authz.png" alt="">
+      </a>
+      <h4>Authorization Grant</h4>
+      <p>User gets information about the permissions the client is requesting, and decides whether to accept this.</p>
+    </div>
+
+  </div>
+
+
+
+
+
+
+<h3 id="response">Authorization Response</h3>
+
+<p>In the authorization code flow, the <a href="http://tools.ietf.org/html/rfc6749#section-4.1.2">authorization response</a> involves a redirect back to the redirect_uri endpoint at the client backend, where a <tt>code</tt> is one of the parameters. The <tt>code</tt> may then be replaced with an access token.</p>
+
+
+
+<p></p>
+
+
+{% highlight HTTP %}
+HTTP/1.1 302 Found
+Location: https://example.org/callback?\
+  code=0f8cf5fa-dc3f-4c9d-a60c-b6016c4134fa&
+  state=f47282ec-0a8b-450a-b0da-dddb393fbeca
+{% endhighlight %}
+
+
+<div class="bs-callout bs-callout-info" id="">
+ <h4>Implicit grant flow</h4>
+ <p>In contrast, with the implicit grant flow, the access token is returned directly at the redirect_uri, but within the hash fragment of the URL, leaving it accessible only to the frontend / client side.</p>
+</div>
+
+
+
+<h3 id="tokenrequest">Fetching the Access Token</h3>
+
+<p>The Feide Connect OAuth 2.0 Token Endpoint requires the client to authenticate using the credentials obtained through the developer dashboard.</p>
+
+<p>The request is authenticated by using HTTP Basic authentication using the client_id and the client secret.</p>
+
+<p>The client application performs an <a href="http://tools.ietf.org/html/rfc6749#section-4.1.3">Access Token Request</a> to the token endpoint:</p>
+
+
+
+{% highlight HTTP %}
+POST /oauth/token HTTP/1.1
+Host: auth.{{ site.uwap.domain }}
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code&code=0f8cf5fa-dc3f-4c9d-a60c-b6016c4134fa
+&redirect_uri=https%3A%2F%2Fexample.org%2Fcallback
+{% endhighlight %}
+
+<p>In return Feide Connect returns a valid OAuth 2.0 Access Token representing both the client and the authenticated end-user, with the appropriate permissions as requested by the developer dashboard and as granted by the end-user.</p>
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+	"access_token":"083a7ef0-ea97-49ec-8804-379dc1e9b54c",
+	"expires_in":3600,
+	"scope": "userinfo groups peoplesearch"
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+<h3 id="using">Using an OAuth 2.0 Access Token</h3>
+
+<p>The string value of the OAuth access token may be used as a HTTP bearer token to access protected Feide Connect API services.</p>
+
+		{% highlight HTTP %}
+GET /userinfo HTTP/1.1
+Host: api.{{ site.uwap.domain }}
+Authorization: Bearer 083a7ef0-ea97-49ec-8804-379dc1e9b54c
+ 
+{% endhighlight %}
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+	"name": "Andreas Åkre Solberg",
+	"...": "..."
+}
+		{% endhighlight %}
+
+</div>

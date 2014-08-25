@@ -25,9 +25,12 @@ download:
   sass:           https://github.com/twbs/bootstrap-sass/archive/v3.2.0.tar.gz
 
 
-groups:			https://groups.uwap.uninettlabs.no
-dev:			https://dev.uwap.uninettlabs.no
+groups:           https://groups.uwap.uninettlabs.no
+dev:              https://dev.uwap.uninettlabs.no
+uwap:
+  domain:         "uwap.uninettlabs.no"
 
+uwapdomain:       "uwap.uninettlabs.no"
 
 cdn:
   css:            https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css
