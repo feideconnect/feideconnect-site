@@ -1,0 +1,28 @@
+{
+  "name": "uninett-theme",
+  "main": "css/uninett.css",
+  "private": true,
+  "authors": [
+    "Andreas Åkre Solberg <andreas.solberg@uninett.no>",
+    "Yørn de Jong <yorn@uninett.no>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3"
+  },
+  "_release": "9ba0b6a92a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "9ba0b6a92a2c693654d4540576b9d010768bdda7"
+  },
+  "_source": "git@scm.uninett.no:system/uninett-theme.git",
+  "_target": "*",
+  "_originalSource": "git@scm.uninett.no:system/uninett-theme.git"
+}

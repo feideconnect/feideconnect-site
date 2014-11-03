@@ -8,7 +8,7 @@
 
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="navbar-brand" href="/"><img src="http://core.app.bridge.uninett.no/_/bootstrap3-uninett/images/UNINETT_logo.svg" alt="Uninett logo" type="image/svg+xml"></a>
+      <a class="navbar-brand" href="/"><img src="/bower_components/uninett-theme/images/UNINETT_logo.svg" alt="Uninett logo" type="image/svg+xml"></a>
     </div>
 
     <div class="navbar-department">
@@ -22,6 +22,17 @@
         <!-- <li{% if page.slug == "docs" %} class="active"{% endif %}>
           <a href="/docs/">Docs</a>
         </li> -->
+
+        <li{% if page.slug == "status" %} class="active"{% endif %}>
+          <a href="/status/">Status</a>
+        </li>
+
+        <li{% if page.slug == "suhs" %} class="active"{% endif %}>
+          <a target="" href="/suhs/">SUHS</a>
+        </li>
+
+
+
 
         <li class="dropdown 
           {% if page.slug == "docs" %}active{% endif %}
@@ -43,16 +54,12 @@
         </li>
 
 
-<!--         <li{% if page.slug == "css" %} class="active"{% endif %}>
-          <a href="{{ site.api }}">API</a>
-        </li> -->
         <li{% if page.slug == "css" %} class="active"{% endif %}>
           <a target="_blank" href="{{ site.dev }}">Developer Dashboard</a>
         </li>
-        <li{% if page.slug == "components" %} class="active"{% endif %}>
-          <a target="_blank" href="{{ site.groups }}">Applications</a>
-        </li>
-        <li{% if page.slug == "js" %} class="active"{% endif %}>
+
+
+        <li{% if page.slug == "groups" %} class="active"{% endif %}>
           <a target="_blank" href="{{ site.groups }}">Groups</a>
         </li>
 

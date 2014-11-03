@@ -1,9 +1,8 @@
 {
-	"name": "feideconnect-docs",
+	"name": "feideconnect-site",
 	"dependencies": {
-		"bootstrap": "*",
 		"requirejs": "*",
-		"uninett-theme": "*"
+		"uninett-theme": "git@scm.uninett.no:system/uninett-theme.git"
 	},
 	"cwd": "site",
 	"directory": "site/bower_components"
