@@ -12,29 +12,111 @@ lead: "Teknisk innblikk i Feide Connect på SUHS 2014"
 
 <p>Vi har for anledningen eksponert et test-API fra FS for uthenting av eksamensresultater.</p>
 
-<p>Vi har lagt ut eksempelkode for 
+<p>Vi har lagt ut eksempelkode for PHP, Java og Javascript, som du kan laste ned og koble opp mot FS via Feide Connect ved å følge dokumentasjonen steg for steg.</p>
+
+
+
+<h3>Test en allerede konfigurert tjeneste</h3>
+
+<p>Vi har satt opp et par instanser av kodeeksemplene du selv kan sette opp, som du først kan teste for å se hvordan det er ment å fungere. Samtidig vil du da få forsikret at du kan logge inn med din bruker. </p>
+
+<ul class="uninett-ul">
+	<li class="uninett-ul-li">
+		<a target="_blank" href="http://eksamen.andreas.uninettlabs.no/php/">
+			Javascript WebApp med eksamensresultater</a></li>
+	<li class="uninett-ul-li">
+		<a target="_blank" href="http://eksamen.andreas.uninettlabs.no/php/">
+			PHP-tjeneste med eksamensresultater</a></li>
+</ul>
+
+
+
+<h3>Les litt om OAuth 2.0</h3>
+
+
+<p>API-ene som eksponeres i Feide Connect er enkle HTTP/JSON API-er. Men for å kunne hente ut data på vegne av en bruker må både klienten din og sluttbrukeren autentiseres. Mesteparten av dette håndterer Feide Connect for deg, men klienten din må hente ut og anvende en OAuth 2.0 token i HTTP forespørslene.</p>
+
+<p>OAuth 2.0 er relativt enkelt å forholde seg til som klient. Det er en protokoll basert på redirigeringer med enkle query string parametere, og ingen komplekse XML dokumenter, slik vi dere kanskje kjenner fra SAML 2.0. Dette betyr at det er mulig å implementere og embedde en komplett OAuth implementasjon i klienten, uten å installere noen tredjeparts software. Det finnes selvsagt biblioteker som man med fordel kan bruke <a href="http://oauth.net/2/#implementations">for de fleste programmeringsspråk</a>.</p>
+
+<p>OAuth 2.0 er blitt de-facto for autentisering og autorisasjon mot APIer, og brukes av blandt annet Amazon, AOL, Box, Dropbox, Evernote, Facebook, Flickr, GitHub, google, Instagram, LinkedIn, Microsoft, Netflix, PayPal, Salesforce, Tumblr, Twitter, Vimeo og Yahoo med flere.</p>
+
+
+
+
+
+
+
+<p>Her er noen kilder for å lære mer om OAuth 2.0:</p>
+
+<ul class="uninett-ul">
+
+
+	<li class="uninett-ul-li">
+		<a target="" href="/docs/#auth">
+			Feide Connect and OAuth 2.0</a> <span class="label label-success">Anbefales</span></li>
+	<li class="uninett-ul-li">
+		<a target="_blank" href="http://aaronparecki.com/articles/2012/07/29/1/oauth2-simplified">
+			Aaron Parecki: OAuth 2 Simplified</a></li>
+	<li class="uninett-ul-li">
+		<a target="_blank" href="http://tools.ietf.org/html/rfc6749">
+			OAuth 2.0 Spesifikasjonen (RFC 6749)</a></li>
+</ul>
+
+
+
+<h3>Kom igang med eksempelkode</h3>
+
+<p>Vi har tre kodeeksempler, som alle gjør omtrent det samme, i tre forskjellige programmeringsspråk. Fremgangsmåten er omtrent den samme:</p>
+
+<ol>
+	<li>Last ned og installerer kodeeksempelet. Dette er jo webapplikasjoner, så det er viktig å spesielt merke seg hvordan man når tak i tjenesten. URL-en som du når applikasjonen på behøver du å mate inn når du skal registrere klienten hos Feide Connect.</li>
+	<li>Etter at eksempelkoden er installert, må den konfigureres. Finn ut hvor du skal legge inn konfigurasjonen i henhold til dokumentasjonen.</li>
+	<li>Så må du registrere klienten hos Feide Connect, for å få tilgang til API-ene. Du må gi klienten et navn, og </li>
+	<li>En del av registreringen er å legge inn en forespørsel om tilgang til Eksamensresultater API-et. Dette skal være lett tilgjengelig på registreringssiden. Tilgang vil bli gitt automatisk når man forespør dette.</li>
+	<li>Så er du klar til å konfigurere applikasjonen ferdig. Fra Feide Connect registreringen fikk du sannsynligvis en <tt>client_id</tt> og en <tt>redirect_uri</tt> som må legges inn i konfigurasjonen.</li>
+	<li>Nå kan du teste applikasjonen!</li>
+</ol>
+
+<p>For å teste eksempelkoden/applikasjonen går du bare til applikasjonens startside i en nettleser.</p>
+
+
+<div class="bs-callout bs-callout-danger" id="">
+	<h4>Problemer med redirect-loop?</h4>
+	<p>Det er ikke lagt inn beskyttelse mot redirect-loop i eksempelkoden. Dette kan resultere i at applikasjonen forsøker å på nytt og på nytt å få utstedt en ny token med tilstrekkelig rettigheter, dersom man ikke får nok rettigheter i den utstedte token.</p>
+	<p>Vær dersfor spesielt nøye med at du har fått godkjent tilgang til eksamensresultater API-et før du tester klienten.</p>
+	<p>Vær også nøye med at <tt>redirect_uri</tt>-en matcher den du benytter selv for å gå til applikasjonen. Noen ganger kan applikasjonen nåes fra mange forskjellige adresser, og du må passe på å konsekvent benytte samme adresse. F.eks. Vil både <tt>0.0.0.0</tt>, <tt>127.0.0.1</tt> og <tt>localhost</tt> alle kunne peke til din arbeidsmaskin.</p>
+</div>
+
+
+
+
+
+
+
+
+
 
 <h3>PHP</h3>
+
+<p>Du må ha tilgang til eget PHP miljø. Det kan være tilgang til en webtjenester, men like gjerne kjøre på en medbrakt laptop eller arbeidsstasjon. PHP bør versjon 5.4 eller nyere, men man kan få det til å fungere med eldre versjoner av PHP med noen justeringer.</p>
+
+<ul class="uninett-ul">
+	<li class="uninett-ul-li">
+		<a href="https://github.com/andreassolberg/feide-connect-php-demo">
+			github.com/andreassolberg/feide-connect-php-demo</a></li>
+</ul>
 
 
 <h3>Java</h3>
 
+
+
+
 <h3>Webapplikasjon javascript</h3>
 
+<p>TBA</p>
 
 <h3>Hybrid applikasjon mobil app</h3>
 
+<p>TBA</p>
 
-
-
-
-
-<a href="">Presentasjon av Feide Connect på Terena Networking Conference 2014</a>
-
-
-
-<h2>Presentasjon av Feide Connect</h2>
-
-
-
-<iframe src="//www.slideshare.net/slideshow/embed_code/34959298" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/erlang/feide-connect-tnc2014-34959298" title="Feide Connect TNC2014" target="_blank">Feide Connect TNC2014</a> </strong> from <strong><a href="//www.slideshare.net/erlang" target="_blank">Andreas Åkre Solberg</a></strong> </div>
