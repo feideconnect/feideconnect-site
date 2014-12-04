@@ -7,7 +7,7 @@ permalink:        pretty
 
 # Server
 source:           site
-destination:      _gh_pages
+destination:      dist
 host:             0.0.0.0
 port:             9001
 baseurl:          /
