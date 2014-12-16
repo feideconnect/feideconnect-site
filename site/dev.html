@@ -1,0 +1,105 @@
+---
+layout: default
+title: Under utvikling
+slug: dev
+lead: "Feide Connect under utvikling - Tekniske detaljer"
+---
+
+<div class="bs-docs-section">
+
+	<h1>Feide Connect Auth Engine</h1>
+
+
+	<p><a href="https://github.com/andreassolberg/feideconnect-authengine">Kildekode Feide Connect Auth Engine</a> – påbegynt desember 2014</p>
+
+
+	<p>Denne komponenten utvikles på <code>auth.dev.feideconnect.no</code> i <code>master</code>-branchen.</p>
+
+	<p>En stabil versjon med hyppige inkrementelle oppdateringer, som etterhvert skal bli komponenten som benyttes i piloten 2015, finnes i <code>pilot</code> branchen i det samme koderepositoriet.</p>
+
+	<p>Per desember 2014 er denne kun satt opp å kunne autentisere med Feide. Vi vil her koble inn edugain, kalmar, IDporten og gjeste IdP løsning etterhvert.</p>
+
+	<p>Pilot instansen av Feide Connect Auth Engine kjører på <code>auth.feideconnect.no</code>.</p>
+
+
+
+	<h3>Storage - Cassandra</h3>
+
+	<p>Piloten kjører mot cassandra clusteret, med keyspacet <code>feideconnect</code>. Dette vil være populert med endel tilfeldig genererte brukere og klienter.</p>
+
+	<p><a href="https://github.com/andreassolberg/feideconnect-authengine/blob/master/etc/bootstrap.sql">database skjema - bootstrap.sql</a></p>
+
+
+	<h3>API for utstedelse av tokens (til testformål)</h3> 
+
+	<p>Dette API endepunktet vil dumpe ut en access token til testformål, med litt debug info, i tekstformat.</p>
+
+	<p>Endepunkt:</p>
+
+{% highlight plaintext %}
+https://auth.feideconnect.no/poc/{user}/{client}
+{% endhighlight %}
+
+	<p>Parameteret <code>{user}</code> kan være:</p>
+	<dl>
+	<dt><code>@me</code></dt>
+	<dd>En autentisert sluttbruker (vil kreve pålogging via Feide)</dd>
+
+	<dt><code>03c01b62-001a-40d7-bb62-c0a5bb90d5bd</code></dt>
+	<dd>Bruker UUID for en vilkårlig bruker.</dd>
+
+	<dt><code>@random</code></dt>
+	<dd>En tilfeldig testbruker. En ny bruker velges for hver forespørsel.</dd>
+
+	<dt><code>@none</code></dt>
+	<dd>Ingen bruker. Bruk denne for å simulere tokens som er utstedt til klienter vha client credentials flow. Slike tokens kan kun representere en autentisert klient og ingen spesielle brukere.</dd>
+
+	</dl>
+
+	<p>Parameteret <code>{client}</code> kan være:</p>
+	<dl>
+
+	<dt><code>af6386b5-d131-4651-a90a-f33299a8df60</code></dt>
+	<dd>Klient UUID for en vilkårlig klient.</dd>
+
+	<dt><code>@random</code></dt>
+	<dd>En tilfeldig testklient. En ny klient velges for hver forespørsel.</dd>
+
+
+	</dl>
+
+	<p>Eksempelkall:</p>
+	<ul>
+		<li><code><a href="https://auth.feideconnect.no/poc/@me/@random">https://auth.feideconnect.no/poc/@me/@random</a></code></li>
+		<li><code><a href="https://auth.feideconnect.no/poc/@random/@random">https://auth.feideconnect.no/poc/@random/@random</a></code></li>
+		
+		<li><code><a href="https://auth.feideconnect.no/poc/904cec02-a893-436c-95a4-da986c6c53ea/86d64772-9be2-475f-9062-151a081e02b5">
+			https://auth.feideconnect.no/poc/904cec02-a893-436c-95a4-da986c6c53ea/86d64772-9be2-475f-9062-151a081e02b5</a></code></li>
+
+
+		<li><code><a href="https://auth.feideconnect.no/poc/@random/86d64772-9be2-475f-9062-151a081e02b5">
+			https://auth.feideconnect.no/poc/@random/86d64772-9be2-475f-9062-151a081e02b5</a></code></li>
+
+		<li><code><a href="https://auth.feideconnect.no/poc/@none/@random">https://auth.feideconnect.no/poc/@none/@random</a></code></li>
+
+	</ul>
+
+
+
+	<h1>Feide Connect Core API</h1>
+
+
+	<ul>
+		<li><a href="/media/documents/Feide Connect - Utviklingsplan - steg 1.pdf">Feide Connect - Intern - Utvikling - Core API - getting started 1</a></li>
+		<li><a href="https://scm.uninett.no/feide-connect/core-apis">Kildekode Feide Connect Core API og Gatekeeper</a> – påbegynt desember 2014</li>
+
+	</ul>
+
+
+
+	<h1>Feide Connect API Gatekeeper</h1>
+
+	<p>TBA</p>
+
+
+</div>
