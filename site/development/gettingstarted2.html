@@ -98,8 +98,8 @@ Authorization: Bearer b8294d59-f92c-4630-88c5-d88cde86fdfe
 
 200 OK
 [
-	{"id": "andreas@uninett.no", "name": "Andreas Åkre Solberg"},
-	{"id": "bach@uninett.no", "name": "Andreas Bach"}
+	{"id": "feide:andreas@uninett.no", "name": "Andreas Åkre Solberg"},
+	{"id": "feide:bach@uninett.no", "name": "Andreas Bach"}
 ]
 {% endhighlight %}
 
@@ -113,7 +113,7 @@ Authorization: Bearer b8294d59-f92c-4630-88c5-d88cde86fdfe
 	<p>Profilbilde må være tilgjengelig fra en URL ala:</p>
 
 {% highlight plaintext %}
-https://api.feideconnect.no/peoplesearch/people/andreas@uninett.no/profilephoto
+https://api.feideconnect.no/peoplesearch/people/feide:andreas@uninett.no/profilephoto
 {% endhighlight %}
 
 	<p>Profilbildet hentes ut fra jpegPhoto attributten i LDAP, og bør resizes ned til 128 x 128px, og caches.</p>
@@ -122,6 +122,19 @@ https://api.feideconnect.no/peoplesearch/people/andreas@uninett.no/profilephoto
 
 
 	<h2 class="page-header">Personinfo</h2>
+
+	<p>I første omgang er det behov for en intern funksjon for å hente ut informasjon om en person fra en katalogtjener. Denne vil være nødvendig når man senere skal la en bruker legge til en annen bruker som deltaker i en gruppe. Vi kommer også til å bruke denne senere for å kunne tilby samme tilsvarende data som Feide kan i dag, for tjenester som har behov for det.</p>
+
+	<pre><code>UserInfo getUserInfo("feide:andreas@uninett.no")</code></pre>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="https://www.feide.no/attributelist">Oversikt over attributter i Feide</a></li>
+	</ul>
+
+	
+
+
+
 
 
 </div>
