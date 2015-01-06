@@ -1,0 +1,128 @@
+---
+layout: default
+title: Utviklingsplan 2
+slug: development2
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">Kobling mot katalogtjenere</h1>
+
+	<p class="lead">Her er samlet noe funksjonalitet som handler om kobling mot katalogtjenere.</p>
+
+
+	<h2 class="page-header">Organisasjonsinfo</h2>
+
+	<p>Vi behøver å samle en del informasjon om tilknyttede organisasjoner. Dette er typisk Feides vertsorganisasjoner.</p>
+
+	<p>Vi har ikke noe cassandra skjema for denne enda. Det bør vi ha etterhvert.</p>
+
+	<p>Noe av det vi kan behøve å samle om hver organisasjon, er ting som:</p>
+
+	<ul>
+		<li>Identifikatoren vil være realmet som er bakerst i Feidenavnet, f.eks. <tt>uio.no</tt> og <tt>ntnu.no</tt>.</li>
+		<li>Informativ info som navn, logo</li>
+		<li>Status for utrulling</li>
+		<li><strong>Tilkoblingsinformasjon til katalogtjener(e)</strong></li>
+		<li>Policy for hvem som får lov til å søke etter personer</li>
+	</ul>
+
+	<p>Viktigst i denne sammenhengen er å samle informasjon om tilkobling til katalogtjenere for å kunne gjøre:</p>
+	<ul>
+		<li>Søk etter personer</li>
+		<li>Uthenting av info om en person</li>
+		<li>Uthenting av informasjon relatert til grupper</li>
+	</ul>
+
+
+	<p>Et eksempel på informasjon om en organisasjon:</p>
+
+
+{% highlight json %}
+{
+	"id": "uninett.no",
+	"title": "UNINETT",
+	"ldap": {
+		"con": [
+			"ldaps://ldap-bs-01.uninett.no", 
+			"ldaps://ldap-bs-02.uninett.no", 
+			"ldaps://ldap-tb-01.uninett.no"
+		],
+		"baseDN": "cn=internal,cn=people,dc=uninett,dc=no",
+		"bindDN": "uid=feideconnect,dc=uninett,dc=no",
+		"bindPwd": "12345"
+	}
+}
+{% endhighlight %}
+	
+	<p>I tillegg må man ha lagret X.509 sertifikatet som benyttes for ldaps.</p>
+
+
+
+
+	<h2 class="page-header">Personsøk</h2>
+
+	<p>Personsøk er et av hoved-APIene som inngår i Feide Connect Core APIs.</p>
+
+	<p>APIet skal KUN godta forespørsler med en access token som har scopet <code>ps</code> (for peoplesearch).</p>
+
+
+	<p>Vi starter med å tillate søk i kun en og en organisasjon hver for seg. Da må først klienten kunne se hvilke organisasjoner som er tilgjengelige.</p>
+
+	<p>Vi trenger et endepunkt som returnerer en liste over alle organisasjoner man kan søke på:</p>
+
+{% highlight http %}
+GET /peoplesearch/orgs HTTP/1.1
+Host: api.feideconnect.no
+Authorization: Bearer b8294d59-f92c-4630-88c5-d88cde86fdfe
+
+200 OK
+[
+	{"id": "uninett.no", "title": "UNINETT"},
+	{"id": "uio.no", "title": "UiO"},
+	{"id": "ntnu.no", "title": "NTNU"}
+]
+{% endhighlight %}
+
+	
+	<p>Deretter må klienten kunne søke etter en streng:</p>
+
+{% highlight http %}
+GET /peoplesearch/people?org=uninett.no&query=andreas HTTP/1.1
+Host: api.feideconnect.no
+Authorization: Bearer b8294d59-f92c-4630-88c5-d88cde86fdfe
+
+200 OK
+[
+	{"id": "andreas@uninett.no", "name": "Andreas Åkre Solberg"},
+	{"id": "bach@uninett.no", "name": "Andreas Bach"}
+]
+{% endhighlight %}
+
+
+	<p>Viktig med <i>sanitizing</i> av søkestreng her.</p>
+
+	<p>Søkestrengen bør matches mot iallefall eduPersondisplayName og mail.</p>
+
+
+
+	<p>Profilbilde må være tilgjengelig fra en URL ala:</p>
+
+{% highlight plaintext %}
+https://api.feideconnect.no/peoplesearch/people/andreas@uninett.no/profilephoto
+{% endhighlight %}
+
+	<p>Profilbildet hentes ut fra jpegPhoto attributten i LDAP, og bør resizes ned til 128 x 128px, og caches.</p>
+	<p>Viktig også å sende med fornuftige cache headere for dette.</p>
+
+
+
+	<h2 class="page-header">Personinfo</h2>
+
+
+</div>
+
