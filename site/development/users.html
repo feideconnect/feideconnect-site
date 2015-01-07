@@ -1,0 +1,117 @@
+---
+layout: default
+title: Brukerobjekter
+slug: users
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">Brukerobjekter i Feide Connect</h1>
+
+	<p class="lead">Beskrivelse av hvordan brukerobjekter er representert i Cassandra.</p>
+
+
+
+	<h2 class="page-header">BrukerID referanser</h2>
+
+
+	<p>Primærnøkkelen til bruker objekter er alltid en intern UUID generert i Feide Connect. Denne blir generert første gang brukeren blir registrert i systemet.</p>
+
+	<p>En primærnøkkel representereres med prefixet <code>uuid:</code>, og et eksempel kan være:</p>
+
+	<pre><code>uuid:77f320cd-b17e-4f1d-a2cd-a7ce891fed16</code></pre>
+
+	<p>Hver bruker kan ha en rekke forskjellige typer sekundærnøkler som peker inn mot samme brukerobjekt.</p>
+
+	<p>Den viktigste sekundærnøkkelen for oss er Feidenavn, med prefiks <code>feide:</code>. Et eksempel kan være:</p>
+
+	<pre><code>feide:andreas@uninett.no</code></pre>
+
+
+
+
+
+	<h2 class="page-header">Brukerobjektet (sett utenfra)</h2>
+
+	<p>De viktigste egenskapene fra brukerobjektet (bortsett fra sekundærnøklene), er:</p>
+
+
+{% highlight json %}
+{
+	"userid": "77f320cd-b17e-4f1d-a2cd-a7ce891fed16",
+	"name": "Andreas Åkre Solberg",
+	"email": "andreas.solberg@uninett.no",
+	"profilephoto": "....."
+}
+{% endhighlight %}
+
+
+
+	
+	<h2 class="page-header">Brukerobjektet (intern repreentasjon)</h2>
+
+	<p>Et brukerobjekt kan ha oppstått med informasjon fra flere forskjellige kilder, f.eks. Feide og direkteaksess mot katalogtjeneren, samt MinID eller andre kilder.</p>
+
+
+	<p>For at ikke disse kildene til informasjon skal konkurrere og overskrive hverandre ved bruk, så lagres hver attributt til brukerobjektet med et <i>map</i> med en eller flere verdier hvor indeksen er en identifikator på kilden.</p>
+
+	<p>For eksempel, kan en bruker bli opprettet slik med informasjon fra Feide:</p>
+
+{% highlight json %}
+{
+	"userid": "77f320cd-b17e-4f1d-a2cd-a7ce891fed16",
+	"name": {
+		"feide:uninett.no": "Andreas Åkre Solberg"
+	},
+	"email": {
+		"feide:uninett.no": "andreas.solberg@uninett.no"
+	},
+	"profilephoto": {
+		"feide:uninett.no": "...."
+	},
+	"selectedsource": "feide:uninett.no",
+	"userid_sec": ["feide:andreas@uninett.no"]
+}
+{% endhighlight %}
+
+	<p>Egenskapen <code>selectedsource</code> representerer den indeksen som er valgt å være gjeldende.</p>
+
+	<p>For eksempel kan man se for seg at en bruker </p>
+
+
+
+
+
+	<h2 class="page-header">Cassandra skjema</h2>
+
+{% highlight sql %}
+/* Users */
+CREATE TABLE users (
+	userid uuid PRIMARY KEY,
+	created timestamp,
+
+	name map<text, text>,
+	email map<text, text>,
+	profilephoto map<text, blob>,
+
+	selectedsource text,
+
+	userid_sec set<text>,
+	userid_sec_seen map<text, timestamp>
+);
+CREATE TABLE userid_sec (
+	userid_sec text,
+	userid uuid,
+	PRIMARY KEY(userid_sec)
+);
+{% endhighlight %}
+
+
+
+
+</div>
+
