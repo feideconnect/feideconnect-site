@@ -1,0 +1,62 @@
+---
+layout: default
+title: Development setup
+slug: devsetup
+---
+
+
+
+<div class="bs-docs-section">
+
+	<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+
+	<p>feideconnect.no zone</p>
+
+	<pre>@                       A       158.38.213.50 ; PaaS
+                        AAAA    2001:700:0:4540::50 ; PaaS
+
+www                     CNAME   feideconnect.no.
+auth            CNAME   vltrd028.web.uninett.no.
+auth.dev        CNAME   vltrd024.web.uninett.no.
+api.dev         CNAME   vltrd029.web.uninett.no.</pre>
+
+
+	<h1 class="page-header">Auth Engine (dev)</h1>
+
+	<p class="lead">Beskrivelse av hvordan brukerobjekter er representert i Cassandra.</p>
+
+	<p></p>
+
+	<pre><code>vltrd024.web.uninett.no</code></pre>
+
+
+
+	<h1 class="page-header">Auth Engine (stable pilot)</h1>
+
+	<p>Denne er etablert for å senere komme over i tilstand <strong>stable pilot</strong>.</p>
+
+	<p></p>
+
+	<pre><code>vltrd028.web.uninett.no</code></pre>
+
+
+	<h1 class="page-header">Cassandra</h1>
+
+	<p></p>
+
+{% highlight json %}
+{
+	"keyspace": "feideconnect",
+	"nodes": ["158.38.213.74", "158.38.213.91", "158.38.213.87"]		
+}
+{% endhighlight %}
+
+
+
+	<h1 class="page-header">Feide Core APIs</h1>
+
+
+
+</div>
