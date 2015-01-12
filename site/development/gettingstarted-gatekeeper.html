@@ -1,0 +1,221 @@
+---
+layout: default
+title: API Gatekeeper
+slug: users
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">API Gatekeeper</h1>
+
+	<p class="lead">Kort beskrivelse av funksjonsmåten til API Gatekeeper.</p>
+
+
+
+
+	<h2 class="page-header">API Gatekeeper skjema</h2>
+
+
+{% highlight sql %}
+CREATE TABLE apigk (
+	id text PRIMARY KEY,
+
+	name text,
+	descr text,
+
+	endpoints list<text>
+
+	trust text, 		-- JSON Structure
+	expose text,		-- JSON Structure
+	scopedef text, 		-- JSON Structure
+	requireuser boolean,
+	httpscertpinned text, 	-- X509 Certificate	
+
+	status set<text>,
+
+	owner uuid,
+	created timestamp,
+	updated timestamp
+);
+CREATE INDEX apigk_owner_idx ON apigk(owner);
+{% endhighlight %}
+
+
+
+	<h2 class="page-header">Eget domene for API Gatekeeper</h2>
+
+
+	<p>API Gatekeeper kjører på et domene med vilkårlige subhosts, f.eks.: <code>*.gk.feideconnect.no</code>.
+	Vi bør anskaffe et eget toppnivådomene for dette formålet.
+	</p>
+
+	<p>En registrert Gatekeeper sin <code>id</code> er unik, og tilsvarer subhostnavnet. F.eks. dersom noen har registrert: </p>
+
+{% highlight json %}
+{
+	"id": "andreas",
+	"name": "Andreas sitt API",
+	"endpoints": ["https://andreas.uninettlabs.no/foo/"]
+}
+{% endhighlight %}
+
+	<p>så vil dette APIet kunne nåes via <code>https://andreas.gk.feideconnect.no/</code>.</p>
+
+	<p>Det er veldig få tegn vi ønsker å tillate i <code>id</code>. til å begynne med kanskje bare [a-z0-9\-].</p>
+
+
+	<p>Det opprinnelige APIet er lagt inn i <code>endpoints</code> i form av en liste, med ekvivalente endepunkter. Forespørsler vil sendes til en tilfeldig valgt fra denne listen. Senere kan vi velge å monitorere og kontakte et av endepunktene som ikke er i feil-tilstand.</p>
+
+	<p>HTTP Forespørsler vil mappes tilnærmet uforandret igjennom gatekeeperen, men med noen headere lagt til. Svaret vil bli sendt uforandret tilbake.</p>
+
+	<p>Denne forespørselen:</p>
+
+{% highlight http %}
+GET /baluba/38 HTTP/1.1
+Host: andreas.gk.feideconnect.no
+Authorization: Bearer b523a8f3-b875-466f-9781-ba17a7a6f4a6
+{% endhighlight %}
+
+	<p>vil videresendes som:</p>
+
+{% highlight http %}
+GET /foo/baluba/38 HTTP/1.1
+Host: andreas.gk.feideconnect.no
+X-FeideConnect-Auth: 2b0b91f2-64cf-46b1-9395-3f8205cedf30
+X-FeideConnect-UserID: a4d09d06-560e-47e5-9993-34d19f69e317
+{% endhighlight %}
+
+
+
+	<h2 class="page-header">Diverse</h2>
+
+	<p>Svaret som mottas fra APIet bør man begynne å sende videre tilbake til klienten før man har mottatt hele. Man må også kontrollere timeout på en god måte, og likeledes ratelimiting.</p>
+
+	<p>Ingenting caches, og cache-relaterte headere sendes uforandret igjennom.</p>
+
+
+
+
+	<h2 class="page-header">Konfigurering av Gatekeeper</h2>
+
+	<p><code>id</code> kobles til domenenavn, og er beskrevet tidligere.</p>
+	<p><code>endpoints</code> er beskrevet tidligere.</p>
+	<p><code>name</code>, <code>descr</code>, <code>status</code>, <code>owner</code>, <code>created</code> og <code>updated</code> er som med klient objektet.</p>
+
+	<h3>trust</h3>
+
+	<p>Her definerer vi en delt hemmelighet/tillit mot det opprinnelige API-et. Denne er enkodet som JSON.</p>
+	<p>Til å begynne med støtter vi kun <code>type=token</code>.</p>
+
+	<p>type vil alltid være til stede, og de forskjellige typene vil ha varierende sett med tillegsegenskaper. For type=token, så har vi en token egenskap. F.eks. slik:</p>
+{% highlight json %}
+{
+	"type": "token",
+	"token": "2b0b91f2-64cf-46b1-9395-3f8205cedf30"
+}
+{% endhighlight %}
+
+	<p>Denne delte hemmeligheten <code>token</code> vil oversendes i en HTTP header <code>X-FeideConnect-Auth</code>.</p>
+
+
+	<h3>requireuser</h3>
+
+	<p>Dersom dette flagget er satt til true, så vil gatekeeperen ikke godta forespørsler som opptrer på vegne av en autentisert bruker.</p>
+
+
+
+
+	<h3>expose</h3>
+
+	<p>Denne egenskapen sier noe om hvilke informasjon om den kliente, påloggede brukeren og dens grupper som skal eksponeres til det opprinnelige APIet.</p>
+
+	<p><code>userid</code>, <code>clientid</code> og <code>groups</code> avgjør om henholdsvis klientID, brukerID, scopes, liste over gruppeID-er skal videresendes i egne headers.</p>
+
+	<p><code>userid-sec</code> kan være enten <code>false</code> for å ikke videreformidle noen sekundærnøkler, eller den kan være <code>true</code> for å videreformidle alle sekundærnøkler. Den kan også være en liste over hvilke sekundærnøkkel prefix som skal viderefomidles.</p>
+
+	<p>At egenskapen ikke finnes i JSON strukturen kan regnes ekvivalent med false, altså at informasjonen ikke skap eksponeres.</p>
+
+
+{% highlight json %}
+{
+	"userid": true,
+	"userid-sec": ["feide", "uuid"],
+	"clientid": true,
+	"groups": false,
+	"scopes": true
+}
+{% endhighlight %}
+
+
+
+	<h3>scopedef</h3>	
+
+	<p>En API eier kan styre et sett av subscopes som indikerer tilgangsnivå for klienter inn mot API-et. Disse scopene fungerer som vanlige OAuth scopes for klienten, men er prefixet med <code>gk_apiid</code> for å skille de fra system scopes.</p>
+
+{% highlight json %}
+{
+  "basePolicy": true,
+  "subScopes": {
+    "admin": {
+      "name": "May manage things",
+      "policy": {
+        "auto": false
+      }
+    },
+    "write": {
+      "name": "May edit and delete stuff",
+      "policy": {
+        "auto": false
+      }
+    }
+  }
+}
+{% endhighlight %}
+
+	<p>API Gatekeeperen trenger ikke ta hensyn til denne attributten. Dette er noe som styres i Manage APIet, med arbeidsflyt for tildeling av scopes til klienter.</p>
+
+
+
+	<h3>httpscertpinned</h3>
+
+	<p>Settes til <code>null</code> inntil videre. Vi ønsker på sikt å tilby certificate pinning, for tilliten mot serveresertifikatet mot det opprinnelige API-et.</p>
+
+
+
+	<h2 class="page-header">API Gatekeeper Business logic</h2>
+
+
+	<ol>
+		<li>Mottar innkommende request. Sjekk hosten, og trekk ut hvilken <code>id</code> som tilsvarer. F.eks. <code>ecampus-video</code>.</li>
+		<li>Hent ut hele apigatekeeper konfigurasjonen for denne.</li>
+		<li>Sjekk om requesten har med en OAuth Bearer token. Feil dersom den ikke har det.</li>
+		<li>Sjekk om token er gyldig i tid – ikke expired.</li>
+		<li>Sjekk at token har hovedscopet for API-et. I dette tilfellet <code>gk_ecampus-video</code>. Feil hvis ikke.</li>
+		<li>Last inn klientobjektet.</li>
+		<li>Hvis klienten krever at bruker er autentisert, sjekk om token refererer til en bruker. Last inn brukerobjektet.</li>
+		<li>Hent ut en liste over alle scopene som starter på prefix <code>gk_ecampus-video_</code>. Disse skal kunne legges til egen header, dersom <code>scopes</code> er true i expose.</li>
+		<li>Legg til headerene etter hva som er konfigurert i expose.</li>
+	</ol>
+
+	<p>Litt av hengig av konfigurasjonen av APIet, kan en videreformidlet forespørsel se slik ut:</p>
+
+
+{% highlight http %}
+GET /foo/baluba/38 HTTP/1.1
+Host: andreas.gk.feideconnect.no
+X-FeideConnect-Auth: 2b0b91f2-64cf-46b1-9395-3f8205cedf30
+X-FeideConnect-UserID: a4d09d06-560e-47e5-9993-34d19f69e317
+X-FeideConnect-UserIDsec: feide:andreas@uninett.no,uuid:d648f37f-a0fe-4da1-87ef-670e5ad240a1
+X-FeideConnect-Scopes: admin,write
+X-FeideConnect-Groups: xxx,yyy,zzz,www
+{% endhighlight %}
+
+
+
+
+</div>
+
