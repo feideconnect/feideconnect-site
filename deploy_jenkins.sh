@@ -4,7 +4,6 @@ set -e # halt script on error
 
 echo "Ready to deploy updated version of feideconnect.no"
 
-exit;
 
 . ~/cf-login.sh
 cf target -o system -s prod
