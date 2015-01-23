@@ -27,7 +27,7 @@ CREATE TABLE apigk (
 	name text,
 	descr text,
 
-	endpoints list<text>
+	endpoints list<text>,
 
 	trust text, 		-- JSON Structure
 	expose text,		-- JSON Structure
@@ -124,7 +124,7 @@ X-FeideConnect-UserID: a4d09d06-560e-47e5-9993-34d19f69e317
 
 	<h3>requireuser</h3>
 
-	<p>Dersom dette flagget er satt til true, så vil gatekeeperen ikke godta forespørsler som opptrer på vegne av en autentisert bruker.</p>
+	<p>Dersom dette flagget er satt til true, så vil gatekeeperen kun godta forespørsler som opptrer på vegne av en autentisert bruker.</p>
 
 
 
@@ -133,11 +133,11 @@ X-FeideConnect-UserID: a4d09d06-560e-47e5-9993-34d19f69e317
 
 	<p>Denne egenskapen sier noe om hvilke informasjon om den kliente, påloggede brukeren og dens grupper som skal eksponeres til det opprinnelige APIet.</p>
 
-	<p><code>userid</code>, <code>clientid</code> og <code>groups</code> avgjør om henholdsvis klientID, brukerID, scopes, liste over gruppeID-er skal videresendes i egne headers.</p>
+	<p><code>userid</code>, <code>clientid</code>, <code>scopes</code> og <code>groups</code> avgjør om henholdsvis brukerID, klientID, scopes, liste over gruppeID-er skal videresendes i egne headers.</p>
 
 	<p><code>userid-sec</code> kan være enten <code>false</code> for å ikke videreformidle noen sekundærnøkler, eller den kan være <code>true</code> for å videreformidle alle sekundærnøkler. Den kan også være en liste over hvilke sekundærnøkkel prefix som skal viderefomidles.</p>
 
-	<p>At egenskapen ikke finnes i JSON strukturen kan regnes ekvivalent med false, altså at informasjonen ikke skap eksponeres.</p>
+	<p>At egenskapen ikke finnes i JSON strukturen kan regnes ekvivalent med false, altså at informasjonen ikke skal eksponeres.</p>
 
 
 {% highlight json %}
@@ -154,7 +154,7 @@ X-FeideConnect-UserID: a4d09d06-560e-47e5-9993-34d19f69e317
 
 	<h3>scopedef</h3>	
 
-	<p>En API eier kan styre et sett av subscopes som indikerer tilgangsnivå for klienter inn mot API-et. Disse scopene fungerer som vanlige OAuth scopes for klienten, men er prefixet med <code>gk_apiid</code> for å skille de fra system scopes.</p>
+	<p>En API eier kan styre et sett av subscopes som indikerer tilgangsnivå for klienter inn mot API-et. Disse scopene fungerer som vanlige OAuth scopes for klienten, men er prefixet med <code>gk_apiid_</code> for å skille de fra system scopes.</p>
 
 {% highlight json %}
 {
@@ -196,7 +196,7 @@ X-FeideConnect-UserID: a4d09d06-560e-47e5-9993-34d19f69e317
 		<li>Sjekk om token er gyldig i tid – ikke expired.</li>
 		<li>Sjekk at token har hovedscopet for API-et. I dette tilfellet <code>gk_ecampus-video</code>. Feil hvis ikke.</li>
 		<li>Last inn klientobjektet.</li>
-		<li>Hvis klienten krever at bruker er autentisert, sjekk om token refererer til en bruker. Last inn brukerobjektet.</li>
+		<li>Hvis apiet krever at bruker er autentisert, sjekk om token refererer til en bruker. Last inn brukerobjektet.</li>
 		<li>Hent ut en liste over alle scopene som starter på prefix <code>gk_ecampus-video_</code>. Disse skal kunne legges til egen header, dersom <code>scopes</code> er true i expose.</li>
 		<li>Legg til headerene etter hva som er konfigurert i expose.</li>
 	</ol>
