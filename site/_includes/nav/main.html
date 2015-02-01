@@ -19,12 +19,39 @@
         </li> -->
 
         <li{% if page.slug == "status" %} class="active"{% endif %}>
-          <a href="/status/">Status</a>
+          <a href="/status/">Prosjektstatus</a>
         </li>
 
-        <li{% if page.slug == "suhs" %} class="active"{% endif %}>
-          <a target="" href="/suhs/">SUHS</a>
+
+
+        <li{% if page.slug == "utvikling" %} class="active"{% endif %}>
+          <a target="" href="/utvikling/">Utvikling</a>
         </li>
+
+        <li class="dropdown 
+          {% if page.slug == "pilot" %}active{% endif %}
+          {% if page.slug == "suhs" %}active{% endif %}
+          ">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pilot <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            
+            <li {% if page.slug == "pilot" %} class="active"{% endif %}>
+              <a href="/pilot/">Pilot 2015</a></li>
+
+            <li{% if page.slug == "suhs" %} class="active"{% endif %}>
+              <a target="" href="/suhs/">SUHS 2014</a>
+            </li>
+          </ul>
+        </li>
+
+
+
+
+
+<!--         <li{% if page.slug == "utrulling" %} class="active"{% endif %}>
+          <a target="#" class="" href="/utrulling/">Utrulling</a>
+        </li> -->
+
 
 
         <li class="dropdown 
@@ -45,7 +72,7 @@
             <li><a href="https://inspect.{{ site.uwap.domain }}/">API Inspector</a></li>
           </ul>
         </li>
-
+<!--
 
         <li{% if page.slug == "css" %} class="active"{% endif %}>
           <a target="_blank" href="{{ site.dev }}">Developer Dashboard</a>
@@ -55,12 +82,13 @@
         <li{% if page.slug == "groups" %} class="active"{% endif %}>
           <a target="_blank" href="{{ site.groups }}">Groups</a>
         </li>
-
+-->
       </ul>
 
       <ul class="nav navbar-nav navbar-right" style="">
-        <li><a href="http://talk.uninettlabs.no">Community</a></li>
-        <li><a href="{{ site.blog }}">Blog</a></li>
+        <li data-toggle="tooltip" data-placement="left" title="Not yet available. Stay tuned" ><button  style="margin-top: 8px" class="btn btn-default" href="#">Login</button></li>
+        <!-- <li><a href="http://talk.uninettlabs.no">Community</a></li> -->
+        <!-- <li><a href="{{ site.blog }}">Blog</a></li> -->
         <li style="width: 3em"><a href="">&nbsp;</a></li>
       </ul>
     </nav>
