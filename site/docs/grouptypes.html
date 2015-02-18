@@ -1,0 +1,446 @@
+---
+layout: default
+title: Group types
+slug: grouptypes
+lead: "Group types"
+---
+
+
+
+
+<div class="bs-docs-section">
+	<h1 id="org" class="page-header">Organization</h1>
+
+	<p class="lead">An organization can be any kind of organization, including school, university, or other educational institutions.</p>
+
+	<p>You may register your application using the <a href="{{ site.dev }}">Developer Dashboard</a>.</p>
+
+
+	<p>These groups are based upon information defined in norEdu.</p>
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="https://www.feide.no/attributelist">Feide attributes</a></li>
+		<li class="uninett-ul-li"><a href="https://innsyn.feide.no">Feides innsynstjeneste</a></li>
+		<li class="uninett-ul-li"><a href="https://www.feide.no/sites/feide.no/files/documents/norEdu_spec.pdf">norEdu 1.5.1 specification</a></li>
+	</ul>
+
+
+
+	<h2>Group attributes</h2>
+
+	<p>Attributes from VOOT Core.</p>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:org</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the organization.</dd>
+		<dd>In Feide Connect, for all groups populated from the eduOrg objects, these are generated in the following form: <code>fc:org:{realm}</code>, in example <code>fc:org:uninett.no</code>. For all orgunit, this idenifiers are generated in the following form: <code>fc:org:{realm}:unit:{norEduOrgUnitUniqueIdentifier}</code>, in example: <code>fc:org:uninett.no:unit:no876326125</code></dd>
+		<dd>Identifiers generated from eduOrg attirbutes are trimmed and lowercased.</dd>
+
+
+		<dt><code>orgType</code></dt>
+		<dd>Valid types: 
+			<dl>
+				<dt><code>org</code></dt>
+				<dd>Regular organization</dd>
+
+				<dt><code>he</code></dt>
+				<dd>Intituation in higher education</dd>
+
+				<dt><code>orgunit</code></dt>
+				<dd>Regular organizational unit.</dd>
+
+				<dt><code>goowner</code></dt>
+				<dd>Kommune. Skoleeier</dd>
+
+				<dt><code>vgsowner</code></dt>
+				<dd>Fylkeskommune. Eier av VGS.</dd>
+
+				<dt><code>vgs</code></dt>
+				<dd>Videregående skole.</dd>
+
+				<dt><code>go</code></dt>
+				<dd>Barne og / eller ungdomsskole i grunnopplæringa.</dd>
+
+			</dl>
+
+
+
+		<dt><code>parent</code></dt>
+		<dd>Indicates that the organization is part of another organization. The parent attribute value MUST include an ID of another organization.
+		Typically in Feide Connect, the the parent attribute is always populated on group objects that are obtained from an eduOrgUnit, where it points to the corresponding eduOrg object. In example: «Frogner VGS» (orgunit) puts «Oslo Kommune» (org) as a parent.
+		</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the organization. Obtained from <code>eduPersonOrgDN:o</code></dd>
+		<dd>Datatype: Translatable String</dd>
+
+
+		<dt><code>description</code></dt>
+		<dd>is a textual description of the group (optional). It may be translated as well.</dd>
+		<dd>Leave out this field rather than replicate the name of the organization.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+<!--
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+-->
+
+		<dt><code>public</code></dt>
+		<dd>This flag will always be <code>true</code> for organizations.</dd>
+		<dd>is a boolean flag indicating whether the existence of this group and the basic group information is publicly available. Users may search and use groups in setting access control, even if they are not member of a group.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+		<dt><code>active</code></dt>
+		<dd>Will always be <code>true</code> for existing, real organizations.</dd>
+		<dd>will be set to <code>false</code> to indicate organizations that do not exist anymore. In example, when two institutions are merged. The old one may be preserved with a active=false flag for some time to deal with existing access policies.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+
+		<dt><code>sourceID</code></dt>
+		<dd>Usage in Feide Connect yet not defined.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+	</dl>
+
+	<p>Specific attributes for <code>fc:org</code>.</p>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>eduOrgLegalName</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>Organization's legal name Obtained from <code>eduPersonOrgDN:eduOrgLegalName</code></dd>
+
+		<dt><code>norEduOrgNIN</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>Organizational number. obtained from <code>eduPersonOrgDN:norEduOrgNIN</code></dd>
+		<dd>Example: <code>NO976820037</code></dd>
+
+		<dt><code>mail</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>Organization's mail. Obtained from <code>eduPersonOrgDN:mail</code></dd>
+
+
+
+
+		<dt><code>telephoneNumber</code></dt>
+		<dd>Reccomended in Feide 1.5.1</dd>
+		<dd>A multi-valued attribute, directly inherited from <code>eduPersonOrgDN:telephoneNumber</code></dd>
+
+		<dt><code>postalAddress</code></dt>
+		<dd>Reccomended in Feide 1.5.1</dd>
+		<dd>Postal address. obtained from <code>eduPersonOrgDN:postalAddress</code></dd>
+
+
+
+
+
+		<dt><code>eduOrgHomePageURI</code></dt>
+		<dd>Postal address. obtained from <code>eduPersonOrgDN:eduOrgHomePageURI</code></dd>
+
+
+		<dt><code>eduOrgIdentityAuthNPolicyURI</code></dt>
+		<dd>Location of organization's policy regarding identification and authentication. Obtained from <code>eduPersonOrgDN:eduOrgIdentityAuthNPolicyURI</code></dd>
+
+		<dt><code>eduOrgWhitePagesURI)</code></dt>
+		<dd>The URL of the open white pages directory service for the organization <code>eduPersonOrgDN:eduOrgWhitePagesURI)</code></dd>
+
+		<dt><code>facsimileTelephoneNumber</code></dt>
+		<dd> <code>eduPersonOrgDN:facsimileTelephoneNumber</code></dd>
+
+		<dt><code>l</code></dt>
+		<dd>Organization's location <code>eduPersonOrgDN:l</code></dd>
+
+		<dt><code>labeledURI</code></dt>
+		<dd>Labeled URI to organization <code>eduPersonOrgDN:labeledURI</code></dd>
+
+		<dt><code>norEduOrgAcronym</code></dt>
+		<dd>Acronym for the organization <code>eduPersonOrgDN:norEduOrgAcronym</code></dd>
+
+		<dt><code>norEduOrgUniqueIdentifier</code></dt>
+		<dd>Organization's unique identifier <code>eduPersonOrgDN:norEduOrgUniqueIdentifier</code></dd>
+
+		<dt><code>postalCode</code></dt>
+		<dd>Organization's postal code <code>eduPersonOrgDN:postalCode</code></dd>
+
+		<dt><code>postOfficeBox</code></dt>
+		<dd>Organization's postal office box <code>eduPersonOrgDN:postOfficeBox</code></dd>
+
+		<dt><code>street</code></dt>
+		<dd>Organization street address <code>eduPersonOrgDN:street</code></dd>
+
+
+
+
+	</dl>
+
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+		<dd>When populated from eduOrg/OrgUnit, this value is <code>admin</code> for employees, and <code>member</code> for all others.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>affiliation</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>The users affiliation to this org. Obtained from eduPerson. <code>eduPersonAffiliation</code></dd>
+
+		<dt><code>primaryAffiliation</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>The users affiliation to this org. Obtained from eduPerson. <code>eduPersonPrimaryAffiliation</code></dd>
+		<dd></dd>
+
+		<dt><code>manager</code></dt>
+		<dd>Optional in Feide 1.5.1</dd>
+		<dd>Manager. Obtained from eduPerson <code>manager</code></dd>
+
+		<dt><code>title</code></dt>
+		<dd>Optional in Feide 1.5.1</dd>
+		<dd>Title. Obtained from eduPerson <code>title</code></dd>
+
+		<dt><code>telephoneNumber</code></dt>
+		<dd>Obtained from eduPerson</dd>
+
+		<dt><code>mail</code></dt>
+		<dd>Obtained from eduPerson</dd>
+
+	</dl>
+
+
+	<h2>Example 1: Employee in UNINETT</h2>
+
+
+	<p>In the following example, an employee of UNINETT:</p>
+
+{% highlight json tabsize=1 %}
+{
+	"name": "Andreas Åkre Solberg"
+}
+{% endhighlight %}
+
+
+	<p>is member of the UNINETT group:</p>
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:uninett.no",
+	"type": "org",
+	"displayName": "UNINETT",
+	"public": true,
+	"eduOrgLegalName": "UNINETT AS",
+	"norEduOrgNIN": "no968100211",
+	"mail": "info@uninett.no",
+	"telephoneNumber": "+47 73557900",
+	"eduOrgHomePageURI": "http://www.uninett.no/",
+	"l": "Trondheim",
+	"membership": {
+		"basic": "admin",
+		"displayName": "Ansatt",
+		"affiliation": ["employee", "member"],
+		"primaryAffiliation": "employee",
+		"title": "Senior Technical Architect",
+		"telephoneNumber": "+47 73557894",
+		"mail": "andreas.solberg@uninett.no"
+	}
+}
+{% endhighlight %}
+
+
+	<p>and is member of a group for the ASM department:</p>
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:uninett.no:unit:avd-u20",
+	"type": "orgunit",
+	"displayName": "Avdeling for System og Mellomvare",
+	"norEduOrgAcronym": "ASM",
+	"public": true,
+	"mail": "asm@uninett.no",
+	"membership": {
+		"basic": "admin",
+		"displayName": "Ansatt",
+		"affiliation": ["employee", "member"],
+		"primaryAffiliation": "employee"
+	}
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+
+	<h2>Example 2: teacher at two schools</h2>
+
+
+	<p>In the following example, a teacher:</p>
+
+{% highlight json tabsize=1 %}
+{
+	"name": "Anne Istad"
+}
+{% endhighlight %}
+
+	<p>is teaching at two schools, both schools share a school owner Oslo Kommune</p>
+
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:oslo-kommune.no",
+	"type": "goowner",
+	"displayName": "Oslo kommune",
+	"public": true,
+	"eduOrgLegalName": "Oslo Kommune",
+	"norEduOrgNIN": "no976820037",
+	"mail": "info@oslo-kommune.no",
+	"membership": {
+		"basic": "admin",
+		"displayName": "Lærer",
+		"affiliation": ["employee", "member", "faculty"],
+		"primaryAffiliation": "employee",
+		"mail": "annei@oslo-kommune.no"
+	}
+}
+{% endhighlight %}
+
+	<p>The two schools is also represented as groups:</p>
+
+	<p>Alna grunnskole</p>
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:oslo-kommune.no:unit:no876326125",
+	"type": "go",
+	"parent": "fc:org:oslo-kommune.no",
+	"displayName": "Alna grunnskole",
+	"eduOrgLegalName": "Alna grunnskole",
+	"norEduOrgNIN": "no876326125",
+	"mail": "alnags@oslo-kommune.no",
+	"membership": {
+		"basic": "admin",
+		"displayName": "Lærer",
+		"affiliation": ["employee", "member", "faculty"],
+		"primaryAffiliation": "employee"
+	}
+}
+{% endhighlight %}
+
+
+	<p>and Bjerke grunnskole</p>
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:oslo-kommune.no:unit:no876326126",
+	"type": "go",
+	"parent": "fc:org:oslo-kommune.no",
+	"displayName": "Bjerke grunnskole",
+	"eduOrgLegalName": "Bjerke grunnskole",
+	"norEduOrgNIN": "no876326126",
+	"mail": "bjerkegs@oslo-kommune.no",
+	"membership": {
+		"basic": "admin",
+		"displayName": "Lærer",
+		"affiliation": ["employee", "member", "faculty"],
+		"primaryAffiliation": "employee"
+	}
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+	<h2>Example 3: pupil at Frogner VGS</h2>
+
+
+	<p>In the following example, a pupil:</p>
+
+{% highlight json tabsize=1 %}
+{
+	"name": "Thea Eide"
+}
+{% endhighlight %}
+
+	<p>is studing at Frogner VGS, owned by Oslo Kommune</p>
+
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:oslo-kommune.no",
+	"type": "vgsowner",
+	"displayName": "Oslo kommune",
+	"public": true,
+	"eduOrgLegalName": "Oslo Kommune",
+	"norEduOrgNIN": "no976820037",
+	"mail": "info@oslo-kommune.no",
+	"membership": {
+		"basic": "admin",
+		"displayName": "Lærer",
+		"affiliation": ["employee", "member", "faculty"],
+		"primaryAffiliation": "employee",
+		"mail": "annei@oslo-kommune.no"
+	}
+}
+{% endhighlight %}
+
+
+	<p>A group representing the school Frogner VGS</p>
+
+{% highlight json tabsize=1 %}
+{
+	"id": "fc:org:oslo-kommune.no:unit:no895395126",
+	"type": "vgs",
+	"parent": "fc:org:oslo-kommune.no",
+	"displayName": "Frogner VGS",
+	"norEduOrgNIN": "no895395126",
+	"mail": "info@frognervgs.no",
+	"membership": {
+		"basic": "member",
+		"displayName": "Elev",
+		"affiliation": ["member", "student"]
+	}
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="bs-docs-section">
+	<h1 id="adhoc" class="page-header">Ad-Hoc group</h1>
+
+</div>
+
+

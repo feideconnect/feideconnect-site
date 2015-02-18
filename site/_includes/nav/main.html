@@ -56,13 +56,16 @@
 
         <li class="dropdown 
           {% if page.slug == "docs" %}active{% endif %}
+          {% if page.slug == "grouptypes" %}active{% endif %}
           {% if page.slug == "api" %}active{% endif %}
           {% if page.slug == "gatekeeper" %}active{% endif %}
           ">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li {% if page.slug == "docs" %} class="active"{% endif %}>
-              <a href="/docs/">Getting started</a></li>
+              <a href="/docs/gettingstarted/">Getting started</a></li>
+            <li {% if page.slug == "grouptypes" %} class="active"{% endif %}>
+              <a href="/docs/grouptypes/">Group types</a></li>
             <li {% if page.slug == "api" %} class="active"{% endif %}>
               <a href="/api/">API Reference</a></li>
             <li {% if page.slug == "gatekeeper" %} class="active"{% endif %}>
