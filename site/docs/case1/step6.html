@@ -1,0 +1,57 @@
+---
+layout: home
+title: Getting Started
+slug: docs
+lead: "Feide Connect for Developers"
+---
+
+
+<div class="container gutter">
+	<div class="row">
+		<div class="col-md-12">
+
+			<h2>Implementing the application</h2>
+
+			<p>Implementing a Feide Connect appliation is as easy as creating any OAuth 2.0 client.</p>
+
+			<p>In this demo we created a web application using javascript.</p>
+
+			<p>The OAuth details is hidden in the JSO library that we used. And the actual code needed in order to authenticate the use, obtain information about the enduser as well as getting data from Foodle API on behalf of the authenticated user, is something like this:</p>
+
+{% highlight javascript tabsize=1 %}
+
+feideconnect.authenticate.then(function(user) {
+	console.log("The authenticated user is ", user);
+});
+
+var scopes = ["userinfo", "gk_foodle"];
+feideconnect._customRequest('https://foodle.gk.feideconnect.no/api2/foodlelist', scopes, scopes).then(function(result) {
+	console.log("A list of foodle data", result);
+});
+
+
+{% endhighlight %}
+
+
+
+
+			<div class="text-center">
+				<a class="btn btn-default" href="../step5/"><i class="fa fa-chevron-left"></i>  Previous</a>
+				<a class="btn btn-primary" href="../step7/">End user is logging in <i class="fa fa-chevron-right"></i> </a>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

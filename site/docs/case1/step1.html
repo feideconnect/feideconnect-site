@@ -1,0 +1,54 @@
+---
+layout: home
+title: Getting Started
+slug: docs
+lead: "Feide Connect for Developers"
+---
+
+
+<div class="container gutter">
+	<div class="row">
+		<div class="col-md-12">
+
+			<h1>Walk through of Feide Connect for a developer</h1>
+
+
+			<p>In this walkthrough we will show you all the details of Feide Connect in practice from a developers perspective.</p>
+
+			<p>We will first demonstrate how to use Feide Connect to protect an API, and then connect an application to obtain access to this API.</p>
+
+			<p>For the use case we will be using the <a href="https://foodl.org">UNINETT Foodle service</a> – a simple survey and poll web tool.</p>
+
+			<h2>The Feide Connect API Gatekeeper</h2>
+
+			<p>Protecting an API with an OAuth Provider is not that complex. However, you also have to add federated authentication to the provider. And then a easy to use self service portal for third party clients to register – and that would need to be federated as well. And add policy management and workflow into the mix. And you want todo this for all your APIs spanning across your organization. You will need to build something like Feide Connect, or simply let Feide Connect help you. Here's how.</p>
+
+			<p>We already have an API, and we want to implement handling of trusted requests from Feide Connect.</p>
+
+			<p>A trusted requeset from Feide Connect, is passed on from an authenticated client and an authenticated user of the Feide Connect platform. It looks like this:</p>
+
+
+{% highlight http tabsize=1 %}
+GET /yourapi/something HTTP/1.1
+Accept: application/json, text/javascript, */*; q=0.01
+Authorization: Basic Zm0OmEyZDYzMzUmVpZGVjb25uZWN0OmEyZDYzMzU3LZmVpjb25uZWN0OmEyZDYzMzU3L==
+X-feideconnect-clientid: 610cbba7-3985-45ae-bc9f-0db0e36f71ad
+X-feideconnect-userid-sec: feide:andreas@uninett.no
+X-feideconnect-userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f
+X-feideconnect-groups: ldap:uninett.no:AVD-U20,ldap:uninett.no,adhoc:2d7310f0-55f1-452c-af8c-e40e7e8436db
+{% endhighlight %}
+
+			<p></p>
+
+
+
+			<div class="text-center">
+				<!-- <a class="btn btn-primary" href="#"><i class="fa fa-chevron-left"></i>  Forrige steg</a> -->
+				<a class="btn btn-primary" href="../step2/">Registrer Gatekeeper <i class="fa fa-chevron-right"></i> </a>
+			</div>
+
+
+
+		</div>
+	</div>
+</div>
