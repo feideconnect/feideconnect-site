@@ -5,7 +5,11 @@ install:
   - gem install jekyll 
   - gem install rouge
   - gem install html-proofer
-script: jekyll build && htmlproof ./dist
+script: 
+  - jekyll build 
+# - htmlproof ./dist
+notifications:
+  slack: uninett:5CpnkrlaqOLKLXDttDzpTqqU
 env:
   global:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of
