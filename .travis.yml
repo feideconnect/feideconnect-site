@@ -3,8 +3,9 @@ rvm:
 - 2.1
 install:
   - gem install jekyll 
+  - gem install rouge
   - gem install html-proofer
-script: jekyll build && htmlproof ./_site
+script: jekyll build && htmlproof ./dist
 env:
   global:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of
