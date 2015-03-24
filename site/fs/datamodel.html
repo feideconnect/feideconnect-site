@@ -1,0 +1,135 @@
+---
+layout: default
+title: FS Groups Datamodel
+slug: fsgroups
+
+---
+
+<div class="bs-docs-section">
+
+	<p><a href="/fs/">« Tilbake til FS startside</a></p>
+
+
+
+
+
+	<p>Her er en oversikt over gruppetyper.</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="/docs/grouptypes/">Group types</a> (for hele Connect)</li>
+	</ul>
+
+
+
+	<h1 class="page-header">Kull</h1>
+
+	<p>Forslag til identifikator: <code>fc:kull:ntnu.no:2008</code></p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Opptaksår {y}</li>
+	</ul>
+	
+
+
+
+	<h1 class="page-header">Studieprogram</h1>
+
+	<p>Forslag til identifikator: <code>fc:prg:ntnu.no:siving-bygg</code></p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieprogram {y}</li>
+	</ul>
+	
+
+
+
+	<h1 class="page-header">Studieprogram / kull (NY)</h1>
+
+	<p>Forslag til identifikator: <code>fc:prg:ntnu.no:siving-bygg:2009</code></p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieprogram {y}</li>
+		<li class="uninett-ul-li">Opptaksår {z}</li>
+	</ul>
+	
+
+
+
+
+
+	<h1 class="page-header">Emner</h1>
+
+	<p>Forslag til identifikator: <code>fc:emne:ntnu.no:sie5080</code></p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Har tilknytning {z} til emne {y}</li>
+	</ul>
+
+	<p>Mulige tilknytninger er f.eks.</p>
+	
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Student</li>
+		<li class="uninett-ul-li">Faglærer</li>
+	</ul>
+
+
+
+
+
+
+	<h1 class="page-header">Emne / semester (NY)</h1>
+
+	<p>Forslag til identifikator: <code>fc:emne:ntnu.no:sie5080:2015-1</code></p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Har tilknytning {z} til emne {y} for semester {å}</li>
+	</ul>
+
+	<p>Mulige tilknytninger er f.eks.</p>
+	
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Student</li>
+		<li class="uninett-ul-li">Faglærer</li>
+	</ul>
+
+	<p>Viktig at semester kan knyttes til tidsperiode.</p>
+
+
+
+
+
+
+
+
+	<h1 class="page-header">Organisasjon</h1>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Tilhørighet {y} til organisasjon {x}</li>
+	</ul>
+	
+	<p>Vi må vurdere om denne tilfører noe utover det vi kan få fra Feide, eller om den blir overflødig.</p>
+
+
+
+
+</div>
