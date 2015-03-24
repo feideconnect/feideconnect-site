@@ -1,7 +1,7 @@
 ---
 layout: default
 title: FS Gruppper API Spec
-slug: fsconnector
+slug: fsapi
 ---
 
 
@@ -13,7 +13,8 @@ slug: fsconnector
 
 
 
-	<p>....</p>
+	<p>Se også <a href="/fs/datamodel/">Datamodel</a></p>
+
 
 	<ul class="uninett-ul">
 		<li class="uninett-ul-li"><a href="/docs/grouptypes/">...</a></li>
@@ -21,24 +22,170 @@ slug: fsconnector
 
 
 
+
+
+
+	<h2>Autentisering</h2>
+
+	<p>F.eks. HTTP Basic Auth</p>
+
+
+
+
+	<h2>Bruker IDer</h2>
+
+	<p>Feide bruker ID representerers på følgende måte: <code>feide:andreas@uninett.no</code></code>.</p>
+
+	<p>Personnummer (brukes ikke foreløpig) representeres ved: <code>nin:10108012345</code>.</p>
+
+
+
+
+	<h2>Localization</h2>
+
+	<p>Alle tekststrenger som kan være flerspråkelige representeres slik:</p>
+
+Dersom det er utbredt å ha flere språk for dette så foreslår jeg at vi tar det med fra starten av. Vi kan gjøre om det som er tekststrenger i dag, til f.eks:
+
+{% highlight json %}
+{
+	"nb": "Tittel på bokmål",
+	"nn": "Tittel på nynorsk",
+	"en": "Tittel på engelsk"
+}
+{% endhighlight %}
+
+
+
+
 	<h1 class="page-header">Uthenting av grupper for spesifikk bruker</h1>
 
-	<p>sdf</p>
+	<p>Dette kallet vil liste ut alle grupper for en spesifikk bruker.</p>
+
+	<p><b>TODO</b> Default er å liste ut grupper av alle typer. Vi bør legge til muligheten for et query string parameter som kun returnerer grupper av et subset av gruppetypene. Det vil ikke være slik at alle klienter skal kunne se alle gruppene. Alternativt kan denne filtreringen gjøres kun på klienten.</p>
+
+
+{% highlight http %}
+GET /api/user/{USERID}/groups HTTP/1.1
+
+{% endhighlight %}
+
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[
+	{
+		"id": "...",
+		"type": "...",
+		"displayName": "...",
+		"membership": {
+			"...": "..."
+		}
+	},
+	{
+		"id": "...",
+		"type": "...",
+		"displayName": "...",
+		"membership": {
+			"...": "..."
+		}
+	}
+]
+{% endhighlight %}
+
+
+	<p>Dersom bruker ikke finnes: <code>404 Not Found</code></p>
+	<p>Dersom bruker finnes men ikke er med i noen grupper (tom liste):</p>
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[]
+{% endhighlight %}
 
 
 
 
 	<h1 class="page-header">Uthenting av mer informasjon om en gruppe</h1>	
 
-	<p>sdf</p>
+{% highlight HTTP %}
+GET /groups/{GROUPID} HTTP/1.1
+{% endhighlight %}
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8 
+Content-Language: en
+
+{
+	"id": "...",
+	"displayName": "..."
+}
+{% endhighlight %}
+
+	<p>Membership attributten skal aldri være med her, fordi den representerer medlemskapet / koblingen mellom person og gruppe.</p>
+
+
+
+	<h1 class="page-header">Utlisting av medlemmer av en gruppe</h1>	
+
+{% highlight HTTP %}
+GET /groups/{GROUPID}/members HTTP/1.1
+{% endhighlight %}
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8 
+Content-Language: en
+
+[
+	{
+		"userid": "feide:andreas@uninett.no",
+		"name": "Andreas Åkre Solberg",
+		"mail": "andreas.solberg@uninett.no"
+	},
+	{
+		"...": "..."
+	}
+]
+{% endhighlight %}
+
+	<p>Kan være aktuelt med navn, brukerid og epostadresse.</p>
+
+
 
 
 
 
 	<h1 class="page-header">Utlisting og søk på alle grupper hos en institusjon</h1>	
 	
-	<p>sdf</p>
+	<p>List ut alle grupper, basert på søkestreng.</p>
 
+
+{% highlight HTTP %}
+GET /groups?query=telematikk HTTP/1.1
+{% endhighlight %}
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8 
+
+[
+	{
+		"id": "...",
+		"displayName": "..."
+	},
+	{
+		"id": "...",
+		"displayName": "..."
+	}
+]
+{% endhighlight %}
+
+	<p>TODO: Spesifiser litt mer detaljer rundt dette.</p>
 
 
 
