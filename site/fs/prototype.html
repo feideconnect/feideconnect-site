@@ -7,6 +7,9 @@ slug: fsprototype
 
 <div class="bs-docs-section">
 
+	<p><a href="/fs/">« Tilbake til FS startside</a></p>
+
+
 	<h1>Oppsummering fra prototype</h1>
 
 	<p>Her er en samling med notater fra prototypen vi arbeidet med i 2014. </p>
@@ -15,6 +18,46 @@ slug: fsprototype
 		<a href="/media/documents/GruppeAPI-FS-v1-2013-12-02.pdf">
 			<i class="fa fa-file-pdf-o"></i> API for grupper fra FS (pdf)</a>
 	</p>
+
+
+	<hr  />
+
+
+	<p>Fra FS:</p>
+
+<pre>
+1. Uthenting av grupper for en spesifikk bruker
+
+2. Uthenting av mer informasjon om en gruppe
+2.1. Mer informasjon om en gruppe
+2.2. Medlemmer av en gruppe
+
+I hovedsak har jeg definert tre typer brukere (studenter, sensorer og fagpersoner) og fire typer grupper (institusjon, kull, studieprogram, emne). Alle fire gruppene har studentmedlemmer (og vice versa: en student kan være medlem i alle gruppene), mens fagpersoner og sensorer kan kun være medlem av institusjoner og emner (og vice versa).
+
+========= Funksjon 1 og 2.2 ==========
+
+==== Gruppe 1: Studieprogram.  ====
+- Oversikt for/over studentbrukere hentes fra FS-tabellen Studieprogramstudent.
+
+==== Gruppe 2: Emner ====
+- Oversikt for/over studentbrukere hentes fra Studentvurdkombprotokoll, Undmeldinglogg
+- Oversikt for/over fagpersonbrukere hentes fra Undervisningsenhet (personnr/fodselsnr_ansvarligkontakt)
+- Oversikt for/over sensorbrukere hentes fra Vurdkombenhet
+
+==== Gruppe 3: Institusjoner ====
+- Oversikt for/over studentbrukere hentes fra Undmeldinglogg, Studentvurdkombprotokoll, Studieprogramstudent
+- Oversikt for/over fagpersonbrukere hentes fra Undervisningsenhet
+- Oversikt for/over sensorbrukere hentes fra Sensoroppdrag
+
+==== Gruppe 4: Kull ====
+- Oversikt for/over studentbrukere hentes fra Kullklassestudent
+
+Merk: Andre tabeller enn de nevnt over brukes også for å hente ut tilstrekkelig informasjon om brukerne og gruppene, men det er i all hovedsak disse som brukes for å definere hvem som er medlem av gruppene.
+
+========= Funksjon 2.1 ==========
+Å hente ut id og navn på gruppene er ganske rett fram, og er hentet fra hhv. tabellene Studieprogram, Emne, Institusjon og Kullklasse.
+</pre>
+
 
 
 </div>

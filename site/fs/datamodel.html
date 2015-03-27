@@ -1,0 +1,174 @@
+---
+layout: default
+title: FS Groups Datamodel
+slug: fsdatamodel
+
+---
+
+<div class="bs-docs-section">
+
+	<p><a href="/fs/">« Tilbake til FS startside</a></p>
+
+
+	<hr />
+
+
+	<p>Her er en oversikt over gruppetyper.</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="/docs/grouptypes/">Group types</a> (for hele Connect). De endelige skjemaene for gryppe typene skal inn på denne siden etterhvert.</li>
+	</ul>
+
+	<p>Se også <a href="/fs/api/">API / protokoll</a></p>
+
+
+
+	<h1 id="kull" class="page-header">Kull</h1>
+
+	<p>Type ID <code>fc:kull</code></p>
+	<p>Forslag til identifikator: <code>fc:kull:ntnu.no:siving-bygg:2009</code></p>
+
+	<p>Alle studenter innenfor en studieprogram(eller retning?) som er tatt opp et gitt år.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieprogram {y}</li>
+		<li class="uninett-ul-li">Opptaksår {z}</li>
+	</ul>
+	
+
+
+
+	<h1 id="studieprogram" class="page-header">Studieprogram</h1>
+
+	<p>Type ID <code>fc:prg</code></p>
+	<p>Forslag til identifikator: <code>fc:prg:ntnu.no:siving-bygg</code></p>
+
+	<p>Alle studenter innenfor en studieprogram uavhengig av når de er tatt opp.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieprogram {y}</li>
+	</ul>
+	
+
+
+
+	<h1 id="studieretning" class="page-header">Studieretning</h1>
+
+	<p>Type ID <code>fc:str</code></p>
+	<p>Forslag til identifikator: <code>fc:str:ntnu.no:siving-telematikk-sikkerhet</code></p>
+
+	<p>Alle studenter innenfor en studieretning uavhengig av når de er tatt opp.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieretning {y}</li>
+	</ul>
+	
+	<p>I tillegg, så kan disse gruppene kobles til andre grupper:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Studieretning er knyttet til organisasjon</li>
+		<li class="uninett-ul-li">Studieretning er knyttet til studieprogram</li>
+		<li class="uninett-ul-li">Studieretning er knyttet til Sted (fakultet, institutt)</li>
+	</ul>
+
+
+
+
+
+
+	<h1 id="klasse" class="page-header">Klasse</h1>
+
+	<p>Type ID <code>fc:klasse</code></p>
+	<p>Forslag til identifikator: <code>fc:klasse:ntnu.no:siving-telematikk-sikkerhet:1234</code></p>
+
+
+	<p>En klasse brukes kun ved enkelte institusjoner? En klasse er en subgruppering av studieretning/program? Kanskje dette kan være noe ala labgrupper eller lignende?</p>
+
+
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til klasse {y}</li>
+	</ul>
+	
+	<p>I tillegg, så kan disse gruppene kobles til andre grupper:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Klasse er knyttet til organisasjon</li>
+		<li class="uninett-ul-li">Klasse er knyttet til studieprogram</li>
+		<li class="uninett-ul-li">Klasse er knyttet til (kanskje) studieretning</li>
+		<!-- <li class="uninett-ul-li">Studieretning er knyttet til studieprogram</li> -->
+	</ul>
+
+
+
+
+
+
+
+
+
+	<h1 id="emner" class="page-header">Emner</h1>
+
+	<p>Type ID <code>fc:emne</code></p>
+	<p>Forslag til identifikator: <code>fc:emne:ntnu.no:sie5080</code></p>
+
+	<p>Et emne er et fag, som en student kan være undervisningsmeldt i. En faglærer er også tilknyttet emner man underviser i.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Har tilknytning {z} til emne {y}</li>
+	</ul>
+
+	<p>Tilleggsinformasjon:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Hvilket semester er man knyttet til faget.</li>
+	</ul>
+
+
+	<p>Mulige tilknytninger er f.eks.</p>
+	
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Student</li>
+		<li class="uninett-ul-li">Faglærer</li>
+	</ul>
+
+	<p>I tillegg, så kan disse gruppene kobles til andre grupper:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Emne er knyttet til organisasjon</li>
+		<li class="uninett-ul-li">Emne er knyttet til fakultet</li>
+		<li class="uninett-ul-li">Emne er knyttet til institutt</li>
+	</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
