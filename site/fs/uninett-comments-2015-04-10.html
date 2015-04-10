@@ -1,7 +1,7 @@
 ---
 layout: default
 title: UNINETT tilbakemelding 10. april 2015.
-slug: fsdatamodel
+slug: uninett-comments
 
 ---
 
@@ -18,155 +18,161 @@ slug: fsdatamodel
 	<h1 id="kull" class="page-header">Generelle kommentarer</h1>
 
 
-<p>Dersom dere har støtte for både bokmål og nynorsk, kan vi bruke språkkodene <code>nb</code> og <code>nn</code>. Ser at du har brukt <code>no</code> i eksempelet.</p>
+	<h3>Om språkkoder</h3>
 
-<h3>Rolletilknytning</h3>
-
-<p>Jeg ser at dere har brutk en attributt <code>role</code>.</p>
-<p>Vi ønsker å representerer koblingen mellom en <em>gruppe</em> og en <em>person</em> ved hjelp av et <em>medlemskap</em>-objekt, med en attributt <code>basic</code> som allerede er definert. <code>basic</code> kan kun være <code>member</code>,<code>admin</code> eller <code>owner</code>. For FS-gruppene, foreslår jeg at vi mapper alle student-relaterte roller over til <code>member</code> og alle ansatte/faglærer-relaterte roller over til <code>admin</code>. I tillegg definerer vi egne attributter for hver av gruppetypene. F.eks. en egen rolleattributt for tilknytning til studieprogram.</p>
-<ul>
-<li><a href="http://openvoot.org/datamodel/#memberships">Mer om medlemskap-objektet</a></li>
-</ul>
+	<blockquote>Skal vi ha flerspråklig "displayName", slik som i eksempel? Skal vi overføre nynorsk?</blockquote>
 
 
-
-<h2>Studieprogram</h2>
-
-<p>Vi ser på eksempelet:</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span>   <span class="p">:</span> <span class="s2">&quot;fc:prg:fs.no:ITM&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;prg&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;role&quot;</span> <span class="p">:</span> <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;displayName&quot;</span> <span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;no&quot;</span> <span class="p">:</span> <span class="s2">&quot;Masterstudium i informatikk&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;en&quot;</span> <span class="p">:</span> <span class="s2">&quot;Master in Computer Science&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+	<p>Dersom dere har støtte for både bokmål og nynorsk, kan vi bruke språkkodene <code>nb</code> og <code>nn</code>. Ser at du har brukt <code>no</code> i eksempelet.</p>
 
 
-<p>La oss prefikse gruppetypene våre med <code>fc:</code>.</p>
-<p>Se kommentar under <em>generelle kommenaterer</em> når det gjelder språkkoder.</p>
-<p>Hvis vi anvender identifikator på formatet <code>fc:prg:{realm}:{program-kode}</code>, vet vi med sikkerhet at <code>{realm}</code> matcher feide-realm?</p>
-<p>Hvordan håndteres programkode? Er dette noe institusjonen setter selv, og er en identifikator som de kjenner selv og gjenbruker i andre systemer. Er den case-sensitiv? Finnes noen regler for lovlige tegn? Jeg antar den kun er unik innenfor en institusjon, og det gjør ingenting for oss.</p>
-<p>Vi ønsker å eksplisitt angi organisasjonstiøhøringhet med den samme identifikatoren som representerer organisasjonen. Jeg foreslår å representere dette med <code>"parent"  : "fc:org:{realm}"</code>.</p>
-<blockquote>
-<p>Spørsmålet er om man skal bruke "Gyldig til" og ha et felt i gruppeinformasjonen som heter "expires"? Eller om man skal kunne søke på "kun gyldige grupper".</p>
-</blockquote>
-<p><a href="http://openvoot.org/datamodel/#memberships">I medlemskap-objektet</a>, er det definert tre attributter som kan være relevant for dette:</p>
-<ul>
-<li><code>notBefore</code></li>
-<li><code>notActive</code></li>
-<li><code>active</code></li>
-</ul>
-<p>Vi anser en gruppe/gruppetilknytning som inaktiv når den enten har en eksplisitt <code>active: false</code> egenskap, eller at <em>nå</em> ikke er innen gyldighetsperioden. Vi ønsker nok at default valget for klienter som kaller gruppe-API-et vil være å returnere kun aktive grupper, men at man med en opsjon kan velge å eksportere også inaktive grupper. Dette kan jo filtreres på vår side, men det ville vært med effektivt og også kunne representere denne filtreringsopsjonen også på deres side.</p>
-<p>Dersom vi har informasjon om tidspunkt for når en tilknytning ble opprettet til et studieprogram, og når den er forventet og opphøre, så vil vi gjerne populere denne informasjonen.</p>
-<p>De samme tre attributtene kan også brukes på gruppen, f.eks. dersom et studieprogram ble opprettet for første gang 1. august 2005, så kan denne informasjonen legges til.</p>
-<p>Har dere noe annen informasjon om studieprogram som kan være relevant, men som ikke var med i eksempelet? F.eks. URL-er med mer informasjon, eller lignende?</p>
-<p>Har studieprogram noe tilknytning til fakultet og/eller institutt? Isåfall kunne vi også fått inn denne lenken...</p>
-<p>Når det gjelder rolletilknytning til program, så har dere eksempler på <code>STUDENT</code>, <code>FAGANSV</code> og <code>HOVEDLÆRER</code>. Hvor godt er disse verdiene harmonisert på kryss av institusjoner, finnes andre verdier enn disse tre, og er de dokumentert noe sted? Finnes en mapping over til menneskelesbare verdier for disse? f.eks. FAGANS --&gt; Fagansvarlig? Isåfall kan disse verdiene populeres i <code>membership.displayName</code>.</p>
-<p>Her er en oppdatert versjon, med noen av de foreslåtte endringene:</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span>     <span class="p">:</span> <span class="s2">&quot;fc:prg:fs.no:ITM&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;type&quot;</span>   <span class="p">:</span> <span class="s2">&quot;fc:prg&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;parent&quot;</span> <span class="p">:</span> <span class="s2">&quot;fc:org:fs.no&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;basic&quot;</span><span class="p">:</span> <span class="s2">&quot;member&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;prgrole&quot;</span><span class="p">:</span> <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;notBefore&quot;</span><span class="p">:</span> <span class="s2">&quot;2008-08-01T08:00:00Z&quot;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;displayName&quot;</span> <span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;nb&quot;</span> <span class="p">:</span> <span class="s2">&quot;Masterstudium i informatikk&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;en&quot;</span> <span class="p">:</span> <span class="s2">&quot;Master in Computer Science&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+	<h3>Rolletilknytning</h3>
+
+	<p>Jeg ser at dere har brutk en attributt <code>role</code>.</p>
+	<p>Vi ønsker å representerer koblingen mellom en <em>gruppe</em> og en <em>person</em> ved hjelp av et <em>medlemskap</em>-objekt, med en attributt <code>basic</code> som allerede er definert. <code>basic</code> kan kun være <code>member</code>,<code>admin</code> eller <code>owner</code>. For FS-gruppene, foreslår jeg at vi mapper alle student-relaterte roller over til <code>member</code> og alle ansatte/faglærer-relaterte roller over til <code>admin</code>. I tillegg definerer vi egne attributter for hver av gruppetypene. F.eks. en egen rolleattributt for tilknytning til studieprogram.</p>
+	<ul>
+	<li><a href="http://openvoot.org/datamodel/#memberships">Mer om medlemskap-objektet</a></li>
+	</ul>
 
 
-<h2>Kull</h2>
-<p>Endel av kommentarene til studieprogram gjelder også her.</p>
-<p>Identifikatoren ser ut til å være <code>fc:kull:{realm}:{programkode}:{semester for opptak}</code>.</p>
-<p>Husker jeg riktig om det er semester for opptak, eller var det semester for forventet avgang?</p>
-<p>Hvordan er semesterkoden standardisert, altså <code>2014H</code>. De som har flere enn to semester, hvordan koder de dette? Inneholder den alltid årstall?</p>
-<p>Tidsavgrensningen her vil nok være den samme som for studieprogram. Med unntak av dersom man blir justert opp/ned i kullene.</p>
-<p>En <code>parent</code> verdi som peker på studieprogram identifikatoren virker fornuftig.</p>
-<p>Prefikse gruppetypene våre får vi <code>fc:kull</code>.</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;fc:kull:fs.no:TS-MN1:2014H&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="s2">&quot;fc:prg:fs.no:TS-MN1&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;kull&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;basic&quot;</span><span class="p">:</span> <span class="s2">&quot;member&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;prgrole&quot;</span><span class="p">:</span> <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;notBefore&quot;</span><span class="p">:</span> <span class="s2">&quot;2008-08-01T08:00:00Z&quot;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;nb&quot;</span><span class="p">:</span><span class="s2">&quot;MN Integrert Master. 2014 Høst&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;en&quot;</span><span class="p">:</span><span class="s2">&quot;MN Master. 2014 Fall&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+
+	<h2>Studieprogram</h2>
+
+	<p>Vi ser på eksempelet:</p>
+	<div class="codehilite"><pre><span class="p">{</span>
+	    <span class="nt">&quot;id&quot;</span>   <span class="p">:</span> <span class="s2">&quot;fc:prg:fs.no:ITM&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;prg&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;role&quot;</span> <span class="p">:</span> <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;displayName&quot;</span> <span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;no&quot;</span> <span class="p">:</span> <span class="s2">&quot;Masterstudium i informatikk&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;en&quot;</span> <span class="p">:</span> <span class="s2">&quot;Master in Computer Science&quot;</span>
+	    <span class="p">}</span>
+	<span class="p">}</span>
+	</pre></div>
 
 
-<h2>Klasse</h2>
-<p>Endel av kommentarene til studieprogram gjelder også her.</p>
-<p>En <code>parent</code> verdi som peker på kull identifikatoren virker fornuftig.</p>
-<h2>Emner</h2>
-<p>Endel av kommentarene til studieprogram gjelder også her.</p>
-<p>Hva vet vi om emnekodene hos institusjonene? Standardisering mellom institusjonene. Og innad på institusjonene, brukes de samme kodene overalt, eller finnes det mange forskjellige koder?</p>
-<p>Er det noe nasjonalt arbeid rundt sammenknyttning av emner på et nivå over, f.eks. å knytte "Matematikk M101" til "Matematikkemner"?</p>
-<p>Det kunne vært interessant om vi har mere informasjon/dato om emnene... F.eks. beskrivelse, url med mer info, osv.</p>
-<p>Jeg foreslår at vi setter en <code>parent</code> lenke til organisasjon.</p>
-<p>Jeg foreslår at vi tar med tilknytning til semesterperioden via <code>notBefore</code> og <code>notAfter</code>, slik at kun de nåværende fagene blir med i default kallet, men at man kan få ut alle historiske fag også om man ber om også inaktive grupper.</p>
-<p>Har studieprogram noe tilknytning til fakultet og/eller institutt? Isåfall kunne vi også fått inn denne lenken...</p>
-<p>Jeg synes vi skal bruke den samme gruppetypen både for undervisningsmelding og eksamensmelding, slik du har foreslått.</p>
-<p>Er det slik at en student kan være knyttet til et fag på disse måtene:</p>
-<ul>
-<li>kun undervisning,</li>
-<li>kun eksamen eller</li>
-<li>både undervisning og eksamen?</li>
-</ul>
-<p>Isåfall fåreslår jeg at vi får med dette som boolske egenskaper på egenskap-objektet, slik:</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;undervisning&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nt">&quot;eksamen&quot;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+	<p>La oss prefikse gruppetypene våre med <code>fc:</code>.</p>
+	<p>Se kommentar under <em>generelle kommenaterer</em> når det gjelder språkkoder.</p>
+	<p>Hvis vi anvender identifikator på formatet <code>fc:prg:{realm}:{program-kode}</code>, vet vi med sikkerhet at <code>{realm}</code> matcher feide-realm?</p>
+	<p>Hvordan håndteres programkode? Er dette noe institusjonen setter selv, og er en identifikator som de kjenner selv og gjenbruker i andre systemer. Er den case-sensitiv? Finnes noen regler for lovlige tegn? Jeg antar den kun er unik innenfor en institusjon, og det gjør ingenting for oss.</p>
+	<p>Vi ønsker å eksplisitt angi organisasjonstiøhøringhet med den samme identifikatoren som representerer organisasjonen. Jeg foreslår å representere dette med <code>"parent"  : "fc:org:{realm}"</code>.</p>
+	<blockquote>
+	<p>Spørsmålet er om man skal bruke "Gyldig til" og ha et felt i gruppeinformasjonen som heter "expires"? Eller om man skal kunne søke på "kun gyldige grupper".</p>
+	</blockquote>
+	<p><a href="http://openvoot.org/datamodel/#memberships">I medlemskap-objektet</a>, er det definert tre attributter som kan være relevant for dette:</p>
+	<ul>
+	<li><code>notBefore</code></li>
+	<li><code>notActive</code></li>
+	<li><code>active</code></li>
+	</ul>
+	<p>Vi anser en gruppe/gruppetilknytning som inaktiv når den enten har en eksplisitt <code>active: false</code> egenskap, eller at <em>nå</em> ikke er innen gyldighetsperioden. Vi ønsker nok at default valget for klienter som kaller gruppe-API-et vil være å returnere kun aktive grupper, men at man med en opsjon kan velge å eksportere også inaktive grupper. Dette kan jo filtreres på vår side, men det ville vært med effektivt og også kunne representere denne filtreringsopsjonen også på deres side.</p>
+	<p>Dersom vi har informasjon om tidspunkt for når en tilknytning ble opprettet til et studieprogram, og når den er forventet og opphøre, så vil vi gjerne populere denne informasjonen.</p>
+	<p>De samme tre attributtene kan også brukes på gruppen, f.eks. dersom et studieprogram ble opprettet for første gang 1. august 2005, så kan denne informasjonen legges til.</p>
+	<p>Har dere noe annen informasjon om studieprogram som kan være relevant, men som ikke var med i eksempelet? F.eks. URL-er med mer informasjon, eller lignende?</p>
+	<p>Har studieprogram noe tilknytning til fakultet og/eller institutt? Isåfall kunne vi også fått inn denne lenken...</p>
+	<p>Når det gjelder rolletilknytning til program, så har dere eksempler på <code>STUDENT</code>, <code>FAGANSV</code> og <code>HOVEDLÆRER</code>. Hvor godt er disse verdiene harmonisert på kryss av institusjoner, finnes andre verdier enn disse tre, og er de dokumentert noe sted? Finnes en mapping over til menneskelesbare verdier for disse? f.eks. FAGANS --&gt; Fagansvarlig? Isåfall kan disse verdiene populeres i <code>membership.displayName</code>.</p>
+	<p>Her er en oppdatert versjon, med noen av de foreslåtte endringene:</p>
+	<div class="codehilite"><pre><span class="p">{</span>
+	    <span class="nt">&quot;id&quot;</span>     <span class="p">:</span> <span class="s2">&quot;fc:prg:fs.no:ITM&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;type&quot;</span>   <span class="p">:</span> <span class="s2">&quot;fc:prg&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;parent&quot;</span> <span class="p">:</span> <span class="s2">&quot;fc:org:fs.no&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;basic&quot;</span><span class="p">:</span> <span class="s2">&quot;member&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;prgrole&quot;</span><span class="p">:</span> <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;notBefore&quot;</span><span class="p">:</span> <span class="s2">&quot;2008-08-01T08:00:00Z&quot;</span>
+	    <span class="p">},</span>
+	    <span class="nt">&quot;displayName&quot;</span> <span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;nb&quot;</span> <span class="p">:</span> <span class="s2">&quot;Masterstudium i informatikk&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;en&quot;</span> <span class="p">:</span> <span class="s2">&quot;Master in Computer Science&quot;</span>
+	    <span class="p">}</span>
+	<span class="p">}</span>
+	</pre></div>
 
 
-<p>Komplett eksempel:</p>
-<div class="codehilite"><pre><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span>   <span class="p">:</span> <span class="s2">&quot;fc:emne:fs.no:EXPHIL-1&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;fc:emne&quot;</span><span class="p">,</span>
-    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;basic&quot;</span>   <span class="p">:</span>  <span class="s2">&quot;member&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;emnerole&quot;</span> <span class="p">:</span>  <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;displayName&quot;</span> <span class="p">:</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;notBefore&quot;</span>   <span class="p">:</span> <span class="s2">&quot;2008-08-01T08:00:00Z&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;undervisning&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="nt">&quot;eksamen&quot;</span>     <span class="p">:</span> <span class="kc">true</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;no&quot;</span><span class="p">:</span><span class="s2">&quot;Eksamen philosofikum&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;en&quot;</span><span class="p">:</span><span class="s2">&quot;Philosophy entry level&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+	<h2>Kull</h2>
+	<p>Endel av kommentarene til studieprogram gjelder også her.</p>
+	<p>Identifikatoren ser ut til å være <code>fc:kull:{realm}:{programkode}:{semester for opptak}</code>.</p>
+	<p>Husker jeg riktig om det er semester for opptak, eller var det semester for forventet avgang?</p>
+	<p>Hvordan er semesterkoden standardisert, altså <code>2014H</code>. De som har flere enn to semester, hvordan koder de dette? Inneholder den alltid årstall?</p>
+	<p>Tidsavgrensningen her vil nok være den samme som for studieprogram. Med unntak av dersom man blir justert opp/ned i kullene.</p>
+	<p>En <code>parent</code> verdi som peker på studieprogram identifikatoren virker fornuftig.</p>
+	<p>Prefikse gruppetypene våre får vi <code>fc:kull</code>.</p>
+	<div class="codehilite"><pre><span class="p">{</span>
+	    <span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;fc:kull:fs.no:TS-MN1:2014H&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;parent&quot;</span><span class="p">:</span><span class="s2">&quot;fc:prg:fs.no:TS-MN1&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;kull&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;basic&quot;</span><span class="p">:</span> <span class="s2">&quot;member&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;prgrole&quot;</span><span class="p">:</span> <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;notBefore&quot;</span><span class="p">:</span> <span class="s2">&quot;2008-08-01T08:00:00Z&quot;</span>
+	    <span class="p">},</span>
+	    <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;nb&quot;</span><span class="p">:</span><span class="s2">&quot;MN Integrert Master. 2014 Høst&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;en&quot;</span><span class="p">:</span><span class="s2">&quot;MN Master. 2014 Fall&quot;</span>
+	    <span class="p">}</span>
+	<span class="p">}</span>
+	</pre></div>
 
 
-<h2>Studieretning</h2>
-<p>Jeg tenkte at studieretning var en spesialisering av studieprogram, men det er kanskje ikke tilfelle?</p>
-<p>Hvis det er slik, så vil man kunne sette en <code>parent</code> som peker til studieprogram identifikatoren.</p>
-<h2>Om rolletyper</h2>
-<p>Jeg ser at det er de samme rolletypene som går igjen i alle gruppetypene, hvis dette stemmer, og det er nøykatig den samme rollerepresentasjonen vi tenker på, så bør vi gjenbruke denne mellom gruppetypene studieprogram, emne osv.</p>
-<p>Altså, at vi bruker f.eks. <code>fsrole</code> istedenfor <code>prgrole</code>, <code>emnerole</code> osv.</p>
-<p>I den representasjonen vi har valgt nå, så har vi ikke tatt høyde for at en person kan ha flere rolletilknytninger til samme gruppe. Er dette noe vi bør gjøre? For eksempel kan en student også være kontaktperson eller noe annet for samme fag? </p>
-<h2>Neste steg</h2>
-<p>Avventer kommentarer fra dere igjen på dette. Har lagt inn endel spørsmål og forslag. Når vi er enige, så oppdaterer jeg doumentet der vi begynte å beskrive gruppetypene.</p>
+	<h2>Klasse</h2>
+	<p>Endel av kommentarene til studieprogram gjelder også her.</p>
+	<p>En <code>parent</code> verdi som peker på kull identifikatoren virker fornuftig.</p>
+	<h2>Emner</h2>
+	<p>Endel av kommentarene til studieprogram gjelder også her.</p>
+	<p>Hva vet vi om emnekodene hos institusjonene? Standardisering mellom institusjonene. Og innad på institusjonene, brukes de samme kodene overalt, eller finnes det mange forskjellige koder?</p>
+	<p>Er det noe nasjonalt arbeid rundt sammenknyttning av emner på et nivå over, f.eks. å knytte "Matematikk M101" til "Matematikkemner"?</p>
+	<p>Det kunne vært interessant om vi har mere informasjon/dato om emnene... F.eks. beskrivelse, url med mer info, osv.</p>
+	<p>Jeg foreslår at vi setter en <code>parent</code> lenke til organisasjon.</p>
+	<p>Jeg foreslår at vi tar med tilknytning til semesterperioden via <code>notBefore</code> og <code>notAfter</code>, slik at kun de nåværende fagene blir med i default kallet, men at man kan få ut alle historiske fag også om man ber om også inaktive grupper.</p>
+	<p>Har studieprogram noe tilknytning til fakultet og/eller institutt? Isåfall kunne vi også fått inn denne lenken...</p>
+	<p>Jeg synes vi skal bruke den samme gruppetypen både for undervisningsmelding og eksamensmelding, slik du har foreslått.</p>
+	<p>Er det slik at en student kan være knyttet til et fag på disse måtene:</p>
+	<ul>
+	<li>kun undervisning,</li>
+	<li>kun eksamen eller</li>
+	<li>både undervisning og eksamen?</li>
+	</ul>
+	<p>Isåfall fåreslår jeg at vi får med dette som boolske egenskaper på egenskap-objektet, slik:</p>
+	<div class="codehilite"><pre><span class="p">{</span>
+	    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;undervisning&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+	        <span class="nt">&quot;eksamen&quot;</span><span class="p">:</span> <span class="kc">true</span>
+	    <span class="p">}</span>
+	<span class="p">}</span>
+	</pre></div>
+
+
+	<p>Komplett eksempel:</p>
+	<div class="codehilite"><pre><span class="p">{</span>
+	    <span class="nt">&quot;id&quot;</span>   <span class="p">:</span> <span class="s2">&quot;fc:emne:fs.no:EXPHIL-1&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;type&quot;</span> <span class="p">:</span> <span class="s2">&quot;fc:emne&quot;</span><span class="p">,</span>
+	    <span class="nt">&quot;membership&quot;</span><span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;basic&quot;</span>   <span class="p">:</span>  <span class="s2">&quot;member&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;emnerole&quot;</span> <span class="p">:</span>  <span class="s2">&quot;STUDENT&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;displayName&quot;</span> <span class="p">:</span> <span class="s2">&quot;Student&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;notBefore&quot;</span>   <span class="p">:</span> <span class="s2">&quot;2008-08-01T08:00:00Z&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;undervisning&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+	        <span class="nt">&quot;eksamen&quot;</span>     <span class="p">:</span> <span class="kc">true</span>
+	    <span class="p">},</span>
+	    <span class="nt">&quot;displayName&quot;</span><span class="p">:</span> <span class="p">{</span>
+	        <span class="nt">&quot;no&quot;</span><span class="p">:</span><span class="s2">&quot;Eksamen philosofikum&quot;</span><span class="p">,</span>
+	        <span class="nt">&quot;en&quot;</span><span class="p">:</span><span class="s2">&quot;Philosophy entry level&quot;</span>
+	    <span class="p">}</span>
+	<span class="p">}</span>
+	</pre></div>
+
+
+	<h2>Studieretning</h2>
+	<p>Jeg tenkte at studieretning var en spesialisering av studieprogram, men det er kanskje ikke tilfelle?</p>
+	<p>Hvis det er slik, så vil man kunne sette en <code>parent</code> som peker til studieprogram identifikatoren.</p>
+	<h2>Om rolletyper</h2>
+	<p>Jeg ser at det er de samme rolletypene som går igjen i alle gruppetypene, hvis dette stemmer, og det er nøykatig den samme rollerepresentasjonen vi tenker på, så bør vi gjenbruke denne mellom gruppetypene studieprogram, emne osv.</p>
+	<p>Altså, at vi bruker f.eks. <code>fsrole</code> istedenfor <code>prgrole</code>, <code>emnerole</code> osv.</p>
+	<p>I den representasjonen vi har valgt nå, så har vi ikke tatt høyde for at en person kan ha flere rolletilknytninger til samme gruppe. Er dette noe vi bør gjøre? For eksempel kan en student også være kontaktperson eller noe annet for samme fag? </p>
+	<h2>Neste steg</h2>
+	<p>Avventer kommentarer fra dere igjen på dette. Har lagt inn endel spørsmål og forslag. Når vi er enige, så oppdaterer jeg doumentet der vi begynte å beskrive gruppetypene.</p>
 
 
 </div>
