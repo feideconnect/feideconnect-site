@@ -8,21 +8,83 @@ slug: personvern
 <div class="container bs-docs-container">
 
 	<div class="row">
-		<div class="col-md-5" role="main">
+		<div class="col-md-12" role="main">
 
 
 
 			<div class="bs-docs-section">
 
-				<h3>Personvern</h3>
+				<h3>Personvern - problemstilling og skisse til løsninger</h3>
+				<p>Da Connect-prosjektet ble startet av UNINETT høsten 2014, så vi at problemstillinger rundt personvern var noe av det mest kritiske å få løst. UNINETT har inngått en samarbeidsavtale med <a href="http://www.jus.uio.no/ifp/om/organisasjon/seri/">Senter for rettsinformatikk (SERI)</a>, og gjennom denne avtalen engasjerte vi Tommy Tranvik (forsker ved SERI) til å se nærmere på disse problemstillingene. Vi deler her de vurderinger som er foretatt rundt personvern og Connect. 
 
+				<h4>Utgangspunktet</h4>
+				<p>Bruken av Connect innebærer elektronisk behandling av opplysninger om sluttbrukerne (personopplysninger).  Connect må derfor utformes slik at de relevante kravene som stilles til elektronisk behandling av personopplysninger i personopplysningsloven med forskrift ivaretas.</p> 
+				<p>Bruken av Connect kan beskrives i to bruksscenarier. Scenariene reiser ulike personvernrettslige problemstillinger som krever noe forskjellige løsninger. Løsningene kan likevel gjenbrukes på tvers av scenarier (men med enkelte modifikasjoner).</p>
+				<p>De to bruksscenariene er:</p>
+				<ol>
+					<li><em>Selvvalgt bruk</em> – sluttbrukerne (studenter, elever, ansatte, osv.) bestemmer selv (og på eget initiativ) hvilke eksterne tjenester tilkoblet Connect de ønsker å benytte. Vertsorganisasjonene forplikter seg til å fasilitere selvvalgt bruk.</li>
+					<li><em>«Obligatorisk» bruk</em> – vertsorganisasjonene bestemmer hvilke eksterne tjenester tilkoblet Connect som sluttbrukerne skal benytte.</li> 
+				</ol>
 				
-				<p>...</p>
+				<p>I begge bruksscenariene er det fire aktører. De har ulike roller – og derfor ulike rettslige plikter og rettigheter – avhengig av hvilket scenario det er snakk om.</p>
+				<p>De fire aktørene er:</p>
+				<ol>
+					<li>Sluttbrukerne (ansatte, studenter, elever, osv.).</li>
+					<li>Vertsorganisasjoner (institusjoner, skoleeiere).</li>
+					<li>Connect driftsansvarlig (UNINETT med underleverandører).</li>
+					<li>Ekstern tjenesteleverandør (med eventuelle underleverandører).</li>
+				</ol>    
 
-				<p><a href="/">› Les mer om Feide Connect</a></p>
+				<h4>Bruksscenario 1: Selvvalgt bruk </h4>
+				<p>I dette bruksscenariet har sluttbrukerne selvstendig råderett over opplysninger om dem selv som anvendes til autentiseringsformål i Connect: de bestemmer om sluttbrukeropplysninger skal benyttes til innlogging på eksterne tjenester som de ønsker å benytte. Sluttbrukerne velger også selv hvilke eksterne tjenester de ønsker å anvende, og må selv vurdere hvordan leverandørene ivaretar hensynet til personvern i sine tjenester. </p>
+				<p>I dette bruksscenariet forplikter vertsorganisasjonene seg til å legge til rette for at sluttbrukerne kan utøve selvstendige råderett egne opplysningene.</p>
+				<p>Selvvalgt bruk betyr at:</p>
+				<ul>
+					<li>Vertsorganisasjonene er rettslig ansvarlige (behandlingsansvarlige) for sluttbrukeropplysninger som de behandler i sine kildesystemer.</li>
+					<li>Connect driftsansvarlig er rettslig ansvarlig (behandlingsansvarlig) for (a) sluttbrukeropplysninger som de mottar fra vertsorganisasjonene og (b) opplysninger om sluttbrukerne som genereres hos Connect driftsansvarlig ved administrasjon og anvendelse av tjenesten.</li>
+					<li>Ekstern tjenesteleverandør er rettslig ansvarlig (behandlingsansvarlig) for (a) sluttbrukeropplysninger som de mottar om brukerne ved innlogging og (b) alle andre opplysninger om sluttbrukerne som genereres gjennom administrasjon og anvendelse av tjenesten.</li>
+				</ul>
+				<p><em>Vertsorganisasjonene</em> trenger en lovlig grunn for å utlevere sluttbrukeropplysninger fra sine kildesystemer til Connect driftsansvarlig og ekstern tjenesteleverandør. Behandlingen av sluttbrukeropplysninger skal meldes til Datatilsynet før Connect settes i ordinær drift. </p>
+				<p><em>Connect driftsansvarlig</em> trenger en lovlig grunn for (a) mottak av sluttbrukeropplysninger fra vertsorganisasjonene, (b) behandlingen av alle opplysninger om sluttbrukerne som skjer i Connect og (c) utlevering av sluttbrukeropplysninger til ekstern tjenesteleverandør. Behandlingen av sluttbrukeropplysninger skal medles til Datatilsynet før Connect settes i ordinær drift.</p>
+				<p><em>Ekstern tjenesteleverandør</em> trenger en lovlig grunn for (a) mottak av sluttbrukeropplysninger og (b) all annen behandling av opplysninger om sluttbrukerne som skjer i tjenesten. Behandlingen av sluttbrukeropplysninger skal medles til Datatilsynet før tjenesten settes i drift (det må søkes om konsesjon fra Datatilsynet for tjenester som ønsker å behandle sensitive personopplysninger).</p>
+				<p>Den aktuelle lovlige grunnen i dette bruksscenariet – både for vertsorganisasjon, Connect driftsansvarlig og ekstern tjenesteleverandør – er samtykke fra sluttbrukerne.</p> 
+				<p>Et samtykke fra sluttbrukerne skal være informert, frivillig og uttrykkelig. </p>
+				<p>Vertsorganisasjonene/Connect driftsansvarlig bør definere en nedre aldersgrense for hvilke brukere som har samtykkekompetanse (kan gi eller nekte samtykke). For elever i grunnopplæringen uten samtykkekompetanse må foreldre/foresatte eller verge samtykke på elevenes vegne. </p>
+				<p>Et samtykke kan når som helst trekkes tilbake av sluttbrukerne (eller av foreldre/foresatte eller verge for sluttbrukere uten selvstendig samtykkekompetanse). Dersom det skjer, må opplysninger om de aktuelle sluttbrukerne slettes hos Connect driftsansvarlig og ekstern tjenesteleverandør, men ikke hos vertsorganisasjonene.  </p>
+				<p>Sluttbrukerne har visse rettigheter etter personopplysningsloven. Det er de rettslig ansvarlige (vertsorganisasjonene, Connect driftsansvarlig og ekstern tjenesteleverandør) som er pålagt å ivareta sluttbrukernes rettigheter. </p>
+				<p>Sluttbrukerrettigheter som er særlig aktuelle i denne sammenheng er:</p>
+				<ol>
+					<li>Retten til informasjon om behandling og sikring av personopplysninger.</li>
+					<li>Retten til innsyn i egne opplysninger.</li>
+					<li>Retten til retting eller sletting av egne opplysninger.</li>
+				</ol>
+				
+				<h4>Bruksscenario 2: «Obligatorisk» bruk</h4>
+				<p>I dette bruksscenariet er det vertsorganisasjonene som bestemmer at</p>
+				<ol>
+					<li>alle eller grupper av sluttbrukere skal anvende ekstern tjenesteleverandør eller </li>
+					<li>eksterne tjenester som vertsorganisasjonene bestiller fra og tilbyr egne sluttbrukere.</li>
+				</ol>
+				
+				<p>Obligatorisk bruk betyr at:</p>
+				<ul>
+					<li><em>Vertsorganisasjonene</em> er rettslig ansvarlige (behandlingsansvarlige) for all behandling av sluttbrukeropplysninger hos seg selv og i hele behandlingskjeden, det vil si hos Connect driftsansvarlig, eksterne tjenesteleverandører og eventuelle underleverandører.</li>
+					<li><em>Connect driftsansvarlig</em> er databehandler for vertsorganisasjonene.</li>
+					<li><em>Ekstern tjenesteleverandør</em> er databehandler for vertsorganisasjonene.</li>
+				</ul>
+				<p>Vertsorganisasjonene må skaffe seg en lovlig grunn for å anvende Connect og ekstern tjenesteleverandør til behandling av sluttbrukeropplysninger. </p>
+				<p>Både for universiteter, høyskoler og skoleeiere i grunnopplæringen kan et informert, frivillig og uttrykkelig samtykke fra sluttbrukerne trolig være problematisk (fordi en del «obligatorisk» bruk vil gjøre det vanskelig å oppfylle kravet til at samtykke skal avgis frivillig). Dermed må behandlingen av personopplysninger basrer seg på andre lovlige grunner nevnt i personopplysningsloven, for eksempel forholdsmessighet.</p>
+				<p>Vertsorganisasjonene må melde behandlingen av sluttbrukeropplysninger til Datatilsynet før Connect tas i bruk, inkludert bruken av databehandlere (Connect driftsansvarlig og ekstern tjenesteleverandør).</p>
+				<p>Connect driftsansvarlig og ekstern tjenesteleverandør trenger ikke å skaffe seg lovlig grunn for sin behandling av opplysninger om sluttbrukerne. Dette fordi disse aktørene behandler sluttbrukeropplysninger på vegne av (eller etter bestilling fra) vertsorganisasjonene. De trenger heller ikke å melde sin behandling av sluttbrukeropplysninger til Datatilsynet. </p>
+				<p>Hver enkelt vertsorganisasjon må inngå en databehandleravtale med Connect driftsansvarlig. Tilsvarende avtaler må inngås med hver enkelt eksterne tjenesteleverandør som vertsorganisasjonene har bestemt seg for å benytte.</p>
+				<p>Databehandleravtalene skal inneholde vertsorganisasjonenes instrukser til Connect driftansvarlig og ekstern tjenesteleverandør, blant annet hva de kan anvende sluttbrukeropplysningene til, hvordan sluttbrukernes rettigheter skal ivaretas (innsyn, retting og sletting) og hvordan opplysningene skal sikres mot uautorisert tilgang, eksponering, endring, skade eller tap.</p>
+				<p>Dersom vertsorganisasjonene anvender eksterne tjenesteleverandører som overfører og behandler sluttbrukeropplysninger i land utenfor EØS-området (tredjeland), må vertsorganisasjonene vanligvis ha særskilt lovlig grunn til dette, for eksempel at det inngås en spesiell type databehandleravtale med tjenesteleverandøren (EUs standardkontrakt for overføring av personopplysninger til databehandlere i tredjeland ).</p>
 
+			
 				<p>Denne siden er lenket inn fra Feide Connect sin samtykkeside.</p>
+				<p><a href="/">› Les mer om Connect</a></p>
 
+			
 			</div>
 
 
