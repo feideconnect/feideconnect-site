@@ -11,17 +11,32 @@ slug: prepilot
 	<h1 id="org" class="page-header">Getting started for developers</h1>
 
 
+	<p>All requests, questions, issue reporting etc. should be directed through the Connect Pilot Slack communication room. </p>
+
 </div>
 
 
+
+
+
 <div class="bs-docs-section">
-	<h2 id="clients" class="page-header">Getting started with Service Providers / Applications</h1>
+	<h2 id="auth" class="page-header">Authentication as an end user</h2>
+
+
+	<p>Before the educational institution you belong to is successfully connected to the Connect platform, you may choose to login using <strong>OpenIdP</strong> in the login provider selection interface.</p>
+
+</div>
+
+
+
+
+<div class="bs-docs-section">
+	<h2 id="clients" class="page-header">Getting started with Service Providers / Applications</h2>
 
 
 	<p>As an service provider, you may register a client which implement OAuth Consumer functionality.</p>
 
 	<p>Learn <a target="_blank" href="http://oauth.net">about OAuth</a> before moving on.</p>
-
 
 	<p>Register a client using the Developer Dashboard. When registering a client, you need to know the OAuth redirect URI endpoint of your application.</p>
 
@@ -31,20 +46,81 @@ slug: prepilot
 
 
 	<ul class="uninett-ul">
-		<li class="uninett-ul-li"><a target="_blank" href="https://developers.feideconnect.no/">Developer Dashboard</a></li>
-		<li class="uninett-ul-li"><a target="_blank" href="/docs/gettingstarted/">Getting started with OAuth using UNINETT Connect</a></li>
+		<li class="uninett-ul-li"><a target="_blank" href="http://developers.feideconnect.no/#!/">Developer Dashboard</a></li>
+		<li class="uninett-ul-li"><a target="_blank" href="/docs/gettingstarted/">Getting started with OAuth using UNINETT Connect</a> (not entirely up to date)</li>
 	</ul>
 
 	<p>When you have successfully registered a client, you need to know the OAuth endpoint of Connect, in order to configure your application:</p>
 
 	
 	<dl>
-		<dt>Blah</dt>
-		<dd>Test</dd>
+		<dt>Connect OAuth Provider Authorization endpoint</dt>
+		<dd><code>https://auth.feideconnect.no/oauth/authorization</code></dd>
+
+		<dt>Connect OAuth Provider Token endpoint</dt>
+		<dd><code>https://auth.feideconnect.no/oauth/token</code></dd>
 	</dl>
 
+	<p><a href="https://auth.feideconnect.no/oauth/config">OAuth configuration JSON endpoint</a></p>
 
 
+	<h3>User information</h3>
+
+	<p>With the obtained OAuth token, a request to the user info endpoint will give information about the authenticated user.</p>
+
+
+	<p>The set of userdata you obtain, will depend on which scopes you have requested. Scopes is managed through the developer dashboard.</p>
+
+	<p>To get the basic information about a user, you might start with requesting the <code>userinfo</code>, <code>userinfo-photo</code>, <code>userinfo-mail</code>, <code>userinfo-feide</code> scopes.</p>
+
+	<p>Example</p>
+
+{% highlight http %}
+GET https://auth.dev.feideconnect.no/userinfo HTTP/1.1
+Host: auth.feideconnect.no
+Authorization: Bearer 6c443f1e-7052-432c-1234-abc2644de4ab
+{% endhighlight %}
+
+
+{% highlight http %}
+HTTP/1.1 200 OK
+Content-Type:application/json; charset=utf-8
+
+{
+    "user": {
+        "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+        "userid_sec": [
+            "feide:andreas@uninett.no"
+        ],
+        "name": "Andreas Åkre Solberg",
+        "email": "andreas.solberg@uninett.no",
+        "profilephoto": "p:a3019954-902f-45a3-b4ee-bca7b48ab507"
+    },
+    "audience": "cf00cea5-fc20-4c90-8515-144159322bed"
+}
+{% endhighlight %}
+
+
+	<p>The user profile photo is available on the URL including the <code>profilephoto</code> value from the userinfo endpoint: </p>
+
+	<pre><code>https://auth.feideconnect.no/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507</code></pre>
+
+
+	<p>Most Connect APIs support CORS, including the userinfo API, to use with client side applications.</p>
+
+
+	<h3>Peoplesearch</h3>
+
+	<p>TBA</p>
+
+	<h3>Groups</h3>
+
+	<p>TBA</p>
+
+
+	<h3>OpenID Connect</h3>
+
+	<p>In development, will be available later. Let us know if you are interested in this part.</p>
 
 
 </div>
@@ -52,26 +128,80 @@ slug: prepilot
 
 
 <div class="bs-docs-section">
-	<h2 id="apigks" class="page-header">Getting started with API Gatekeeper</h1>
+	<h2 id="apigks" class="page-header">Getting started with API Gatekeeper</h2>
 
+	<p>The API Gatekeeper implements an API Proxy offloading you as an API owner from functionalities like authentication and authorization.</p>
 
-	<p>Register an API Gatekeeper using the Developer Dashboard</p>
+	<p>Let us say you operate an API at <code>http://api.example.org</code>.</p>
+
+	<p>First, register an API Gatekeeper using the Developer Dashboard</p>
 
 	<ul class="uninett-ul">
-		<li class="uninett-ul-li"><a target="_blank" href="https://developers.feideconnect.no/">Developer Dashboard</a></li>
+		<li class="uninett-ul-li"><a target="_blank" href="http://developers.feideconnect.no/#!/">Developer Dashboard</a></li>
 	</ul>
 
 	<p>You would need to register the URL of your API endpoint</p>
+
+
 
 	<div class="bs-callout bs-callout-warning"><strong>HTTP or HTTPS</strong> The Connect pilot will allow you to register API endpoints that are not secured with HTTPs, although not reccomended. 
 	A production enviornment with Connect, would probably forbid registering unsecured endpoints.
 	</div>
 
+	<p>Example of registering this API Gatekeeper using Developer Dashboard:</p>
+
+	<p><img class="img-thumbnail" src="../../media/screenshots/docs/prepilot-apigk.png" alt="">	</p>
+
+
+	<p>In the developer dashboard, you see a <strong>trust</strong> pane for your API Gatekeeper, where you see a password that API Gatekeeper will use when accessing your API.</p>
+
+	<p>The default authentication type of your API, will be that API gatekeeper uses HTTP Basic Authentication to authenticate.</p>
+
+	<p>In the <strong>Scopes</strong>-pane, you setup the accept policy of the basic scope, and have the ability to add subscopes.</p>
+
+	<p>Third party clients that wants to access your API through the API Gatkeeper, register a regular client on Connect, and then request access to your API under third party APIs. The third party client will then use OAuth to connect to your API through the API Gatekeeper. You choose the hostname yourself.</p>
+
+	<p>A request like this:</p>
+
+
+{% highlight http %}
+GET /foo/bar HTTP/1.1
+Host: demoapi123.gk.feideconnect.no
+Authorization: Bearer 12344567-1234-4998-1234-abbabababab
+{% endhighlight %}
+
+	<p>is passed on to your API like this:</p>
+
+{% highlight http %}
+GET /foo/bar HTTP/1.1
+Host: api.example.org
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X_FEIDECONNECT_CLIENTID: 42b0c02e-0dda-4882-9da0-882a4b1abad6
+X_FEIDECONNECT_USERID: 76a7a061-3c55-430d-8ee0-6f82ec42501f
+X_FEIDECONNECT_USERID_SEC: feide:andreas@uninett.no
+{% endhighlight %}
+
+
+
+	<p>The client id is the client identifer of the requesting client.</p>
+	<p>The userid is the authenticated end users Connect user identifier.</p>
+	<p>UserID_sec is a list of secondary user keys, such as Feide ID and more. It is comma separated.</p>
+
+	<p>TODO: Fully document all the API Gatkeeper headers.</p>
+
+
+
+
+
+
+
+
+
 </div>
 
 
 <div class="bs-docs-section">
-	<h2 id="inst" class="page-header">Connecting your university / school</h1>
+	<h2 id="inst" class="page-header">Connecting your university / school</h2>
 
 
 	<p>Get in touch with us to discuss the details.</p>
