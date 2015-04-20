@@ -14,8 +14,8 @@ baseurl:          /
 encoding:         UTF-8
 
 
-groups:           https://groups.uwap.uninettlabs.no
-dev:              https://dev.uwap.uninettlabs.no
+groups:           http://groups.feideconnect.no
+dev:              http://developers.feideconnect.no
 uwap:
   domain:         "feideconnect.no"
 
