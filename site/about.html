@@ -45,8 +45,11 @@ slug: about
 				<h4>Hvem kan være dataleverandør?</h4>
 				<p>Alle som har et API de ønsker å dele med en eller flere tjenester i utdanningssektoren kan være dataleverandør i Connect: utdanningsinstitusjoner, offentlige og kommersielle aktører.</p>
 				<p>Tradisjonelt har dataflyt gått én vei: fra en datakilde til en eller flere tjenester. Vi ser at dataflyt i dag går frem og tilbake mellom mange ulike tjenester og systemer, og at tjenester både opptrer som konsument og produsent av data. En og samme tjeneste kan være både dataleverandør og tjenesteleverandør tilknyttet Connect.</p> 								
+				
 				<h3 class="page-header" id="gruppemotor">Gruppemotor</h3>
-
+				<p>Gjennom API Gatekeeperen tilbyr Connect muligheten for at dataleverandører kan levere nær sagt all mulig informasjon til tjenester.</p>
+				<p>I løpet av vår lange erfaring med Feide har vi imidlertid sett at det er spesielt én type informasjon mange tjenester er svært interessert i: Gruppeinformasjon.</p>
+				<p>I Connect har vi derfor utviklet en egen gruppemotor som er spesielt godt egnet til å levere et utvidet sett med gruppeinformasjon til tjenester.</p>
 				<h4>Tilgang på gruppeinformasjon</h4>
 				<p>Gruppemotoren gir tjenester tilgang på et bredt spekter av gruppeinformasjon:</p>
 				<ul class="uninett-ul">
@@ -73,13 +76,13 @@ slug: about
 				<p>Connect tilbyr ikke en egen innlogging, men gir tjenester muligheten til å koble seg til ulike innloggingsløsninger på en ny og enklere måte.</p>
 				<p>Med tjenesteplattformen blir det også enklere å tilby innlogging på mobile- og desktopapplikasjoner.</p>
 
-				<h4>Moderne tekniske løsninger</h4>
-				<p>Connect kommuniserer med tjenestene gjennom en moderne og fleksibel protokoll kalt <a href="http://oauth.net/2/">OAuth 2.0</a>. OAuth er kjent for å være svært enkel å bruke for tjenesteutviklere, og fokuserer på dataflyt rundt <em>autorisasjon</em> - det å gi tilgang til ressurser. OAuth er i dag i utstrakt bruk hos store internasjonale aktører som Facebook, Google, Box, Dropbox, Windows Live etc.</p>
+				<h4>En moderne løsning i bunnen</h4>
+				<p>Connect kommuniserer med tjenestene gjennom en moderne og fleksibel protokoll kalt <a href="http://oauth.net/2/">OAuth 2.0</a>. OAuth er kjent for å være svært enkel å bruke for tjenesteutviklere, og fokuserer på dataflyt rundt <em>autorisasjon</em> - det å gi tilgang til ressurser. I Connect snakker vi om at tjenester får tilgang til å hente ut informasjon om sluttbrukere - tilgangen gis av sluttbrukeren selv. OAuth er i dag i utstrakt bruk hos store internasjonale aktører som Facebook, Google, Box, Dropbox, Windows Live etc.</p>
 				<p>Fordi Connect benytter en annen teknisk protokoll enn f.eks. Feide, gir Connect nye muligheter når det gjelder innloggingsmetoder og det å hente ut informasjon om brukere.</p>
 
 				
 				<h4>Velge innloggingsmetode</h4>
-				<p>I tjenesteplattformen kan leverandører registrere sine tjenester og velge hvilke innloggingsmuligheter som skal være tilgjengelige for sluttbrukerne. I piloten kommer vi til å tilby innlogging med:</p>
+				<p>I Connect kan leverandører registrere sine tjenester og velge hvilke innloggingsmuligheter som skal være tilgjengelige for sluttbrukerne. I piloten kommer vi til å tilby innlogging med:</p>
 				<ul class="uninett-ul">
 					<li class="uninett-ul-li">Feide</li>
 					<li class="uninett-ul-li">ID-porten</li>
@@ -87,12 +90,12 @@ slug: about
 					<li class="uninett-ul-li">Den internasjonale innloggingsløsningen Edugain</li>
 				</ul>
 				
-				<p>Tjenesten må fortsatt håndtere innlogging på sin side, men protokollen OAuth som benyttes i Connect er en enkel og lettvekts protokoll som ikke krever større installasjoner på tjenesteleverandørens side, noe som kan være en fordel for leverandører som har liten eller ingen kompetanse på SAML-protokollen og ved utvikling av nye tjenester.</p>
+				<p>Tjenesten må fortsatt håndtere innlogging på sin side, men protokollen OAuth som benyttes i Connect er en enkel og lettvekts protokoll som ikke krever større installasjoner på tjenesteleverandørens side, noe som kan være en fordel for leverandører som har liten eller ingen kompetanse på SAML-protokollen, eller når helt nye tjenester skal utvikles.</p>
 
 				<h4>Enklere Feide-pålogging til mobile applikasjoner</h4>
 				<p>Med bruk av Connect er det enklere å lage mobile applikasjoner med Feide-innlogging:</p>
 				<ul class="uninett-ul">
-					<li class="uninett-ul-li">Connect tilbyr lange brukersesjoner som forventes når man bruker mobilapplikasjoner</li>
+					<li class="uninett-ul-li">Connect tilbyr lange brukersesjoner som forventes når man bruker mobilapplikasjoner - det betyr at man ikke må logge på så ofte på mobile applikasjoner</li>
 					<li class="uninett-ul-li">Connect tar seg av SAML-dialogen med Feide, tjenesten trenger kun å tenke på OAuth-dialogen</li>
 				</ul>
 
