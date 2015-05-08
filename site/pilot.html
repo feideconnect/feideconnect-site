@@ -8,17 +8,112 @@ lead: "Feide Connect Pilot 2015"
 <div class="bs-docs-section">
 
 	<h3 id="">Pilot</h3>
-	<p>Feide Connect skal tilby en pilotløsning fra 1.juni til 15.november 2015.</p>
-	<p>Vi trenger deltakere med ulike roller:</p>
+	<p>UNINETT setter opp en Connect pilotløsning fra 1.juni til 15.november 2015, og vi inviterer tjenesteleverandører og utdanningsinstitusjoner med i piloten.</p>
+	<p>Ta kontakt med prosjektleder (<a href="mailto:hildegunn.vada@uninett.no">hildegunn.vada@uninett.no</a>) for å melde din interesse som pilotdeltaker eller hvis du spørsmål om piloten.</p>	
 		
+	<h3 class="page-header" id="autentiseringsmotor">Hvilken funksjonalitet tilbys i piloten?</h3>
+	<p>Connects pilotløsning består av tre ulike deler:</p>
 	<ul class="uninett-ul">	
-		<li class="uninett-ul-li">Vertsorganisasjoner</li>
-		<li class="uninett-ul-li">Tjenesteleverandører</li>
+		<li class="uninett-ul-li"><b>Connect Dashboard</b> - <a href="#funksjonalitet">selvbetjening for utviklere og administratorer</a>
+			<ul>
+				<li>Enkel autentisering av brukere med OAuth 2.0</li>
+				<li>Tilgang på utvidet gruppeinformasjon</li>
+				<li>Del dine API-er og få tilgang til andres - på en trygg måte</li>
+				<li>For vertsorganisasjoner: Merk tjenester som obligatoriske</li>
+			</ul>
+		</li>
+		<li class="uninett-ul-li"><b>Mine grupper</b> - for sluttbrukere
+			<ul>
+				<li>Opprett egne grupper</li>
+				<li>Hold oversikt over dine grupper</li>
+			</ul>
+		</li>
+		<li class="uninett-ul-li"><b>Min Connect</b> - for sluttbrukere
+			<ul>
+				<li>Hold oversikt over din personinformasjon
+				<li>Se hvilke, og eventuelt trekk tilbake, samtykker du har gitt til applikasjoner</li>
+			</ul>
+		</li>
+	</ul>
+	
+	<p>Mer detaljer om funksjonaliteten som tilbys i pilotperioden.</a></p>
+	
+	<h3 class="page-header">Hvem kan delta i piloten og hva kreves?</h3>
+	<p>Følgende grupper kan delta i piloten:</p>
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="#vertsorg_krav">Vertsorganisasjoner i Feide og deres sluttbrukere</a></li>
+		<li class="uninett-ul-li">Tjenesteleverandører til utdanningssektoren</li>
 		<li class="uninett-ul-li">Dataleverandører</li>
 	</ul>
 	
-	<p></p>
-	<p>Invitasjon til å delta i piloten vil bli sendt ut i april til vertsorganisasjoner og tjenesteleverandører som er tilknyttet Feide. Dataleverandører og tjenesteleverandører som ikke allerede er tilknyttet Feide må gjerne ta kontakt for å diskutere mulighetene for å delta i piloten.</p>
-	<p>Ta kontakt med prosjektleder (<a href="mailto:hildegunn.vada@uninett.no">hildegunn.vada@uninett.no</a>) for å melde din interesse som pilotdeltaker eller hvis du spørsmål om piloten.</p>	
+	<p>Trykk på den enkelte målgruppe for å se mer om hva som kreves for å delta i piloten.</p>
+	
+	<h4 id="vertsorg_krav">Vertsorganisasjoner</h4>
+	<p>Vertsorganisasjoner er skoleeiere, høgskoler og universiteter som er tilknyttet Feide. I Connect har vertsorganisasjonene en svært viktig rolle, for det er her elever, studenter og ansatte er og det er her mesteparten av data om dem ligger.</p>
+	<p>Ved at vertsorganisasjoner deltar i piloten, vil alle deres brukere få muligheten til å kunne logge på tjenester i piloten, samt demotjenester. De vil også få tilgang til å håndtere egne brukerdefinerte grupper.</p>
+	<p>Feideadministratorer vil få tilgang til å kontrollere <a href="">obligatoriske tjenester</a> via selvbetjeningsportal.</p>
+	<p>Vi tilbyr en databehandleravtale til alle vertsorganisasjoner som deltar.</p>
+	<p>For å delta i piloten må skoleeiere, høgskoler og universiteter gjøre ett eller flere av følgende punkter:</p>
+	<ul>
+		<li>Åpne for normal feidepålogging til Connect. Connect vil være koblet til Feide som en Feide-tjeneste. Connect må aktiveres i Feides kundeportal.</li>
+		<li>Åpne for direkte aksess til katalogtjener for å hente ut organisatorisk gruppeinformasjon basert på org og orgunit.</li>
+		<li>Avklare tilgangspolicy for personsøk mot katalogtjener.</li>
+		<li>For høyere utdanning: Åpne for å gi tilgang til data fra FS.</li>
+		<li>For grunnopplæringa: Populere gruppeinformasjon for undervisningsgrupper i Feidekatalogen</li>
+		<li>Kommer: Dele et utvidet sett med gruppeinformasjon fra katalogtjener utover normalt Feide-skjema.</li>
+	</ul>
+	
+	<h4 id="tjenestelev_krav">Tjenesteleverandører</h4>
+	<p>Alle tjenester som ønsker å jobbe mer med 
 
+	
+
+
+
+
+	
+	
+	
+	<h4 id="funksjonalitet">Funksjonalitet for tjenesteutviklere og -administratorer</h4>
+	<h5>Enkel autentisering av brukere med bruk av OAuth 2.0 standarden</h5>
+	<ul class="uninett-ul">	
+		<li class="uninett-ul-li">Pålogging for native mobile applikasjoner</li>
+		<li class="uninett-ul-li">Langvarige sesjoner</li>
+		<li class="uninett-ul-li">OpenID Connect støtte (kommer snart)</li>
+		<li class="uninett-ul-li">Autentisering av brukere med
+			<ul>	
+				<li>Feide (fra institusjoner som er med i piloten)</li>
+				<li>Gjestebrukere (Feide OpenIdP)</li>
+				<li>ID-porten</li>
+				<li>Internasjonale identitetsleverandører via eduGAIN (begrenset til enkelte land)</li>
+			</ul>
+		</li>
+	</ul>
+
+
+	<h5>Grupper</h5>
+	<p>Få tilgang på brukernes gruppeinformasjon:</p>
+	<ul class="uninett-ul">	
+		<li>Brukerdefinerte grupper (opprettet av sluttbrukerne selv)</li>
+		<li>Emnetilknytning, kull, studieprogram, studieretning for faglærere og studenter høyere utdanning (fra FS)</li>
+		<li>Tilhørighet til organisasjon (fra Feide)</li>
+		<li>Grupper i grunnopplæringa (videreføring av gruppepilot)</li>
+		<li>Administratorer for Feide og Connect</li>
+	</ul>
+
+	<h5>Personsøk</h5>
+	<p>Mulighet for å gjøre personsøk på studenter og ansatte ved en institusjon (etter avtale).</p>
+
+	<h5>API Gatekeeper</h5>
+	<p>Tilgangsstyring på en skalerbar og kontrollert måte til dine beskyttede APIer.</p>
+
+Dokumentasjon
+
+Demotjenester
+Demo APIer (kommer senere)
+
+
+	
+	<p></p>
+	
 </div>
