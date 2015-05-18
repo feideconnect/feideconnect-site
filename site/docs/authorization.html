@@ -1,3 +1,48 @@
+---
+layout: default
+title: Obtaining an OAuth 2.0 Token
+slug: authorization
+---
+
+
+
+
+<div class="bs-docs-section">
+	<h1 id="auth" class="page-header">Introduction</h1>
+
+
+	<p>As an service provider, you may register a client which implement OAuth Consumer functionality.</p>
+
+	<p>Learn <a target="_blank" href="http://oauth.net">about OAuth</a> before moving on.</p>
+
+	<p>Register a client using the Developer Dashboard. When registering a client, you need to know the OAuth redirect URI endpoint of your application.</p>
+
+	<div class="bs-callout bs-callout-warning"><strong>HTTP or HTTPS</strong> The Connect pilot will allow you to register Redirect URIs that are not secured with HTTPs, although not reccomended. 
+	A production enviornment with Connect, would probably forbid registering unsecured endpoints.
+	</div>
+
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a target="_blank" href="http://developers.feideconnect.no/#!/">Developer Dashboard</a></li>
+		<li class="uninett-ul-li"><a target="_blank" href="/docs/gettingstarted/">Getting started with OAuth using UNINETT Connect</a> (not entirely up to date)</li>
+	</ul>
+
+	<p>When you have successfully registered a client, you need to know the OAuth endpoint of Connect, in order to configure your application:</p>
+
+	
+	<dl>
+		<dt>Connect OAuth Provider Authorization endpoint</dt>
+		<dd><code>{{ site.ep.auth }}/oauth/authorization</code></dd>
+
+		<dt>Connect OAuth Provider Token endpoint</dt>
+		<dd><code>{{ site.ep.auth }}/oauth/token</code></dd>
+	</dl>
+
+	<p><a href="https://auth.feideconnect.no/oauth/config">OAuth configuration JSON endpoint</a></p>
+</code>
+
+
+
 <div class="bs-docs-section">
 	<h1 id="auth" class="page-header">Obtaining an OAuth Token</h1>
 
@@ -32,7 +77,7 @@
 <p>First, the client generates <a href="http://tools.ietf.org/html/rfc6749#section-4.1.1">an authorization request</a>, and redirects the user to this endpoint:
 
 {% highlight plaintext %}
-https://auth.{{ site.uwap.domain }}/oauth/authorization?
+{{ site.ep.auth }}/oauth/authorization?
 	client_id=42934c73-6fae-4507-92a4-c67f87923aa9&
 	response_type=code&
 	redirect_uri=https://example.org/callback&

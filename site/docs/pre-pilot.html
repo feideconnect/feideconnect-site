@@ -130,70 +130,7 @@ Content-Type:application/json; charset=utf-8
 <div class="bs-docs-section">
 	<h2 id="apigks" class="page-header">Getting started with API Gatekeeper</h2>
 
-	<p>The API Gatekeeper implements an API Proxy offloading you as an API owner from functionalities like authentication and authorization.</p>
-
-	<p>Let us say you operate an API at <code>http://api.example.org</code>.</p>
-
-	<p>First, register an API Gatekeeper using the Developer Dashboard</p>
-
-	<ul class="uninett-ul">
-		<li class="uninett-ul-li"><a target="_blank" href="http://developers.feideconnect.no/#!/">Developer Dashboard</a></li>
-	</ul>
-
-	<p>You would need to register the URL of your API endpoint</p>
-
-
-
-	<div class="bs-callout bs-callout-warning"><strong>HTTP or HTTPS</strong> The Connect pilot will allow you to register API endpoints that are not secured with HTTPs, although not reccomended. 
-	A production enviornment with Connect, would probably forbid registering unsecured endpoints.
-	</div>
-
-	<p>Example of registering this API Gatekeeper using Developer Dashboard:</p>
-
-	<p><img class="img-thumbnail" src="../../media/screenshots/docs/prepilot-apigk.png" alt="">	</p>
-
-
-	<p>In the developer dashboard, you see a <strong>trust</strong> pane for your API Gatekeeper, where you see a password that API Gatekeeper will use when accessing your API.</p>
-
-	<p>The default authentication type of your API, will be that API gatekeeper uses HTTP Basic Authentication to authenticate.</p>
-
-	<p>In the <strong>Scopes</strong>-pane, you setup the accept policy of the basic scope, and have the ability to add subscopes.</p>
-
-	<p>Third party clients that wants to access your API through the API Gatkeeper, register a regular client on Connect, and then request access to your API under third party APIs. The third party client will then use OAuth to connect to your API through the API Gatekeeper. You choose the hostname yourself.</p>
-
-	<p>A request like this:</p>
-
-
-{% highlight http %}
-GET /foo/bar HTTP/1.1
-Host: demoapi123.gk.feideconnect.no
-Authorization: Bearer 12344567-1234-4998-1234-abbabababab
-{% endhighlight %}
-
-	<p>is passed on to your API like this:</p>
-
-{% highlight http %}
-GET /foo/bar HTTP/1.1
-Host: api.example.org
-Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
-X_FEIDECONNECT_CLIENTID: 42b0c02e-0dda-4882-9da0-882a4b1abad6
-X_FEIDECONNECT_USERID: 76a7a061-3c55-430d-8ee0-6f82ec42501f
-X_FEIDECONNECT_USERID_SEC: feide:andreas@uninett.no
-{% endhighlight %}
-
-
-
-	<p>The client id is the client identifer of the requesting client.</p>
-	<p>The userid is the authenticated end users Connect user identifier.</p>
-	<p>UserID_sec is a list of secondary user keys, such as Feide ID and more. It is comma separated.</p>
-
-	<p>TODO: Fully document all the API Gatkeeper headers.</p>
-
-
-
-
-
-
+	<p><a href="/docs/apigatekeeper/">Getting started with API Gatekeeper</a></p>
 
 
 

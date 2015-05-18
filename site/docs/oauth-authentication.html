@@ -1,0 +1,135 @@
+---
+layout: default
+title: OAuth Authentication
+slug: oauth-authentication
+---
+
+<div class="bs-docs-section">
+    <h1 class="page-header">OAuth 2.0 and authentication</h1>
+
+    <p>While OAuth 2.0 is not an authentication protocol, Connect offers a simple and convenient userinfo endpoint providing basic information about the end-user.</p>
+
+    <p>In order to make use of userinfo endpoint for authentication, your application must obtain the <code>userinfo</code> scope. Additional scopes are needed depending on how much user information are needed.</p>
+
+
+    <p>The userinfo endpoint is:</p>
+{% highlight plain %}
+{{ site.ep.auth }}/userinfo
+{% endhighlight %}
+
+
+    <p>Here is an example request:</p>
+
+{% highlight HTTP %}
+GET /userinfo HTTP/1.1
+Host: {{ site.ep.auth }}
+Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+{% endhighlight %}
+
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+    "user": {
+        "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+        "userid_sec": ["feide:andreas@uninett.no"],
+        "name": "Andreas \u00c5kre Solberg",
+        "mail": "andreas.solberg@uninett.no",
+        "profilephoto": "p:a3019954-902f-45a3-b4ee-bca7b48ab507"
+    },
+    "audience": "e8160a77-58f8-4006-8ee5-ab64d17a5b1e"
+}
+{% endhighlight %}
+
+
+    <p>When using the userinfo endpoint for authenticating the user, the applicaiton <b>MUST</b> verify that the <code>audience</code> property matches the client id of the application.</p>
+
+    <p>Also, the set of user properties available on the userinfo endpoint depends on the set of scopes the client/application has obtained.</p>
+
+    <p>With only the <code>userinfo</code> scope, the accessible user properties becomes:</p>
+
+{% highlight json %}
+{
+    "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+    "name": "Andreas \u00c5kre Solberg"
+}
+{% endhighlight %}
+
+    <p>The <code>userinfo-mail</code> scope adds access to the mail property.</p>
+    <p>The <code>userinfo-feide</code> scope adds access to the Feide identifier. This is only available for users that are associated with an Feide account. The Feide identifier is a secondary userid key, and is listed in the <code>userid-sec</code> property. <a href="/docs/userid/">Read more about user idenfiers</a>.</p>
+    <p>The <code>userinfo-photo</code> scope adds access to a profile photo of the user, if available. </p>
+    <p>The <code>longterm</code> scope extends the period in which userinfo is available for this client to two years.</p>
+
+
+    <h3>User Profile photo</h3>
+
+
+    <p>If the application has obtained the <code>profilephoto</code> public handle of the user, the application may fetch the profile photo from:</p>
+
+{% highlight plain %}
+{{ site.ep.auth }}/user/media/{profilephoto handle}
+{% endhighlight %}
+
+    <p>In example: <code>{{ site.ep.auth }}/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507</code></p>
+
+    <p>The profile photo is often square, and 128 x 128px. If the original dimension is not 1:1, the longest edge will be 128px, and other will be shorter maintaining the same aspect ratio.</p>
+
+
+
+</div>
+
+
+
+<div class="bs-docs-section">
+
+    <h1 class="page-header">OpenID Connect</h1>
+
+    <p>OpenID Connect is a simple authentication / identity layer on top of OAuth. OpenID Connect is a rather new emerging protocol with significant momentum and promising future. </p>
+
+    <p><a href="/docs/openid/">More about using OpenID Connect</a></p>
+
+</div>
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+    <h1 class="page-header">Security considerations</h1>
+
+    <p>Please read the OAuth 2.0 Security Advisory section.</p>
+
+
+    <ul class="uninett-ul">
+        <li class="uninett-ul-li">Be caseful about only registering protected and real redirect_uri values.</li>
+        <li class="uninett-ul-li">Use the state parameter in the authorization request to link the response to the request.</li>
+        <li class="uninett-ul-li">Make sure you validate the audience property.</li>
+        <li class="uninett-ul-li">Validate the certificate on the token endpoint and the userinfo endpoint. Consider certificate pinning.</li>
+        <li class="uninett-ul-li">Consider OpenID Connect to further increase security on authentication.</li>
+
+    </ul>
+
+</div>
+
+
+
+<div class="bs-docs-section">
+
+    <h1 class="page-header">Logout</h1>
+
+    <p>In the application, include a logout link that performs the following:</p>
+
+    <ul class="uninett-ul">
+        <li class="uninett-ul-li">First, kills the local session for the current user.</li>
+        <li class="uninett-ul-li">Then, redirects the user to <code>https://auth.feideconnect.no/logout</code>.</li>
+        <li class="uninett-ul-li">The user will then automatically be logged out from the Connect core platform, as well as the authentication source Feide, IDporten or similar, and will the end-user will be shown a page with information that the user is now successfully logged out.</li>
+        <li class="uninett-ul-li">Notice that the end-user will not be automatically logged out from other Connect Applications.</li>
+    </ul>
+
+
+</div>

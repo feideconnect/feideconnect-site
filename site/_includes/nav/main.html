@@ -14,10 +14,6 @@
 
       <ul class="nav navbar-nav">
 
-        <!-- <li{% if page.slug == "docs" %} class="active"{% endif %}>
-          <a href="/docs/">Docs</a>
-        </li> -->
-
         <li{% if page.slug == "pilot" %} class="active"{% endif %}>
           <a target="" href="/pilot/">Pilot</a>
         </li>
@@ -33,25 +29,6 @@
         </li>
 
 
-<!--
-        <li class="dropdown 
-          {% if page.slug == "pilot" %}active{% endif %}
-          {% if page.slug == "suhs" %}active{% endif %}
-          ">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pilot <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            
-            <li {% if page.slug == "pilot" %} class="active"{% endif %}>
-              <a href="/pilot/">Pilot 2015</a></li>
-
-            <li{% if page.slug == "suhs" %} class="active"{% endif %}>
-              <a target="" href="/suhs/">SUHS 2014</a>
-            </li>
-          </ul>
-        </li>
-
--->
-
 
 
 <!--         <li{% if page.slug == "utrulling" %} class="active"{% endif %}>
@@ -61,24 +38,54 @@
 
 
         <li class="dropdown 
-          {% if page.slug == "docs" %}active{% endif %}
+          {% if page.slug == "gettingstarted" %}active{% endif %}
+          {% if page.slug == "architecture" %}active{% endif %}
+          {% if page.slug == "userid" %}active{% endif %}
+          {% if page.slug == "authorization" %}active{% endif %}
+          {% if page.slug == "oauth-authentication" %}active{% endif %}
+          {% if page.slug == "oauth-libraries" %}active{% endif %}
+          {% if page.slug == "mobile" %}active{% endif %}
+          {% if page.slug == "openid" %}active{% endif %}
+
+          {% if page.slug == "groups" %}active{% endif %}
           {% if page.slug == "grouptypes" %}active{% endif %}
-          {% if page.slug == "api" %}active{% endif %}
-          {% if page.slug == "gatekeeper" %}active{% endif %}
+          {% if page.slug == "peoplesearch" %}active{% endif %}
+          {% if page.slug == "api-thirdparty" %}active{% endif %}
+
+          {% if page.slug == "apigatekeeper" %}active{% endif %}
+          {% if page.slug == "orgadmin" %}active{% endif %}
+          {% if page.slug == "endusers" %}active{% endif %}
           ">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li {% if page.slug == "docs" %} class="active"{% endif %}>
-              <a href="/docs/gettingstarted/">Getting started</a></li>
-            <li {% if page.slug == "grouptypes" %} class="active"{% endif %}>
-              <a href="/docs/grouptypes/">Group types</a></li>
-            <li {% if page.slug == "api" %} class="active"{% endif %}>
-              <a href="/api/">API Reference</a></li>
-            <li {% if page.slug == "gatekeeper" %} class="active"{% endif %}>
-              <a href="/gatekeeper/">Gatekeeper</a></li>
+
+            <li {% if page.slug == "gettingstarted" %} class="active"{% endif %}> <a href="/docs/gettingstarted/">Getting started</a></li>
+            <li {% if page.slug == "architecture" %} class="active"{% endif %}> <a href="/docs/architecture/">Connect Architecture</a></li>
 
             <li class="divider"></li>
-            <li><a href="https://inspect.{{ site.uwap.domain }}/">API Inspector</a></li>
+            <li role="presentation" class="dropdown-header">For Application Developers</li>
+            <li {% if page.slug == "authorization" %} class="active"{% endif %}> <a href="/docs/authorization/">OAuth: Obtaining tokens</a></li>
+            <li {% if page.slug == "oauth-authentication" %} class="active"{% endif %}> <a href="/docs/oauth-authentication/">›&nbsp;OAuth: Authentication</a></li>
+            <li {% if page.slug == "oauth-libraries" %} class="active"{% endif %}> <a href="/docs/oauth-libraries/">›&nbsp;OAuth: Client libraries</a></li>
+            <li {% if page.slug == "mobile" %} class="active"{% endif %}> <a href="/docs/mobile/">›&nbsp;Mobile Applications</a></li>
+            <li {% if page.slug == "openid" %} class="active"{% endif %}> <a href="/docs/openid/">›&nbsp;OpenID Connect</a></li>
+            <li {% if page.slug == "userid" %} class="active"{% endif %}> <a href="/docs/userid/">›&nbsp;About UserIDs</a></li>
+
+
+            <li {% if page.slug == "groups" %} class="active"{% endif %}> <a href="/docs/groups/">Groups</a></li>
+            <li {% if page.slug == "grouptypes" %} class="active"{% endif %}> <a href="/docs/grouptypes/">›&nbsp;Group types</a></li>
+            <li {% if page.slug == "peoplesearch" %} class="active"{% endif %}> <a href="/docs/peoplesearch/">People Search</a></li>
+            <li {% if page.slug == "api-thirdparty" %} class="active"{% endif %}> <a href="/docs/api-thirdparty/">Using third-party APIs</a></li>
+
+            <li class="divider"></li>
+            <li role="presentation" class="dropdown-header">For API Owners</li>
+            <li {% if page.slug == "apigatekeeper" %} class="active"{% endif %}> <a href="/docs/apigatekeeper/">API Gatekeeper</a></li>
+
+            <li class="divider"></li>
+            <li {% if page.slug == "orgadmin" %} class="active"{% endif %}> <a href="/docs/orgadmin/">For site administrators</a></li>
+            <li {% if page.slug == "endusers" %} class="active"{% endif %}> <a href="/docs/endusers/">For end-users</a></li>
+
+            <!-- <li><a href="https://inspect.{{ site.uwap.domain }}/">API Inspector</a></li> -->
           </ul>
         </li>
 <!--

@@ -14,9 +14,16 @@ baseurl:          /
 encoding:         UTF-8
 
 
-groups:           http://groups.feideconnect.no
-dev:              http://developers.feideconnect.no
-uwap:
-  domain:         "feideconnect.no"
 
-uwapdomain:       "feideconnect.no"
+apps:
+  dashboard:  http://developers.feideconnect.no
+  groups:     http://groups.feideconnect.no
+  min:        http://min.feideconnect.no
+  homepage:   http://feideconnect.no
+
+ep:
+  auth:       https://auth.feideconnect.no
+  api:        https://api.feideconnect.no
+  groups:     https://api-groups.feideconnect.no
+
+

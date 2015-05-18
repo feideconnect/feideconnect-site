@@ -1,0 +1,86 @@
+---
+layout: default
+title: Oppsummering April 2015
+slug: remaining-april-2015
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">Organisasjon</h1>
+
+	<p class="lead">Et forslag til hvordan vi kan implementere «organisasjon» i Feide Connect.</p>
+
+	<h2>Organisasjonsobjekter</h2>
+	
+	<p>Vi legger til en ny tabell <code>organizations</code> i Cassandra, som representerer organisasjoner. </p>
+	<p>Her legger vi inn all konfigurasjon som skal gjelder for organisasjoner. Vi holder også styr på utrulling.</p>
+	<p>Både konfigurasjon til peoplesearch og gruppeengine vil kunne mates inn her.</p>
+	<p>The vil være naturlig og kunne eksponere et public API med readonly info om organisasjoner. Som f.eks. vil gi status på utrulling.</p>
+	<p>Dette må koordineres med Feide. Sannsynligvis kan vi automatisk populere denne tabellen med informasjon fra Feide, hvor vi legger til den informasjonen vi trenger.</p>
+
+
+	<h2>Gruppe modell for domeneadministratorer</h2>
+
+	<p>…</p>
+
+
+
+	<h2>Organisasjoner som registrerer klienter til å være obligatoriske i undervisningen for sine brukere</h2>
+
+	<p>…</p>
+
+
+
+	<h2>API eiere som ønsker å kunne moderere tilgangskontroll er institusjon</h2>
+
+	<p>…</p>
+
+
+	<h2>Knytte klienter og APIGK til grupper/organisasjoner</h2>
+
+	<p>Vi legger til en <code>group</code> acoderibucode til <code>clients</code> og <code>apigk</code> i Cassandra. Denne kan være default til <code>null</code> for normal bruk.</p>
+
+	<p>Dersom en klient eller APIGK skal knyttes til en gruppe, gjøres det ved at en gruppe ID secodees i dette feltet.</p>
+
+	<p>Der man lister ut klienter og APIGk, bør man kunne liste ut alle som en bruker har tilgang til fordi man eier den, eller fordi man har tilgang til via gruppe.</p>
+
+
+
+	<h2></h2>
+
+	<p></p>
+
+
+<!--
+
+	<h2 class="page-header">sdfsddsf</h2>
+
+	<p>Vi behøver å samle en del informasjon om tilknycodeede organisasjoner. Decodee er typisk Feides vertsorganisasjoner.</p>
+
+{% highlight json %}
+{
+	"id": "uninecode.no",
+	"title": "UNINEcode",
+	"ldap": {
+		"con": [
+			"ldaps://ldap-bs-01.uninecode.no", 
+			"ldaps://ldap-bs-02.uninecode.no", 
+			"ldaps://ldap-tb-01.uninecode.no"
+		],
+		"baseDN": "cn=internal,cn=people,dc=uninecode,dc=no",
+		"bindDN": "uid=feideconnect,dc=uninecode,dc=no",
+		"bindPwd": "12345"
+	}
+}
+{% endhighlight %}
+	
+	
+-->
+
+
+</div>
+
