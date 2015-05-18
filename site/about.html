@@ -21,33 +21,43 @@ slug: about
 				
 				<p>Connect er en tjenesteplattform for utdanningssektoren som har følgende funksjonalitet:</p>
 				<ul class="uninett-ul">
-					<li class="uninett-ul-li">API Gatekeeper</li> 
-					<li class="uninett-ul-li">Gruppemotor</li>
-					<li class="uninett-ul-li">Autentiseringsmotor</li>
-					<li class="uninett-ul-li">En helhetlig løsning som ivaretar personvernet</li>
+					<li class="uninett-ul-li"><a href="#autentiseringsmotor">Enkel autentisering av brukere med OAuth 2.0 - også for mobil- og desktop-applikasjoner</a></li> 
+					<li class="uninett-ul-li"><a href="#gruppemotor">Tilgang på utvidet gruppeinformasjon</a></li>
+					<li class="uninett-ul-li"><a href="#apigk">Muligheten til å dele API-er og få tilgang til andres - på en trygg måte</a></li>
+					<li class="uninett-ul-li"><a href="#personvern">En helhetlig løsning som ivaretar personvernet</a></li>
 				</ul>
-				 
-				<h3 class="page-header" id="apigk">API Gatekeeper</h3>
 				
-				<p>Connect tilbyr - gjennom API Gatekeeper - enkel deling av og tilgang til lukkede API-er.</p>
-				<p>Data bør deles, og bruk av API-er er etterhvert en vanlig måte å dele data på. Offentlige data skal deles helt åpent - som for eksempel værdata fra Meterologisk Institutt eller kartdata fra Kartverket. </p>
-				<p>Men hva med data som ikke skal være fullt så åpne? Data som gjelder enkeltpersoner, eller som bare skal deles med utvalgte tjenester? Her er det viktig at personvernet ivaretas og man har oversikt over hvor data flyter. </p>
+				<h3 class="page-header" id="autentiseringsmotor">Enkel autentisering</h3>
 				
-				<h4>Registrere API-er</h4>
-				<p> I API Gatekeeper kan tjenester/systemer - heretter kalt dataleverandører - registrere sine API-er. Dette kan for eksempel være API-er som inneholder forelesningsopptak, timeplaner og romfordeling, og studentinformasjon. I tillegg til å registrere selve API-et, må dataleverandøren også registrere hvem som skal få tilgang til det. </p>
+				<p>Connect tilbyr ikke en egen innlogging, men gir tjenester muligheten til å koble seg til ulike innloggingsløsninger på en ny og enklere måte.</p>
+				<p>Med tjenesteplattformen blir det også enklere å tilby innlogging på mobile- og desktopapplikasjoner.</p>
+
+				<h4>En moderne løsning i bunnen</h4>
+				<p>Connect kommuniserer med tjenestene gjennom en moderne og fleksibel protokoll kalt <a href="http://oauth.net/2/">OAuth 2.0</a>. OAuth er kjent for å være svært enkel å bruke for tjenesteutviklere, og fokuserer på dataflyt rundt <em>autorisasjon</em> - det å gi tilgang til ressurser. I Connect snakker vi om at tjenester får tilgang til å hente ut informasjon om sluttbrukere - tilgangen gis av sluttbrukeren selv. OAuth er i dag i utstrakt bruk hos store internasjonale aktører som Facebook, Google, Box, Dropbox, Windows Live etc.</p>
+				<p>Fordi Connect benytter en annen teknisk protokoll enn f.eks. Feide, gir Connect nye muligheter når det gjelder innloggingsmetoder og det å hente ut informasjon om brukere.</p>
+
+				<h4>Velge innloggingsmetode</h4>
+				<p>I Connect kan leverandører registrere sine tjenester og velge hvilke innloggingsmuligheter som skal være tilgjengelige for sluttbrukerne. I piloten kommer vi til å tilby innlogging med:</p>
+				<ul class="uninett-ul">
+					<li class="uninett-ul-li">Feide</li>
+					<li class="uninett-ul-li">ID-porten</li>
+					<li class="uninett-ul-li">En gjestebrukerløsning</li>
+					<li class="uninett-ul-li">Den internasjonale innloggingsløsningen Edugain</li>
+				</ul>
 				
-				<h4>Få tilgang til API-er</h4>
-				<p>Tjenester kan deretter søke etter og finne de ulike API-ene som er registrert i Connect. Hvis tjenesten trenger noen av API-ene, kan den be om tilgang. Dataleverandøren velger om API-et skal være åpent for de tjenester som ber om tilgang, eller om hver enkelt tjeneste eksplisitt  må godkjennes. I tillegg må sluttbrukeren godkjenne at sine data blir overført til tjenesten. Dette skjer gjennom at brukeren gir sitt samtykke. </p>
+				<p>Tjenesten må fortsatt håndtere innlogging på sin side, men protokollen OAuth som benyttes i Connect er en enkel og lettvekts protokoll som ikke krever større installasjoner på tjenesteleverandørens side, noe som kan være en fordel for leverandører som har liten eller ingen kompetanse på SAML-protokollen, eller når helt nye tjenester skal utvikles.</p>
+
+				<h4>Enklere Feide-pålogging til mobile applikasjoner</h4>
+				<p>Med bruk av Connect er det enklere å lage mobile applikasjoner med Feide-innlogging:</p>
+				<ul class="uninett-ul">
+					<li class="uninett-ul-li">Connect tilbyr lange brukersesjoner som forventes når man bruker mobilapplikasjoner - det betyr at man ikke må logge på så ofte på mobile applikasjoner</li>
+					<li class="uninett-ul-li">Connect tar seg av SAML-dialogen med Feide, tjenesten trenger kun å tenke på OAuth-dialogen</li>
+				</ul>
 				
-				<h4>Kontrollert dataflyt</h4>
-				<p>Dette betyr at man alltid har god kontroll på hvor data flyter – Connect holder styr på hvilke tjenester som har tilgang til hvilke API-er, og hvilke tilganger sluttbrukeren har godkjent eller eventuelt trukket tilbake godkjenningen av. Dette er i tråd med personvernlovgivningen. </p>
-				
-				<h4>Hvem kan være dataleverandør?</h4>
-				<p>Alle som har et API de ønsker å dele med en eller flere tjenester i utdanningssektoren kan være dataleverandør i Connect: utdanningsinstitusjoner, offentlige og kommersielle aktører.</p>
-				<p>Tradisjonelt har dataflyt gått én vei: fra en datakilde til en eller flere tjenester. Vi ser at dataflyt i dag går frem og tilbake mellom mange ulike tjenester og systemer, og at tjenester både opptrer som konsument og produsent av data. En og samme tjeneste kan være både dataleverandør og tjenesteleverandør tilknyttet Connect.</p> 								
-				
-				<h3 class="page-header" id="gruppemotor">Gruppemotor</h3>
-				<p>Gjennom API Gatekeeperen tilbyr Connect muligheten for at dataleverandører kan levere nær sagt all mulig informasjon til tjenester.</p>
+				<p><a href="/about">Til toppen</a></p>
+ 
+				<h3 class="page-header" id="gruppemotor">Tilgang på utvidet gruppeinformasjon</h3>
+				<p>Connect gir muligheten for at dataleverandører kan levere nær sagt all mulig informasjon til tjenester.</p>
 				<p>I løpet av vår lange erfaring med Feide har vi imidlertid sett at det er spesielt én type informasjon mange tjenester er svært interessert i: Gruppeinformasjon.</p>
 				<p>I Connect har vi derfor utviklet en egen gruppemotor som er spesielt godt egnet til å levere et utvidet sett med gruppeinformasjon til tjenester.</p>
 				<h4>Tilgang på gruppeinformasjon</h4>
@@ -70,38 +80,33 @@ slug: about
 				<h4>Brukerdefinerte grupper</h4>
 				<p>Connect gir sluttbrukerne mulighet til å opprette egne grupper etter behov som kan deles på tvers av tjenester.</p>
 				
+				<p><a href="/about">Til toppen</a></p>
 
-				<h3 class="page-header" id="autentiseringsmotor">Autentiseringsmotor</h3>
+				<h3 class="page-header" id="apigk">Del API-er og få tilgang til andres - på en trygg måte</h3>
 				
-				<p>Connect tilbyr ikke en egen innlogging, men gir tjenester muligheten til å koble seg til ulike innloggingsløsninger på en ny og enklere måte.</p>
-				<p>Med tjenesteplattformen blir det også enklere å tilby innlogging på mobile- og desktopapplikasjoner.</p>
-
-				<h4>En moderne løsning i bunnen</h4>
-				<p>Connect kommuniserer med tjenestene gjennom en moderne og fleksibel protokoll kalt <a href="http://oauth.net/2/">OAuth 2.0</a>. OAuth er kjent for å være svært enkel å bruke for tjenesteutviklere, og fokuserer på dataflyt rundt <em>autorisasjon</em> - det å gi tilgang til ressurser. I Connect snakker vi om at tjenester får tilgang til å hente ut informasjon om sluttbrukere - tilgangen gis av sluttbrukeren selv. OAuth er i dag i utstrakt bruk hos store internasjonale aktører som Facebook, Google, Box, Dropbox, Windows Live etc.</p>
-				<p>Fordi Connect benytter en annen teknisk protokoll enn f.eks. Feide, gir Connect nye muligheter når det gjelder innloggingsmetoder og det å hente ut informasjon om brukere.</p>
-
+				<p>Connect tilbyr - gjennom API Gatekeeper - enkel deling av og tilgang til lukkede API-er.</p>
+				<p>Data bør deles, og bruk av API-er er etterhvert en vanlig måte å dele data på. Offentlige data skal deles helt åpent - som for eksempel værdata fra Meterologisk Institutt eller kartdata fra Kartverket. </p>
+				<p>Men hva med data som ikke skal være fullt så åpne? Data som gjelder enkeltpersoner, eller som bare skal deles med utvalgte tjenester? Her er det viktig at personvernet ivaretas og man har oversikt over hvor data flyter. </p>
 				
-				<h4>Velge innloggingsmetode</h4>
-				<p>I Connect kan leverandører registrere sine tjenester og velge hvilke innloggingsmuligheter som skal være tilgjengelige for sluttbrukerne. I piloten kommer vi til å tilby innlogging med:</p>
-				<ul class="uninett-ul">
-					<li class="uninett-ul-li">Feide</li>
-					<li class="uninett-ul-li">ID-porten</li>
-					<li class="uninett-ul-li">En gjestebrukerløsning</li>
-					<li class="uninett-ul-li">Den internasjonale innloggingsløsningen Edugain</li>
-				</ul>
+				<h4>Registrere API-er</h4>
+				<p> I API Gatekeeper kan tjenester/systemer - heretter kalt dataleverandører - registrere sine API-er. Dette kan for eksempel være API-er som inneholder forelesningsopptak, timeplaner og romfordeling, og studentinformasjon. I tillegg til å registrere selve API-et, må dataleverandøren også registrere hvem som skal få tilgang til det. </p>
 				
-				<p>Tjenesten må fortsatt håndtere innlogging på sin side, men protokollen OAuth som benyttes i Connect er en enkel og lettvekts protokoll som ikke krever større installasjoner på tjenesteleverandørens side, noe som kan være en fordel for leverandører som har liten eller ingen kompetanse på SAML-protokollen, eller når helt nye tjenester skal utvikles.</p>
-
-				<h4>Enklere Feide-pålogging til mobile applikasjoner</h4>
-				<p>Med bruk av Connect er det enklere å lage mobile applikasjoner med Feide-innlogging:</p>
-				<ul class="uninett-ul">
-					<li class="uninett-ul-li">Connect tilbyr lange brukersesjoner som forventes når man bruker mobilapplikasjoner - det betyr at man ikke må logge på så ofte på mobile applikasjoner</li>
-					<li class="uninett-ul-li">Connect tar seg av SAML-dialogen med Feide, tjenesten trenger kun å tenke på OAuth-dialogen</li>
-				</ul>
+				<h4>Få tilgang til API-er</h4>
+				<p>Tjenester kan deretter søke etter og finne de ulike API-ene som er registrert i Connect. Hvis tjenesten trenger noen av API-ene, kan den be om tilgang. Dataleverandøren velger om API-et skal være åpent for de tjenester som ber om tilgang, eller om hver enkelt tjeneste eksplisitt  må godkjennes. I tillegg må sluttbrukeren godkjenne at sine data blir overført til tjenesten. Dette skjer gjennom at brukeren gir sitt samtykke. </p>
 				
-				<h3 class="page-header" id="apigk">Personvernet i fokus</h3>
+				<h4>Kontrollert dataflyt</h4>
+				<p>Dette betyr at man alltid har god kontroll på hvor data flyter – Connect holder styr på hvilke tjenester som har tilgang til hvilke API-er, og hvilke tilganger sluttbrukeren har godkjent eller eventuelt trukket tilbake godkjenningen av. Dette er i tråd med personvernlovgivningen. </p>
+				
+				<h4>Hvem kan være dataleverandør?</h4>
+				<p>Alle som har et API de ønsker å dele med en eller flere tjenester i utdanningssektoren kan være dataleverandør i Connect: utdanningsinstitusjoner, offentlige og kommersielle aktører.</p>
+				<p>Tradisjonelt har dataflyt gått én vei: fra en datakilde til en eller flere tjenester. Vi ser at dataflyt i dag går frem og tilbake mellom mange ulike tjenester og systemer, og at tjenester både opptrer som konsument og produsent av data. En og samme tjeneste kan være både dataleverandør og tjenesteleverandør tilknyttet Connect.</p> 								
+				
+				<p><a href="/about">Til toppen</a></p>
+												
+				<h3 class="page-header" id="personvern">Personvernet i fokus</h3>
 				<p>Det er mye data som flyter gjennom Connect - også personopplysninger. Derfor har det vært viktig for oss, helt fra starten av, å lage en gjennomtenkt og helhetlig løsning som ivaretar personvernet og personvernlovgivningen.</p>
 				<p><a href="/personvern">Les mer om vårt arbeid med personvern og avtaler</a>.</p>
+				<p><a href="/about">Til toppen</a></p>
 
 			</div>
 
