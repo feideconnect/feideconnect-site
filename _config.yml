@@ -23,7 +23,8 @@ apps:
 
 ep:
   auth:       https://auth.feideconnect.no
+  authhost:   auth.feideconnect.no
   api:        https://api.feideconnect.no
+  apihost:    api.feideconnect.no
   groups:     https://api-groups.feideconnect.no
-
 
