@@ -27,4 +27,9 @@ ep:
   api:        https://api.feideconnect.no
   apihost:    api.feideconnect.no
   groups:     https://api-groups.feideconnect.no
+  groupshost: api-groups.feideconnect.no
+  groupsBasePath: /groups/
+
+
+exampleAuthorizationHeader: "Authorization: Bearer 0f0935c3-a997-40fb-89c2-f7da126ba5d9"
 

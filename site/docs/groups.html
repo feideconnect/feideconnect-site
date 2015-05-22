@@ -5,8 +5,406 @@ slug: groups
 ---
 
 <div class="bs-docs-section">
-	<h1 class="page-header">Empty section</h1>
 
-	<p>...</p>
+	<h1 class="page-header">Groups</h1>
+
+
+	<p>Groups allow applications to use a set of group contexts for the authenticated user, for sharing, access control, communication or other purposes. These sets of groups are share across services, minimizing the need for managing groups separately in each application.</p>
+
+
+
+
+	<p><img class="img-responsive" src="/assets/img/groupmodel.png" /></p>
+
+	<p>A user is member of a set of groups. For each group that the user is member of, the membership is represented with the existence of an membership object. The membership object has no required properties, but a set of optional properties. </p>
+
+	<p>Properties of the group object is specific for the group and are the same for all members, while properties of the membership object are specific for each member.</p>
+
+
+	<p>All groups share some common properties, while there is a set of group type definitions that define extended attribute for different kind of groups.</p>
+
+	<p>Here is an example of a group:</p>
+
+
+{% highlight json %}
+{
+    "id": "fc:adhoc:3422c057-93f4-4564-831b-142ca412f970",
+    "displayName": "Connect Pilotdeltakere",
+    "description": "Utviklere og andre som deltar i Connect pilot 2015.",
+    "type": "voot:ad-hoc"
+}
+{% endhighlight %}
+
+
+
+	<p>The protocol and data model is using the <a href="http://openvoot.org/">VOOT standard</a> that is used by other educational federations in Europe.</p>
+
+</div>
+
+
+<div class="bs-docs-section">
+
+	<h1 class="page-header">The Protocol</h1>
+
+	<p>The protocol is a simple, lightweight REST-ish protocol based upon <a href="http://openvoot.org/">VOOT</a> and <a href="http://simplecloud.info">SCIM</a>. The group endpoints requires that you provide a valid Connect OAuth 2.0 token with the <code>groups</code>-scope assigned.</p>
+
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="/docs/authorization/">How to obtain an Connect OAuth 2.0 Token</a></li>
+		<li class="uninett-ul-li"><a href="http://openvoot.org/protocol/">More details of VOOT 2.0 Protocol Specification</a></li>
+	</ul>
+
+
+	<p>Groups allow applications to use a set of group contexts for the authenticated user, for sharing, access control, communication or other purposes. These sets of groups are share across services, minimizing the need for managing groups separately in each application.</p>
+
+
+
+{% highlight json %}
+{
+    "id": "fc:adhoc:3422c057-93f4-4564-831b-142ca412f970",
+    "displayName": "Connect Pilotdeltakere",
+    "description": "Utviklere og andre som deltar i Connect pilot 2015.",
+    "type": "voot:ad-hoc"
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+	<p>The base URL prefix of all groups related endpoints on Connect is:</p>
+
+	<pre><code>{{site.ep.groups}}{{site.ep.groupsBasePath}}</code></pre>
+
+
+
+	<p><b>List of group protocol endpoints</b></p>
+
+	<table class="table table-striped table-condensed">
+		<tr><th>Endpoint</th><th>Protocol description</th><th>Data returned</th></tr>
+		<tr><td><code>me/groups</code></td><td>The group memberships of the current user</td><td>List of groups</td></tr>
+		<tr><td><code>me/groups/{groupid}</code></td><td>My membership of this particular group</td><td>One membership object</td></tr>
+		<tr><td><code>groups/{groupid}</code></td><td>Details about a group</td><td>One group object</td></tr>
+		<tr><td><code>groups/{groupid}/members</code></td><td>Members of a group</td><td> A list of users</td></tr>
+		<tr><td><code>groups</code></td><td>List all groups</td><td>A list of groups</td></tr>
+		<tr><td><code>grouptypes</code></td><td>List all group types</td><td>A list of grouptypes</td></tr>
+	</table>
+
+
+
+<!--
+
+	<p>If the VOOT provider allows the client to inspect groups relations for a users that is not represented by the OAuth token, in example by using a token obtained by client credentials only, the following additional endpoint aliases may be used:</p>
+
+	<table class="table table-striped table-condensed">
+		<tr><th>Endpoint</th><th>Protocol description</th><th>Data returned</th></tr>
+		<tr><td><code>user/{userid}/groups</code></td><td>The group memberships of the specified user</td><td>List of groups</td></tr>
+		<tr><td><code>user/{userid}/groups/{groupid}</code></td><td>A specified users membership of this particular group</td><td>One membership object</td></tr>
+	</table>
+	<p>These endpoints behaves identical to the <code>/me/*</code> endpoints.</p>
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<h2  class="page-header" id="me_groups">The group memberships of the current user <br /><code>me/groups</code></h2>
+
+	<p>Requests needs to be authenticated with a personal token.</p>
+
+	<p>This endpoint returns all *active* group memberships of the current user. Expired or otherwise inactive groups and not returned by default.</p>
+
+	<p>Query string parameters:</p>
+
+	<dl class="dl-horizontal">
+		<dt><code>showAll=true</code></dt>
+		<dd>The provider will list all groups that the current user is associated with, also expired and inactive groups and roles.</dd>
+	</dl>
+
+	
+
+
+	<p>The response contains a list of groups. If the user is not actively member of any groups, an empty list is returned; <code>[]</code>.</p>
+
+	<p>Here is an example of a response body:</p>
+
+{% highlight http %}
+GET {{site.ep.groupsBasePath}}me/groups HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
+
+200 OK
+Content-Type: application/json; charset=utf-8 
+Content-Language: no
+
+[
+	{
+		"id": "fc:adhoc:8878ae43-965a-412a-87b5-38c398a76569",
+		"displayName": "...",
+		"...": "..."
+	},
+	{
+		"id": "fc:adhoc8878ae43-965a-412a-87b5-38c398a76569",
+		"displayName": "....",
+		"...": "..."
+	}
+]
+{% endhighlight %}
+
+
+
+	<p>For the specifications of the attributes of groups, review the group type specifiations:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="/docs/grouptypes/">Data model: Group Type specifications</a></li>
+		<!-- <li class="uninett-ul-li"><a href="http://openvoot.org/protocol/">More details of VOOT 2.0 Protocol Specification</a></li> -->
+	</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<h2 class="page-header" id="me_groups_groupid">My membership of this particular group <br /><code>/me/groups/{groupid}</code></h2>
+
+	<p>Requests needs to be authenticated with a personal token.</p>
+
+	<p>If the user is member of the specified group, return the membership object representing the users relation to that group.</p>
+
+{% highlight http %}
+GET /me/groups/8878ae43-965a-412a-87b5-38c398a76569 HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
+
+200 OK
+Content-Type: application/json; charset=utf-8 
+Content-Language: no
+
+{
+	"basic": "member",
+	"displayName": "Medlem"
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+	<h2 class="page-header" id="groups_groupid">Details about a group <br /><code>/groups/{groupid}</code></h2>
+
+	<p>Requests needs to be authenticated with a token, if needed in order to access the content.</p>
+
+
+
+	<p>This endpoint returns all *active* group memberships of the current user. Expired or otherwise inactive groups and not returned by default.</p>
+
+{% highlight http %}
+GET /me/groups/8878ae43-965a-412a-87b5-38c398a76569 HTTP/1.1
+Host: voot-provider.example.org
+Authorization: Bearer 1234-asdf-5678
+
+200 OK
+Content-Type: application/json; charset=utf-8 
+Content-Language: en
+
+{
+	"id": "8878ae43-965a-412a-87b5-38c398a76569",
+	"displayName": "Project on group APIs",
+}
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+	<h2 class="page-header" id="groups_groupid_members">Members of a group <code>/groups/{groupid}/members</code></h2>
+
+	<p>Requests needs to be authenticated with a token, if needed in order to access the content.</p>
+
+	<p>This endpoint returns all *active* group members of the specified group. Expired or otherwise inactive members will not returned by default.</p>
+
+{% highlight http %}
+GET /groups/8878ae43-965a-412a-87b5-38c398a76569/members HTTP/1.1
+Host: voot-provider.example.org
+Authorization: Bearer 1234-asdf-5678
+{% endhighlight %}
+	
+	<p>Query string parameters:</p>
+
+	<dl>
+		<dt><code>showAll=true</code></dt>
+		<dd>The provider will list all members that are associated with the group, also expired and inactive user memberships.</dd>
+	</dl>
+
+
+	<p>The response contains a list of users. If the group is not currently having any members, an empty list is returned; <code>[]</code>.</p>
+
+	<p>Here is an example of a response body:</p>
+
+{% highlight json %}
+[
+	{
+		"name": "Andreas Åkre Solberg",
+		"email": "andreas.solberg@uninett.no",
+		"profilePhotoURL": "http://core.feideconnect.no/profile/1234-5678"
+		"membership": {
+			"basic": "member"
+		}
+	},
+	{
+		"name": "Anders Lund",
+		"membership": {
+			"basic": "admin"
+		}
+	},
+	{
+		"name": "Olav Morken",
+		"membership": {
+			"basic": "member"
+		}
+	}
+]
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+	<h2 class="page-header" id="groups_listall">List all (or query a set of) groups <code>/groups</code></h2>
+
+	<p>Requests needs to be authenticated with a token, if needed in order to access the content.</p>
+
+	<p>This endpoint is used to return information about groups that the user is not neccessarily member of. It may be used for getting information about other groups that a user may choose to grant access to content in an ACL, or it may be used for initating a request to join a group.</p>
+
+
+	
+	<p>Query string parameters (optional):</p>
+
+	<dl>
+		<dt><code>query={search}</code></dt>
+		<dd>The provider will list all groups that the current user is associated with, also expired and inactive groups and roles.</dd>
+	</dl>
+
+
+	<p>The response contains a list of groups. If no groups was found, an empty list is returned; <code>[]</code>.</p>
+
+	<p>Here is an example of a response body, to a request for the search term «UNINETT»:</p>
+
+{% highlight http %}
+GET /groups?query=UNINETT HTTP/1.1
+Host: voot-provider.example.org
+Authorization: Bearer 1234-asdf-5678
+{% endhighlight %}
+
+{% highlight json %}
+[
+	{
+		"id": "1234-5678", "displayName": "UNINETT Systemavdelingen"
+	},
+	{
+		"id": "1234-5689", "displayName": "UNINETT Tjenesteavdelingen"
+	},
+	{
+		"id": "1234-5690", "displayName": "UNINETT Nettavdelingen"
+	}
+]
+{% endhighlight %}
+
+
+	<h2 class="page-header" id="grouptypes_listall">List all group types <code>/grouptypes</code></h2>
+
+
+
+	<p>This endpoint is used to return information about group types.</p>
+
+	
+
+
+	<p>The response contains a list of group types. If no group types was found, an empty list is returned; <code>[]</code>.</p>
+
+	<p>Here is an example of a response body:</p>
+
+{% highlight http %}
+GET /grouptypes HTTP/1.1
+Host: voot-provider.example.org
+{% endhighlight %}
+
+{% highlight json %}
+[
+	{
+		"id": "voot:adhoc", "displayName": "Ad-hoc group"
+	},
+	{
+		"id": "eduorg:org", "displayName": "Organization"
+	},
+	{
+		"id": "feide:course", "displayName": "Course"
+	}
+]
+{% endhighlight %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </div>
