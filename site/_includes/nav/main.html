@@ -104,11 +104,14 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right" style="">
-        <li data-toggle="tooltip" data-placement="left" title="Not yet available. Stay tuned" ><button  style="margin-top: 8px" class="btn btn-default" href="#">Login</button></li>
+   <!--     <li data-toggle="tooltip" data-placement="left" title="Not yet available. Stay tuned" ><button  style="margin-top: 8px" class="btn btn-default" href="#">Login</button></li>-->
         <!-- <li><a href="http://talk.uninettlabs.no">Community</a></li> -->
-        <!-- <li><a href="{{ site.blog }}">Blog</a></li> -->
+
+        <li {% if page.slug == "personvern" %} class="active"{% endif %}><a href="/personvern/">Personvern</a></li>
+        <li {% if page.slug == "about" %} class="active"{% endif %}><a href="/about/">Om Feide Connect</a></li>
         <li style="width: 3em"><a href="">&nbsp;</a></li>
       </ul>
+
     </nav>
   </div>
 </header>
