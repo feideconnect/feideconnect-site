@@ -6,18 +6,213 @@ lead: "Group types"
 ---
 
 
-
-
 <div class="bs-docs-section">
-	<h1 id="org" class="page-header">Todo</h1>
+	<h1 id="commongroup" class="page-header">Data Model for Groups</h1>
 
-	<ul>
-		<li>Check multi-valued eduorg attributes</li>
-		<li>Legg til informasjon om berettigede, etc.</li>
-		<li>.</li>
+	<p>Some properties are common and might be used across all groups.</p>
+
+
+
+
+	<h2>Data types</h2>
+
+	<p>The basic types are <a href="https://tools.ietf.org/html/draft-ietf-scim-core-schema-09#section-2.1">inherited from VOOT/SCIM</a></p>
+	<p>The data types that are currently used are:</p>
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">String</li>
+		<li class="uninett-ul-li">Boolean</li>
+		<li class="uninett-ul-li">DateTime</li>
 	</ul>
 
+	<p>In Connect multi-valued attributes are listed as JSON lists <code>["one", "two", "three"]</code>.</p>
+
+	<p>An additional data type, translatable string is defined in VOOT:</p>
+
+	<dl class="dl-horizontal">
+		
+		<dt>Translatable String</dt>
+		<dd>The content may be eigther an untranslated basic string, in an undefined language. Alternatively, the content is an object with the property keys being ISO 639-1 Language Codes. The values is the translated values into that language.
+		<p>Example:</p>
+
+{% highlight json tabsize=1 %}
+{
+	"en": "Group",
+	"nb": "Gruppe"
+}
+{% endhighlight %}
+</dd>
+
+	</dl>
+
+
+	<h2>Group</h2>
+
+
+
+
+	<h4>Required properties</h4>
+
+
+	<dl class="dl-horizontal">
+
+		<dt><code>id</code></dt>
+		<dd>A unique string identifier representing this group. This identifier shuold not be used by humans, only systems.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>is a translatable string giving the group a human friendly name. The name is supposed to give a clear meaning for users setting up access control.</dd>
+		<dd>Datatype: Translatable String</dd>
+	</dl>
+
+
+	<p>The simplest example of a group containing only required parameters:</p>
+
+{% highlight json %}
+{
+	"id": "8878ae43-965a-412a-87b5-38c398a76569",
+	"displayName": "Project on group APIs"
+}
+{% endhighlight %}
+
+
+
+	<h4>Optional properties</h4>
+
+
+
+	<dl class="dl-horizontal">
+
+		<dt><code>description</code></dt>
+		<dd>is a textual description of the group (optional). It may be translated as well.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>type</code></dt>
+		<dd>a pointer to a group type (optional). Default group is <code>voot:default</code>.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>public</code></dt>
+		<dd>is a boolean flag indicating whether the existence of this group and the basic group information is publicly available. Users may search and use groups in setting access control, even if they are not member of a group.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+		<dt><code>active</code></dt>
+		<dd>may be set to <code>false</code> to indicate that the group is currently inactive. It will cause the group to not show up on compact group lists.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+
+		<dt><code>sourceID</code></dt>
+		<dd>is an identifier that refer to the authorative source defining this group. This is useful when the VOOT Provider is merging information from a lot of different systems and passes this information on to the clients.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>membership</code></dt>
+		<dd>if used in the context of a user's membership to this group, the property may contain the embedded membership object. See below for more details about the membership object.</dd>
+
+	</dl>
+
+
+
+	<h2>Membership</h2>
+
+
+
+	<p>The simplest representation of a group membership is an empty object, which tells that the user is member of the group, but does not give any more details than that:</p>
+
+{% highlight json %}
+{}
+{% endhighlight %}
+
+	<p>An optional property <code>basic</code> is recommended to use to indicate the most basic level of roles. For each group type, it should be described how the more complex role model within that group types are projected into the <code>basic</code>.</p>
+
+	<p>There are three legal values of <code>basic</code>:</p>
+
+
+	<ul>
+
+		<li><code>member</code> is regular members. This is the default role if no explicit value is provided. </li>
+		<li><code>admin</code> is an abstract role of super members, having some kind of additional permissions. In example, the admin may invite or add </li>other members, moderate content in a group or anything else.
+		<li><code>owner</code> is given a special meaning in the Ad-Hoc scenario, where groups are created by a person, which then is the owner of the group.</li>
+	</ul>
+
+
+	<p>The following properties are optional.</p>
+
+
+	<dl class="dl-horizontal">
+
+		<dt><code>basic</code></dt>
+		<dd>The basic membership role of the current user (optoinal). Default value is <code>member</code>.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable description of the memership role.</dd>
+
+
+
+		<dt><code>active</code></dt>
+		<dd>may be set to <code>false</code> to indicate that the user is a passive member of the group. <a href="#states">See group and membership states</a>.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>may</code></dt>
+		<dd>An object of permissions that a user may or may not have related to the group. In example a user may be allowed to edit, manage, invite or delete a group.</dd>
+
+		<dt><code>userId</code></dt>
+		<dd>If the membership object is used stand alone, and there is no implicit relation to a given user, the user may be referred to by using this property.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>groupID</code></dt>
+		<dd>If the membership object is used stand alone, and there is no implicit relation to a given group, the group may be referred to by using this property.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+	</dl>
+
+
+	<p>Specific group types may define additional properties on the membership object.</p>
+
+
+
+<p>An example of a membership may look like this:</p>
+
+{% highlight json %}
+{
+	"basic": "admin",
+	"displayName": {
+		"en": "Teacher",
+		"nb": "Lærer"
+	},
+	"course_role": 	"teacher",
+	"notBefore": 	"2014-01-01T12:00:00Z",
+	"notAfter": 	"2014-08-01T12:00:00Z",
+	"active": 	true,
+	"userId": "andreas@university.edu",
+	"groupId": "courses:university_edu:m201"
+}
+{% endhighlight %}
+
+
+
+
+
 </div>
+
+
+
+
+
 
 
 <div class="bs-docs-section">
