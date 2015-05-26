@@ -123,7 +123,7 @@ slug: groups
 
 	<p>Requests needs to be authenticated with a personal token.</p>
 
-	<p>This endpoint returns all *active* group memberships of the current user. Expired or otherwise inactive groups and not returned by default.</p>
+	<p>This endpoint returns all <strong>active</strong> group memberships of the current user. Expired or otherwise inactive groups are not returned by default.</p>
 
 	<p>Query string parameters:</p>
 
@@ -187,12 +187,20 @@ Content-Language: no
 
 	<h2 class="page-header" id="me_groups_groupid">My membership of this particular group <br /><code>/me/groups/{groupid}</code></h2>
 
+
+
+	<div class="bs-callout bs-callout-danger" id="">
+		<h4 id=""><i class="fa fa-bullhorn fa-4x pull-left"></i> Special notes about the Connect Pilot</h4>
+		<p>This endpoint is not yet implemented in the Connect pilot. Instead you will get the exact same information when getting all group memberships with <code>/me/groups</code>.</p>
+	</div>
+
+
 	<p>Requests needs to be authenticated with a personal token.</p>
 
 	<p>If the user is member of the specified group, return the membership object representing the users relation to that group.</p>
 
 {% highlight http %}
-GET /me/groups/8878ae43-965a-412a-87b5-38c398a76569 HTTP/1.1
+GET {{site.ep.groupsBasePath}}me/groups/8878ae43-965a-412a-87b5-38c398a76569 HTTP/1.1
 Host: {{site.ep.groupshost}}
 {{site.exampleAuthorizationHeader}}
 
@@ -218,14 +226,15 @@ Content-Language: no
 
 	<p>Requests needs to be authenticated with a token, if needed in order to access the content.</p>
 
+	<p>This endpoint returns details about a group, that that user has access to. The user might have access to view information about the group even if the user is not member. In example, the group information might be public.</p>
 
 
-	<p>This endpoint returns all *active* group memberships of the current user. Expired or otherwise inactive groups and not returned by default.</p>
+
 
 {% highlight http %}
-GET /me/groups/8878ae43-965a-412a-87b5-38c398a76569 HTTP/1.1
-Host: voot-provider.example.org
-Authorization: Bearer 1234-asdf-5678
+GET {{site.ep.groupsBasePath}}me/groups/8878ae43-965a-412a-87b5-38c398a76569 HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
 
 200 OK
 Content-Type: application/json; charset=utf-8 
@@ -238,6 +247,10 @@ Content-Language: en
 {% endhighlight %}
 
 
+	<div class="bs-callout bs-callout-info" id="">
+		<h4 id=""><i class="fa fa-bullhorn fa-4x pull-left"></i> Special notes about the Connect Pilot</h4>
+		<p>This endpoint is not yet available for all grouptypes.</p>
+	</div>
 
 
 
@@ -245,16 +258,16 @@ Content-Language: en
 
 
 
-	<h2 class="page-header" id="groups_groupid_members">Members of a group <code>/groups/{groupid}/members</code></h2>
+	<h2 class="page-header" id="groups_groupid_members">Members of a group <br /><code>/groups/{groupid}/members</code></h2>
 
 	<p>Requests needs to be authenticated with a token, if needed in order to access the content.</p>
 
 	<p>This endpoint returns all *active* group members of the specified group. Expired or otherwise inactive members will not returned by default.</p>
 
 {% highlight http %}
-GET /groups/8878ae43-965a-412a-87b5-38c398a76569/members HTTP/1.1
-Host: voot-provider.example.org
-Authorization: Bearer 1234-asdf-5678
+GET {{site.ep.groupsBasePath}}groups/8878ae43-965a-412a-87b5-38c398a76569/members HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
 {% endhighlight %}
 	
 	<p>Query string parameters:</p>
@@ -263,6 +276,13 @@ Authorization: Bearer 1234-asdf-5678
 		<dt><code>showAll=true</code></dt>
 		<dd>The provider will list all members that are associated with the group, also expired and inactive user memberships.</dd>
 	</dl>
+
+	<div class="bs-callout bs-callout-info" id="">
+		<h4 id=""><i class="fa fa-bullhorn fa-4x pull-left"></i> Special notes about the Connect Pilot</h4>
+		<p>Listing group members is primiarly intended for display purposes, and therefore userIDs are not returned for the users.</p>
+		<p>Please get in touch with us aobut use cases where it is required to also include userIDs for members.</p>
+	</div>
+
 
 
 	<p>The response contains a list of users. If the group is not currently having any members, an empty list is returned; <code>[]</code>.</p>
@@ -273,8 +293,6 @@ Authorization: Bearer 1234-asdf-5678
 [
 	{
 		"name": "Andreas Åkre Solberg",
-		"email": "andreas.solberg@uninett.no",
-		"profilePhotoURL": "http://core.feideconnect.no/profile/1234-5678"
 		"membership": {
 			"basic": "member"
 		}
@@ -303,7 +321,7 @@ Authorization: Bearer 1234-asdf-5678
 
 
 
-	<h2 class="page-header" id="groups_listall">List all (or query a set of) groups <code>/groups</code></h2>
+	<h2 class="page-header" id="groups_listall">List all (or query a set of) groups <br /><code>/groups</code></h2>
 
 	<p>Requests needs to be authenticated with a token, if needed in order to access the content.</p>
 
@@ -319,14 +337,22 @@ Authorization: Bearer 1234-asdf-5678
 	</dl>
 
 
+	<div class="bs-callout bs-callout-info" id="">
+		<h4 id=""><i class="fa fa-bullhorn fa-4x pull-left"></i> Special notes about the Connect Pilot</h4>
+		<p>Quering/searching is <strong>not yet supported</strong> in the pilot. Instead you will need to list out all groups and filter on the client side.</p>
+		<p>Not all group submodules are still enabled to list groups.</p>
+	</div>
+
+
+
 	<p>The response contains a list of groups. If no groups was found, an empty list is returned; <code>[]</code>.</p>
 
 	<p>Here is an example of a response body, to a request for the search term «UNINETT»:</p>
 
 {% highlight http %}
-GET /groups?query=UNINETT HTTP/1.1
-Host: voot-provider.example.org
-Authorization: Bearer 1234-asdf-5678
+GET {{site.ep.groupsBasePath}}groups?query=UNINETT HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
 {% endhighlight %}
 
 {% highlight json %}
@@ -344,13 +370,21 @@ Authorization: Bearer 1234-asdf-5678
 {% endhighlight %}
 
 
-	<h2 class="page-header" id="grouptypes_listall">List all group types <code>/grouptypes</code></h2>
+
+
+
+
+
+
+	<h2 class="page-header" id="grouptypes_listall">List all group types <br /><code>/grouptypes</code></h2>
 
 
 
 	<p>This endpoint is used to return information about group types.</p>
 
-	
+	<p>It will at least return group type information for all group types are are represented by the groups that the current user is member of</p>
+
+
 
 
 	<p>The response contains a list of group types. If no group types was found, an empty list is returned; <code>[]</code>.</p>
@@ -358,8 +392,9 @@ Authorization: Bearer 1234-asdf-5678
 	<p>Here is an example of a response body:</p>
 
 {% highlight http %}
-GET /grouptypes HTTP/1.1
-Host: voot-provider.example.org
+GET {{site.ep.groupsBasePath}}grouptypes HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
 {% endhighlight %}
 
 {% highlight json %}
