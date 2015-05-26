@@ -90,6 +90,11 @@ lead: "Group types"
 		<dd>a pointer to a group type (optional). Default group is <code>voot:default</code>.</dd>
 		<dd>Datatype: SCIM String</dd>
 
+		<dt><code>parent</code></dt>
+		<dd>a pointer to another group. The linking does not imply any specific semantics on the relationship between the two groups, but it allows for building up hierarchical visual representations of the list of groups a user is member of.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+
 		<dt><code>notBefore</code></dt>
 		<dd>the group did not exist before this date.</dd>
 		<dd>Datatype: SCIM DateTime</dd>
@@ -106,10 +111,6 @@ lead: "Group types"
 		<dd>may be set to <code>false</code> to indicate that the group is currently inactive. It will cause the group to not show up on compact group lists.</dd>
 		<dd>Datatype: SCIM Boolean</dd>
 
-
-		<dt><code>sourceID</code></dt>
-		<dd>is an identifier that refer to the authorative source defining this group. This is useful when the VOOT Provider is merging information from a lot of different systems and passes this information on to the clients.</dd>
-		<dd>Datatype: SCIM String</dd>
 
 		<dt><code>membership</code></dt>
 		<dd>if used in the context of a user's membership to this group, the property may contain the embedded membership object. See below for more details about the membership object.</dd>
@@ -153,8 +154,6 @@ lead: "Group types"
 		<dt><code>displayName</code></dt>
 		<dd>A human readable description of the memership role.</dd>
 
-
-
 		<dt><code>active</code></dt>
 		<dd>may be set to <code>false</code> to indicate that the user is a passive member of the group. <a href="#states">See group and membership states</a>.</dd>
 		<dd>Datatype: SCIM Boolean</dd>
@@ -170,10 +169,11 @@ lead: "Group types"
 		<dt><code>may</code></dt>
 		<dd>An object of permissions that a user may or may not have related to the group. In example a user may be allowed to edit, manage, invite or delete a group.</dd>
 
+<!--
 		<dt><code>userId</code></dt>
 		<dd>If the membership object is used stand alone, and there is no implicit relation to a given user, the user may be referred to by using this property.</dd>
 		<dd>Datatype: SCIM String</dd>
-
+-->
 		<dt><code>groupID</code></dt>
 		<dd>If the membership object is used stand alone, and there is no implicit relation to a given group, the group may be referred to by using this property.</dd>
 		<dd>Datatype: SCIM String</dd>
@@ -198,7 +198,6 @@ lead: "Group types"
 	"notBefore": 	"2014-01-01T12:00:00Z",
 	"notAfter": 	"2014-08-01T12:00:00Z",
 	"active": 	true,
-	"userId": "andreas@university.edu",
 	"groupId": "courses:university_edu:m201"
 }
 {% endhighlight %}
@@ -219,8 +218,6 @@ lead: "Group types"
 	<h1 id="org" class="page-header">Organization</h1>
 
 	<p class="lead">An organization can be any kind of organization, including school, university, or other educational institutions.</p>
-
-	<p>You may register your application using the <a href="{{ site.dev }}">Developer Dashboard</a>.</p>
 
 
 	<p>These groups are based upon information defined in norEdu.</p>
@@ -312,11 +309,6 @@ lead: "Group types"
 		<dd>Will always be <code>true</code> for existing, real organizations.</dd>
 		<dd>will be set to <code>false</code> to indicate organizations that do not exist anymore. In example, when two institutions are merged. The old one may be preserved with a active=false flag for some time to deal with existing access policies.</dd>
 		<dd>Datatype: SCIM Boolean</dd>
-
-
-		<dt><code>sourceID</code></dt>
-		<dd>Usage in Feide Connect yet not defined.</dd>
-		<dd>Datatype: SCIM String</dd>
 
 	</dl>
 
@@ -647,8 +639,293 @@ lead: "Group types"
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+	<h1 id="orgunit" class="page-header">Organizational Unit</h1>
+
+	<p class="lead">An organization unit can be any kind of departments or parts of an organization.</p>
+
+
+
+
+	<h2>Group attributes</h2>
+
+	<p>Attributes from VOOT Core.</p>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:orgunit</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the organizational unit.</dd>
+
+
+		<dt><code>parent</code></dt>
+		<dd>Points to the identifier of the organization.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the organizational unit. Obtained from <code>eduPersonOrgUnitDN:ou</code></dd>
+		<dd>Datatype: Translatable String</dd>
+
+
+		<dt><code>description</code></dt>
+		<dd>is a textual description of the group (optional). It may be translated as well.</dd>
+		<dd>Leave out this field rather than replicate the name of the organization.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+		<dt><code>public</code></dt>
+		<dd>This flag will always be <code>true</code> for organizational units.</dd>
+		<dd>is a boolean flag indicating whether the existence of this group and the basic group information is publicly available. Users may search and use groups in setting access control, even if they are not member of a group.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+		<dt><code>active</code></dt>
+		<dd>Will always be <code>true</code> for organizational units that are currently active.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+
+
+	</dl>
+
+	<p>Specific attributes for <code>fc:org</code>.</p>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>eduOrgLegalName</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>Organization's legal name Obtained from <code>eduPersonOrgDN:eduOrgLegalName</code></dd>
+
+		<dt><code>norEduOrgNIN</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>Organizational number. obtained from <code>eduPersonOrgDN:norEduOrgNIN</code></dd>
+		<dd>Example: <code>NO976820037</code></dd>
+
+		<dt><code>mail</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>Organization's mail. Obtained from <code>eduPersonOrgUnitDN:mail</code></dd>
+
+
+
+
+		<dt><code>telephoneNumber</code></dt>
+		<dd>Reccomended in Feide 1.5.1</dd>
+		<dd>A multi-valued attribute, directly inherited from <code>eduPersonOrgUnitDN:facsimileTelephoneNumber</code></dd>
+
+		<dt><code>postalAddress</code></dt>
+		<dd>Reccomended in Feide 1.5.1</dd>
+		<dd>Postal address. obtained from <code>eduPersonOrgUnitDN:postalAddress</code></dd>
+
+
+		<dt><code>facsimileTelephoneNumber</code></dt>
+		<dd> <code>eduPersonOrgUnitDN:facsimileTelephoneNumber</code></dd>
+
+		<dt><code>l</code></dt>
+		<dd>Organization's location <code>eduPersonOrgUnitDN:l</code></dd>
+
+		<dt><code>norEduOrgAcronym</code></dt>
+		<dd>Acronym for the organization <code>eduPersonOrgUnitDN:norEduOrgAcronym</code></dd>
+
+		<dt><code>postalCode</code></dt>
+		<dd>Organization's postal code <code>eduPersonOrgUnitDN:postalCode</code></dd>
+
+		<dt><code>postOfficeBox</code></dt>
+		<dd>Organization's postal office box <code>eduPersonOrgUnitDN:postOfficeBox</code></dd>
+
+		<dt><code>street</code></dt>
+		<dd>Organization street address <code>eduPersonOrgUnitDN:street</code></dd>
+
+
+	</dl>
+
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+		<dd>When populated from eduOrg/OrgUnit, this value is <code>admin</code> for employees, and <code>member</code> for all others.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>affiliation</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>The users affiliation to this org. Obtained from eduPerson. <code>eduPersonAffiliation</code></dd>
+
+		<dt><code>primaryAffiliation</code></dt>
+		<dd>Mandatory in Feide 1.5.1</dd>
+		<dd>The users affiliation to this org. Obtained from eduPerson. <code>eduPersonPrimaryAffiliation</code></dd>
+		<dd></dd>
+
+		<dt><code>manager</code></dt>
+		<dd>Optional in Feide 1.5.1</dd>
+		<dd>Manager. Obtained from eduPerson <code>manager</code></dd>
+
+		<dt><code>title</code></dt>
+		<dd>Optional in Feide 1.5.1</dd>
+		<dd>Title. Obtained from eduPerson <code>title</code></dd>
+
+		<dt><code>telephoneNumber</code></dt>
+		<dd>Obtained from eduPerson</dd>
+
+		<dt><code>mail</code></dt>
+		<dd>Obtained from eduPerson</dd>
+
+	</dl>
+
+
+
+
+
+	<p>Example:</p>
+
+{% highlight json tabsize=1 %}
+{
+    "id": "fc:ldap:uninett.no:unit:AVD-U20",
+    "type": "fc:org",
+    "parent": "fc:ldap:uninett.no",
+    "public": true,
+    "displayName": "Avdeling for System og Mellomvare",
+    "membership": {
+        "basic": "member"
+    }
+}
+{% endhighlight %}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="bs-docs-section">
 	<h1 id="adhoc" class="page-header">Ad-Hoc group</h1>
+
+	<p class="lead">Ad-hoc groups can be created by any user.</p>
+
+	<p>Ad-hoc groups are managed through the <a href="{{site.apps.groups}}">Connect Groups app</a></p>
+
+
+
+
+	<h2>Group attributes</h2>
+
+	<p>Attributes from VOOT Core.</p>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>voot:ad-hoc</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the ad-hoc group, typically an prefixed UUID like this <br /><code>fc:adhoc:902d87a4-03ed-46cb-96ef-b7bef2763232</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+
+		<dt><code>description</code></dt>
+		<dd>is a textual description of the group (optional). It may be translated as well. Provided by the group creator.</dd>
+		<dd>Datatype: SCIM String</dd>
+
+
+		<dt><code>public</code></dt>
+		<dd>An ad-hoc group be both public and private, depending on the settings added by the group administrators.</dd>
+		<dd>Datatype: SCIM Boolean</dd>
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+	</dl>
+
+
+
+	<div class="bs-example" data-example-id="simple-button-group">
+
+		<p>Example of an adhoc group</p>
+
+	</div>
+{% highlight json tabsize=1 %}
+{
+    "type": "voot:ad-hoc",
+    "description": "Testing demo",
+    "displayName": "A new group",
+    "id": "fc:adhoc:902d87a4-03ed-46cb-96ef-b7bef2763232",
+    "membership": {
+        "basic": "owner"
+    }
+}
+{% endhighlight %}
 
 </div>
 
