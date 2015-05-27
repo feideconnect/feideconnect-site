@@ -454,7 +454,7 @@ lead: "Group types"
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:uninett.no",
-	"type": "org",
+	"type": "fc:org",
 	"displayName": "UNINETT",
 	"public": true,
 	"eduOrgLegalName": "UNINETT AS",
@@ -484,7 +484,7 @@ lead: "Group types"
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:uninett.no:unit:avd-u20",
-	"type": "orgunit",
+	"type": "fc:orgunit",
 	"displayName": "Avdeling for System og Mellomvare",
 	"norEduOrgAcronym": "ASM",
 	"public": true,
@@ -523,7 +523,8 @@ lead: "Group types"
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:oslo-kommune.no",
-	"type": "goowner",
+	"type": "fc:org",
+	"orgType": "goowner",
 	"displayName": "Oslo kommune",
 	"public": true,
 	"eduOrgLegalName": "Oslo Kommune",
@@ -547,7 +548,8 @@ lead: "Group types"
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:oslo-kommune.no:unit:no876326125",
-	"type": "go",
+	"type": "fc:org",
+	"orgType": "goowner",
 	"parent": "fc:org:oslo-kommune.no",
 	"displayName": "Alna grunnskole",
 	"eduOrgLegalName": "Alna grunnskole",
@@ -568,7 +570,8 @@ lead: "Group types"
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:oslo-kommune.no:unit:no876326126",
-	"type": "go",
+	"type": "fc:org",
+	"orgType": "go",
 	"parent": "fc:org:oslo-kommune.no",
 	"displayName": "Bjerke grunnskole",
 	"eduOrgLegalName": "Bjerke grunnskole",
@@ -608,20 +611,19 @@ lead: "Group types"
 
 {% highlight json tabsize=1 %}
 {
-	"id": "fc:org:oslo-kommune.no",
-	"type": "vgsowner",
-	"displayName": "Oslo kommune",
-	"public": true,
-	"eduOrgLegalName": "Oslo Kommune",
-	"norEduOrgNIN": "no976820037",
-	"mail": "info@oslo-kommune.no",
-	"membership": {
-		"basic": "admin",
-		"displayName": "Lærer",
-		"affiliation": ["employee", "member", "faculty"],
-		"primaryAffiliation": "employee",
-		"mail": "annei@oslo-kommune.no"
-	}
+    "id": "fc:org:oslo-kommune.no",
+    "type": "fc:org",
+    "orgType": "vgsowner",
+    "displayName": "Oslo kommune",
+    "eduOrgLegalName": "Oslo kommune",
+    "mail": "post@test.feide.no",
+    "norEduOrgNIN": "NO976820037",
+    "membership": {
+        "basic": "member",
+		"displayName": "Elev",
+		"affiliation": ["student", "member"],
+		"primaryAffiliation": "student"
+    }
 }
 {% endhighlight %}
 
@@ -631,16 +633,18 @@ lead: "Group types"
 
 {% highlight json tabsize=1 %}
 {
-	"id": "fc:org:oslo-kommune.no:unit:no895395126",
-	"type": "vgs",
-	"parent": "fc:org:oslo-kommune.no",
-	"displayName": "Frogner VGS",
-	"norEduOrgNIN": "no895395126",
-	"mail": "info@frognervgs.no",
+    "id": "fc:org:oslo-kommune.no:unit:NO895395126",
+    "type": "fc:org",
+    "orgType": "vgs",
+    "displayName": "Frogner VGS",
+    "public": true,
+    "parent": "fc:org:feide.no",
+    "active": true,
 	"membership": {
 		"basic": "member",
 		"displayName": "Elev",
-		"affiliation": ["member", "student"]
+		"affiliation": ["student", "member"],
+		"primaryAffiliation": "student"
 	}
 }
 {% endhighlight %}
