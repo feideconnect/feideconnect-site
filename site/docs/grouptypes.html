@@ -976,6 +976,9 @@ lead: "Group types"
 
 	<p class="lead">Undervisningsgrupper, basisgrupper og andre grupper i grunnskolen.</p>
 
+	<div class="bs-callout bs-callout-default">
+		<h4>Gruppetypen er spesifikk for grunnopplæringa og er ikke tilgjengelig for brukere i høyere utdanning.</h4>
+	</div>
 
 	<p>Undervisningsgrupper i Connect hentes via Feides katalogtjener i henhold til spesifikasjonen «Format for gruppeinformasjon gjennom Feide for grunnopplæringa» som inngår i Feides skjema versjon 1.6.</p>
 
@@ -1126,5 +1129,854 @@ lead: "Group types"
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="kull" class="page-header">Kull</h1>
+
+	<p class="lead">Alle studenter innenfor en studieprogram(eller retning?) som har felles forventet avgangsår.</p>
+
+	<div class="bs-callout bs-callout-default">
+		<h4><i class="fa fa-university fa-2x"></i> Gruppetypen er spesifikk for høyere utdanning.</h4>
+	</div>
+
+
+	<p>Type ID <code>fc:kull</code></p>
+	<p>Forslag til identifikator: <code>fc:kull:ntnu.no:siving-bygg:2009</code></p>
+
+	<p>Alle studenter innenfor en studieprogram(eller retning?) som er tatt opp et gitt år.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieprogram {y}</li>
+		<li class="uninett-ul-li">Opptaksår {z}</li>
+	</ul>
+	<!--
+
+	<h2>Group attributes</h2>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:gogroup</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the group.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+		<dt><code>parent</code></dt>
+		<dd>En peker på identifikatoren for den organisatoriske gruppen for skolen. Dette kan f.eks. være: <code>fc:org:feide.no:unit:NO895395126</code>.</dd>
+
+
+		<dt><code>go_type</code></dt>
+		<dd>Undervisningsgrupper kan settes til å være en av tre definerte typer. go_type settes til en enbokstavsindikator for type gruppe. Definerte verdier er:</dd>
+		<dd><code>b</code>: Basisgruppe</dd>
+		<dd><code>u</code>: Undervisningsgruppe</dd>
+		<dd><code>a</code>: andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</dd>
+
+		<dt><code>go_type_displayName</code></dt>
+		<dd>Menneskelesbar tekst for gruppetypen definert i <code>go_type</code>. Verdien kan f.eks. være <code>basisgruppe</code>.</dd>
+
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>grep</code></dt>
+		<dd>En referanse til fag representert som et JSON objekt, med to attributter, <code>code</code> og <code>displayName</code>.</dd>
+		<dd><code>code</code> henviser til en gyldig GREP kode for fag.</dd>
+		<dd><code>displayName</code> er et mennekselesbart beskrivende navn på faget.</dd>
+		<dd><div class="bs-example"><p>Eksempel på referanse til Matematikk 1T som har GREP-fagkoden MAT1013.</p></div>
+
+{% highlight json tabsize=1 %}
+{
+    "code": "MAT1013",
+    "displayName": "Matematikk 1T"
+}
+{% endhighlight %}
+</dd>
+
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>role</code></dt>
+		<dd>(endres til affiliation)</dd>
+		<dd>Personens rolletilhørighet til undervisningsgruppen. Lovlige verdier er:</dd>
+		<dd><code>student</code> for elev</dd>
+		<dd><code>faculty</code> for lærer</dd>
+		<dd><code>staff</code> for ansatt uten undervisningsansvar.</dd>
+		<dd><code>affiliate</code> for person som er løsere tilknyttet gruppen og uten å være ansatt eller elev.</dd>
+
+
+	</dl>
+
+
+
+-->
+
+	<div class="bs-example">
+		<p>Eskempel</p>
+	</div>
+{% highlight json tabsize=1 %}
+{
+    "id": "fc:kull:fssbkurs.no:TS-MN1:2015V",
+    "displayName": "2015 v\u00e5r",
+    "parent": "fc:prg:TS-MN1",
+    "type": "fc:kull",
+    "membership": {
+        "fsroles": [
+            "STUDENT"
+        ],
+        "displayName": "Student",
+        "basic": "member"
+    }
+}
+{% endhighlight %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="klasse" class="page-header">Klasse</h1>
+
+	<p class="lead">Klasser er en mindre inndeling enn kull innenfor en et studieprogram.</p>
+
+	<div class="bs-callout bs-callout-default">
+		<h4><i class="fa fa-university fa-2x"></i> Gruppetypen er spesifikk for høyere utdanning.</h4>
+	</div>
+
+	<p>Type ID <code>fc:klasse</code></p>
+	<p>Forslag til identifikator: <code>fc:klasse:ntnu.no:siving-telematikk-sikkerhet:1234</code></p>
+
+
+	<p>En klasse brukes kun ved enkelte institusjoner? En klasse er en subgruppering av studieretning/program? Kanskje dette kan være noe ala labgrupper eller lignende?</p>
+
+
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til klasse {y}</li>
+	</ul>
+	
+	<p>I tillegg, så kan disse gruppene kobles til andre grupper:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Klasse er knyttet til organisasjon</li>
+		<li class="uninett-ul-li">Klasse er knyttet til studieprogram</li>
+		<li class="uninett-ul-li">Klasse er knyttet til (kanskje) studieretning</li>
+		<!-- <li class="uninett-ul-li">Studieretning er knyttet til studieprogram</li> -->
+	</ul>
+
+
+	<!--
+
+	<h2>Group attributes</h2>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:gogroup</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the group.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+		<dt><code>parent</code></dt>
+		<dd>En peker på identifikatoren for den organisatoriske gruppen for skolen. Dette kan f.eks. være: <code>fc:org:feide.no:unit:NO895395126</code>.</dd>
+
+
+		<dt><code>go_type</code></dt>
+		<dd>Undervisningsgrupper kan settes til å være en av tre definerte typer. go_type settes til en enbokstavsindikator for type gruppe. Definerte verdier er:</dd>
+		<dd><code>b</code>: Basisgruppe</dd>
+		<dd><code>u</code>: Undervisningsgruppe</dd>
+		<dd><code>a</code>: andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</dd>
+
+		<dt><code>go_type_displayName</code></dt>
+		<dd>Menneskelesbar tekst for gruppetypen definert i <code>go_type</code>. Verdien kan f.eks. være <code>basisgruppe</code>.</dd>
+
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>grep</code></dt>
+		<dd>En referanse til fag representert som et JSON objekt, med to attributter, <code>code</code> og <code>displayName</code>.</dd>
+		<dd><code>code</code> henviser til en gyldig GREP kode for fag.</dd>
+		<dd><code>displayName</code> er et mennekselesbart beskrivende navn på faget.</dd>
+		<dd><div class="bs-example"><p>Eksempel på referanse til Matematikk 1T som har GREP-fagkoden MAT1013.</p></div>
+
+{% highlight json tabsize=1 %}
+{
+    "code": "MAT1013",
+    "displayName": "Matematikk 1T"
+}
+{% endhighlight %}
+</dd>
+
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>role</code></dt>
+		<dd>(endres til affiliation)</dd>
+		<dd>Personens rolletilhørighet til undervisningsgruppen. Lovlige verdier er:</dd>
+		<dd><code>student</code> for elev</dd>
+		<dd><code>faculty</code> for lærer</dd>
+		<dd><code>staff</code> for ansatt uten undervisningsansvar.</dd>
+		<dd><code>affiliate</code> for person som er løsere tilknyttet gruppen og uten å være ansatt eller elev.</dd>
+
+
+	</dl>
+
+
+-->
+
+	<div class="bs-example">
+		<p>Klasse</p>
+	</div>
+{% highlight json tabsize=1 %}
+{
+    "type": "fc:klasse",
+    "membership": {
+        "fsroles": [
+            "STUDENT"
+        ],
+        "notAfter": "2014-01-01T10:12:04Z",
+        "basic": "member",
+        "active": false,
+        "displayName": "Student"
+    },
+    "id": "fc:klasse:fssbkurs.no:TS-MN1:2014V:A",
+    "parent": "fc:kull:fssbkurs.no:TS-MN1:2014V",
+    "displayName": "2014 v\u00e5r"
+}
+{% endhighlight %}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="studieprogram" class="page-header">Studieprogram</h1>
+
+	<!-- <p class="lead">Hovedinndeling .</p> -->
+
+
+	<div class="bs-callout bs-callout-default">
+		<h4><i class="fa fa-university fa-2x"></i> Gruppetypen er spesifikk for høyere utdanning.</h4>
+	</div>
+
+	<p>Type ID <code>fc:prg</code></p>
+	<p>Forslag til identifikator: <code>fc:prg:ntnu.no:siving-bygg</code></p>
+
+	<p>Alle studenter innenfor en studieprogram uavhengig av når de er tatt opp.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+	</ul>
+
+
+	<!--
+
+	<h2>Group attributes</h2>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:gogroup</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the group.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+		<dt><code>parent</code></dt>
+		<dd>En peker på identifikatoren for den organisatoriske gruppen for skolen. Dette kan f.eks. være: <code>fc:org:feide.no:unit:NO895395126</code>.</dd>
+
+
+		<dt><code>go_type</code></dt>
+		<dd>Undervisningsgrupper kan settes til å være en av tre definerte typer. go_type settes til en enbokstavsindikator for type gruppe. Definerte verdier er:</dd>
+		<dd><code>b</code>: Basisgruppe</dd>
+		<dd><code>u</code>: Undervisningsgruppe</dd>
+		<dd><code>a</code>: andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</dd>
+
+		<dt><code>go_type_displayName</code></dt>
+		<dd>Menneskelesbar tekst for gruppetypen definert i <code>go_type</code>. Verdien kan f.eks. være <code>basisgruppe</code>.</dd>
+
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>grep</code></dt>
+		<dd>En referanse til fag representert som et JSON objekt, med to attributter, <code>code</code> og <code>displayName</code>.</dd>
+		<dd><code>code</code> henviser til en gyldig GREP kode for fag.</dd>
+		<dd><code>displayName</code> er et mennekselesbart beskrivende navn på faget.</dd>
+		<dd><div class="bs-example"><p>Eksempel på referanse til Matematikk 1T som har GREP-fagkoden MAT1013.</p></div>
+
+{% highlight json tabsize=1 %}
+{
+    "code": "MAT1013",
+    "displayName": "Matematikk 1T"
+}
+{% endhighlight %}
+</dd>
+
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>role</code></dt>
+		<dd>(endres til affiliation)</dd>
+		<dd>Personens rolletilhørighet til undervisningsgruppen. Lovlige verdier er:</dd>
+		<dd><code>student</code> for elev</dd>
+		<dd><code>faculty</code> for lærer</dd>
+		<dd><code>staff</code> for ansatt uten undervisningsansvar.</dd>
+		<dd><code>affiliate</code> for person som er løsere tilknyttet gruppen og uten å være ansatt eller elev.</dd>
+
+
+	</dl>
+
+
+-->
+
+	<div class="bs-example">
+		<p>Studieprogram</p>
+	</div>
+{% highlight json tabsize=1 %}
+    {
+        "type": "fc:prg",
+        "membership": {
+            "fsroles": [
+                "STUDENT"
+            ],
+            "notAfter": "2014-03-26T00:00:00CET",
+            "basic": "member",
+            "active": false,
+            "displayName": "Student"
+        },
+        "id": "fc:prg:fssbkurs.no:HFB3-SPR",
+        "parent": "fc:org:fssbkurs.no",
+        "displayName": "Spr\u00e5k 3"
+    }
+{% endhighlight %}
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="studieretning" class="page-header">Studieretning</h1>
+
+
+
+	<div class="bs-callout bs-callout-danger">
+		<h4><i class="fa fa-warning"></i> Studieretning er ennå ikke ferdig implementert.</h4>
+		<p>Ta kontakt for oppdatert status på dette.</p>
+	</div>
+
+	<p class="lead">Studieretning representerer en spesialisering innenfor et studieprogram.</p>
+
+
+	<div class="bs-callout bs-callout-default">
+		<h4><i class="fa fa-university fa-2x"></i> Gruppetypen er spesifikk for høyere utdanning.</h4>
+	</div>
+
+	<p>Type ID <code>fc:str</code></p>
+	<p>Forslag til identifikator: <code>fc:str:ntnu.no:siving-telematikk-sikkerhet</code></p>
+
+	<p>Alle studenter innenfor en studieretning uavhengig av når de er tatt opp.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Person er student</li>
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Tilhørighet til studieretning {y}</li>
+	</ul>
+	
+	<p>I tillegg, så kan disse gruppene kobles til andre grupper:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Studieretning er knyttet til organisasjon</li>
+		<li class="uninett-ul-li">Studieretning er knyttet til studieprogram</li>
+		<li class="uninett-ul-li">Studieretning er knyttet til Sted (fakultet, institutt)</li>
+	</ul>
+
+
+	<!--
+
+	<h2>Group attributes</h2>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:gogroup</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the group.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+		<dt><code>parent</code></dt>
+		<dd>En peker på identifikatoren for den organisatoriske gruppen for skolen. Dette kan f.eks. være: <code>fc:org:feide.no:unit:NO895395126</code>.</dd>
+
+
+		<dt><code>go_type</code></dt>
+		<dd>Undervisningsgrupper kan settes til å være en av tre definerte typer. go_type settes til en enbokstavsindikator for type gruppe. Definerte verdier er:</dd>
+		<dd><code>b</code>: Basisgruppe</dd>
+		<dd><code>u</code>: Undervisningsgruppe</dd>
+		<dd><code>a</code>: andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</dd>
+
+		<dt><code>go_type_displayName</code></dt>
+		<dd>Menneskelesbar tekst for gruppetypen definert i <code>go_type</code>. Verdien kan f.eks. være <code>basisgruppe</code>.</dd>
+
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>grep</code></dt>
+		<dd>En referanse til fag representert som et JSON objekt, med to attributter, <code>code</code> og <code>displayName</code>.</dd>
+		<dd><code>code</code> henviser til en gyldig GREP kode for fag.</dd>
+		<dd><code>displayName</code> er et mennekselesbart beskrivende navn på faget.</dd>
+		<dd><div class="bs-example"><p>Eksempel på referanse til Matematikk 1T som har GREP-fagkoden MAT1013.</p></div>
+
+{% highlight json tabsize=1 %}
+{
+    "code": "MAT1013",
+    "displayName": "Matematikk 1T"
+}
+{% endhighlight %}
+</dd>
+
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>role</code></dt>
+		<dd>(endres til affiliation)</dd>
+		<dd>Personens rolletilhørighet til undervisningsgruppen. Lovlige verdier er:</dd>
+		<dd><code>student</code> for elev</dd>
+		<dd><code>faculty</code> for lærer</dd>
+		<dd><code>staff</code> for ansatt uten undervisningsansvar.</dd>
+		<dd><code>affiliate</code> for person som er løsere tilknyttet gruppen og uten å være ansatt eller elev.</dd>
+
+
+	</dl>
+
+
+
+	<div class="bs-example">
+		<p>Basisgruppe</p>
+	</div>
+{% highlight json tabsize=1 %}
+{
+    "membership": {
+        "basic": "admin",
+        "role": "faculty"
+    },
+    "displayName": "Klasse 1SFA",
+    "go_type_displayName": "basisgruppe",
+    "type": "fc:gogroup",
+    "notAfter": "2015-06-15T00:00:00Z",
+    "notBefore": "2014-08-01T00:00:00Z",
+
+    "id": "fc:gogroup:feide.no:b:NO895395126:1SFA:2014-08-01:2015-06-15",
+    "parent": "fc:org:feide.no:unit:NO895395126"
+}
+{% endhighlight %}
+
+
+-->
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="emner" class="page-header">Emner</h1>
+
+	<p class="lead">Tilknytning til emner / fag ved institusjonen.</p>
+
+
+	<div class="bs-callout bs-callout-default">
+		<h4><i class="fa fa-university fa-2x"></i> Gruppetypen er spesifikk for høyere utdanning.</h4>
+	</div>
+
+
+	<p>Type ID <code>fc:emne</code></p>
+	<p>Forslag til identifikator: <code>fc:emne:ntnu.no:sie5080</code></p>
+
+	<p>Et emne er et fag, som en student kan være undervisningsmeldt i. En faglærer er også tilknyttet emner man underviser i.</p>
+
+	<p>Kan identifiseres av følgende:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Tilhørighet til organisasjon {x}</li>
+		<li class="uninett-ul-li">Har tilknytning {z} til emne {y}</li>
+	</ul>
+
+	<p>Tilleggsinformasjon:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Hvilket semester er man knyttet til faget.</li>
+	</ul>
+
+
+	<p>Mulige tilknytninger er f.eks.</p>
+	
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Student</li>
+		<li class="uninett-ul-li">Faglærer</li>
+	</ul>
+
+	<p>I tillegg, så kan disse gruppene kobles til andre grupper:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Emne er knyttet til organisasjon</li>
+		<li class="uninett-ul-li">Emne er knyttet til fakultet</li>
+		<li class="uninett-ul-li">Emne er knyttet til institutt</li>
+	</ul>
+
+
+	<!--
+
+	<h2>Group attributes</h2>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:gogroup</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the group.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+		<dt><code>parent</code></dt>
+		<dd>En peker på identifikatoren for den organisatoriske gruppen for skolen. Dette kan f.eks. være: <code>fc:org:feide.no:unit:NO895395126</code>.</dd>
+
+
+		<dt><code>go_type</code></dt>
+		<dd>Undervisningsgrupper kan settes til å være en av tre definerte typer. go_type settes til en enbokstavsindikator for type gruppe. Definerte verdier er:</dd>
+		<dd><code>b</code>: Basisgruppe</dd>
+		<dd><code>u</code>: Undervisningsgruppe</dd>
+		<dd><code>a</code>: andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</dd>
+
+		<dt><code>go_type_displayName</code></dt>
+		<dd>Menneskelesbar tekst for gruppetypen definert i <code>go_type</code>. Verdien kan f.eks. være <code>basisgruppe</code>.</dd>
+
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>grep</code></dt>
+		<dd>En referanse til fag representert som et JSON objekt, med to attributter, <code>code</code> og <code>displayName</code>.</dd>
+		<dd><code>code</code> henviser til en gyldig GREP kode for fag.</dd>
+		<dd><code>displayName</code> er et mennekselesbart beskrivende navn på faget.</dd>
+		<dd><div class="bs-example"><p>Eksempel på referanse til Matematikk 1T som har GREP-fagkoden MAT1013.</p></div>
+
+{% highlight json tabsize=1 %}
+{
+    "code": "MAT1013",
+    "displayName": "Matematikk 1T"
+}
+{% endhighlight %}
+</dd>
+
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>role</code></dt>
+		<dd>(endres til affiliation)</dd>
+		<dd>Personens rolletilhørighet til undervisningsgruppen. Lovlige verdier er:</dd>
+		<dd><code>student</code> for elev</dd>
+		<dd><code>faculty</code> for lærer</dd>
+		<dd><code>staff</code> for ansatt uten undervisningsansvar.</dd>
+		<dd><code>affiliate</code> for person som er løsere tilknyttet gruppen og uten å være ansatt eller elev.</dd>
+
+
+	</dl>
+
+
+
+-->
+
+	<div class="bs-example">
+		<p>Emne</p>
+	</div>
+{% highlight json tabsize=1 %}
+    {
+        "id": "fc:emne:fssbkurs.no:THTEST18-1",
+        "parent": "fc:org:fssbkurs.no",
+        "displayName": "Testemne 18",
+        "type": "fc:emne",
+        "membership": {
+            "fsroles": [
+                "STUDENT"
+            ],
+            "subjectRelations": "vurdering",
+            "displayName": "Student",
+            "basic": "member",
+            "active": true
+        }
+    }
+{% endhighlight %}
+
+
+</div>
 
 
