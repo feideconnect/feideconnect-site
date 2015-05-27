@@ -32,14 +32,18 @@ lead: "Group types"
 		
 		<dt>Translatable String</dt>
 		<dd>The content may be eigther an untranslated basic string, in an undefined language. Alternatively, the content is an object with the property keys being ISO 639-1 Language Codes. The values is the translated values into that language.
-		<p>Example:</p>
 
+
+	<div class="bs-example">
+		<p>Example of an translatable string</p>
+	</div>
 {% highlight json tabsize=1 %}
 {
 	"en": "Group",
 	"nb": "Gruppe"
 }
 {% endhighlight %}
+
 </dd>
 
 	</dl>
@@ -65,7 +69,9 @@ lead: "Group types"
 	</dl>
 
 
-	<p>The simplest example of a group containing only required parameters:</p>
+	<div class="bs-example">
+		<p>The simplest example of a group containing only required parameters:</p>	
+	</div>
 
 {% highlight json %}
 {
@@ -73,6 +79,9 @@ lead: "Group types"
 	"displayName": "Project on group APIs"
 }
 {% endhighlight %}
+
+
+
 
 
 
@@ -184,8 +193,10 @@ lead: "Group types"
 	<p>Specific group types may define additional properties on the membership object.</p>
 
 
+<div class="bs-example">
+	<p>An example of a membership may look like this:</p>	
+</div>
 
-<p>An example of a membership may look like this:</p>
 
 {% highlight json %}
 {
@@ -437,8 +448,9 @@ lead: "Group types"
 {% endhighlight %}
 
 
+<div class="bs-example">
 	<p>is member of the UNINETT group:</p>
-
+</div>
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:uninett.no",
@@ -464,7 +476,10 @@ lead: "Group types"
 {% endhighlight %}
 
 
+
+<div class="bs-example">
 	<p>and is member of a group for the ASM department:</p>
+</div>
 
 {% highlight json tabsize=1 %}
 {
@@ -501,8 +516,9 @@ lead: "Group types"
 }
 {% endhighlight %}
 
+<div class="bs-example">
 	<p>is teaching at two schools, both schools share a school owner Oslo Kommune</p>
-
+</div>
 
 {% highlight json tabsize=1 %}
 {
@@ -525,8 +541,9 @@ lead: "Group types"
 
 	<p>The two schools is also represented as groups:</p>
 
+<div class="bs-example">
 	<p>Alna grunnskole</p>
-
+</div>
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:oslo-kommune.no:unit:no876326125",
@@ -545,9 +562,9 @@ lead: "Group types"
 }
 {% endhighlight %}
 
-
+<div class="bs-example">
 	<p>and Bjerke grunnskole</p>
-
+</div>
 {% highlight json tabsize=1 %}
 {
 	"id": "fc:org:oslo-kommune.no:unit:no876326126",
@@ -585,8 +602,9 @@ lead: "Group types"
 }
 {% endhighlight %}
 
+<div class="bs-example">
 	<p>is studing at Frogner VGS, owned by Oslo Kommune</p>
-
+</div>
 
 {% highlight json tabsize=1 %}
 {
@@ -607,8 +625,9 @@ lead: "Group types"
 }
 {% endhighlight %}
 
-
+<div class="bs-example">
 	<p>A group representing the school Frogner VGS</p>
+</div>
 
 {% highlight json tabsize=1 %}
 {
@@ -910,10 +929,8 @@ lead: "Group types"
 
 
 
-	<div class="bs-example" data-example-id="simple-button-group">
-
+	<div class="bs-example">
 		<p>Example of an adhoc group</p>
-
 	</div>
 {% highlight json tabsize=1 %}
 {
@@ -928,5 +945,186 @@ lead: "Group types"
 {% endhighlight %}
 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="undervisningsgrupper" class="page-header">Undervisningsgrupper</h1>
+
+	<p class="lead">Undervisningsgrupper, basisgrupper og andre grupper i grunnskolen.</p>
+
+
+	<p>Undervisningsgrupper i Connect hentes via Feides katalogtjener i henhold til spesifikasjonen «Format for gruppeinformasjon gjennom Feide for grunnopplæringa» som inngår i Feides skjema versjon 1.6.</p>
+
+
+
+<!--
+	<div class="bs-callout bs-callout-danger">
+		<h4>sldkfjsdlkfj</h4>
+		<p></p>
+	</div>
+-->
+
+
+
+	<h2>Group attributes</h2>
+
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>type</code></dt>
+		<dd><code>fc:gogroup</code></dd>
+
+		<dt><code>id</code></dt>
+		<dd>A unique identifier of the group.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human friendly name of the group. Provided by the group creator.</dd>
+		<dd>Datatype: Translatable String</dd>
+
+		<dt><code>parent</code></dt>
+		<dd>En peker på identifikatoren for den organisatoriske gruppen for skolen. Dette kan f.eks. være: <code>fc:org:feide.no:unit:NO895395126</code>.</dd>
+
+
+		<dt><code>go_type</code></dt>
+		<dd>Undervisningsgrupper kan settes til å være en av tre definerte typer. go_type settes til en enbokstavsindikator for type gruppe. Definerte verdier er:</dd>
+		<dd><code>b</code>: Basisgruppe</dd>
+		<dd><code>u</code>: Undervisningsgruppe</dd>
+		<dd><code>a</code>: andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</dd>
+
+		<dt><code>go_type_displayName</code></dt>
+		<dd>Menneskelesbar tekst for gruppetypen definert i <code>go_type</code>. Verdien kan f.eks. være <code>basisgruppe</code>.</dd>
+
+
+		<dt><code>notBefore</code></dt>
+		<dd>the group did not exist before this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>notAfter</code></dt>
+		<dd>the group is deleted or not valid after this date.</dd>
+		<dd>Datatype: SCIM DateTime</dd>
+
+		<dt><code>grep</code></dt>
+		<dd>En referanse til fag representert som et JSON objekt, med to attributter, <code>code</code> og <code>displayName</code>.</dd>
+		<dd><code>code</code> henviser til en gyldig GREP kode for fag.</dd>
+		<dd><code>displayName</code> er et mennekselesbart beskrivende navn på faget.</dd>
+		<dd><div class="bs-example"><p>Eksempel på referanse til Matematikk 1T som har GREP-fagkoden MAT1013.</p></div>
+
+{% highlight json tabsize=1 %}
+{
+    "code": "MAT1013",
+    "displayName": "Matematikk 1T"
+}
+{% endhighlight %}
+</dd>
+
+
+	</dl>
+
+
+	<h2>Membership attributes</h2>
+
+	<dl class="dl-horizontal">
+
+
+		<dt><code>basic</code></dt>
+		<dd>This value may be <code>member</code>, <code>admin</code> or <code>owner</code>.</dd>
+
+		<dt><code>displayName</code></dt>
+		<dd>A human readable descriptive name of the affiliation to the group.</dd>
+
+		<dt><code>role</code></dt>
+		<dd>(endres til affiliation)</dd>
+		<dd>Personens rolletilhørighet til undervisningsgruppen. Lovlige verdier er:</dd>
+		<dd><code>student</code> for elev</dd>
+		<dd><code>faculty</code> for lærer</dd>
+		<dd><code>staff</code> for ansatt uten undervisningsansvar.</dd>
+		<dd><code>affiliate</code> for person som er løsere tilknyttet gruppen og uten å være ansatt eller elev.</dd>
+
+
+	</dl>
+
+
+
+	<div class="bs-example">
+		<p>Basisgruppe</p>
+	</div>
+{% highlight json tabsize=1 %}
+{
+    "membership": {
+        "basic": "admin",
+        "role": "faculty"
+    },
+    "displayName": "Klasse 1SFA",
+    "go_type_displayName": "basisgruppe",
+    "type": "fc:gogroup",
+    "notAfter": "2015-06-15T00:00:00Z",
+    "notBefore": "2014-08-01T00:00:00Z",
+
+    "id": "fc:gogroup:feide.no:b:NO895395126:1SFA:2014-08-01:2015-06-15",
+    "parent": "fc:org:feide.no:unit:NO895395126"
+}
+{% endhighlight %}
+
+
+
+
+	<div class="bs-example">
+		<p>Undervisningsgruppe</p>
+	</div>
+{% highlight json tabsize=1 %}
+{
+    "membership": {
+        "basic": "admin",
+        "role": "faculty"
+    },
+    "displayName": "Matematikk 1TA VG1 studieforberedende",
+    "go_type_displayName": "undervisningsgruppe",
+    "type": "fc:gogroup",
+    "notAfter": "2015-06-15T00:00:00Z",
+    "notBefore": "2014-08-01T00:00:00Z",
+    "go_type": "u",
+    "grep": {
+        "code": "MAT1013",
+        "displayName": "Matematikk 1T"
+    },
+    "id": "fc:gogroup:feide.no:u:NO895395126:1TA-MAT1013:2014-08-01:2015-06-15",
+    "parent": "fc:org:feide.no:unit:NO895395126"
+}
+{% endhighlight %}
+
+
+
+</div>
+
+
+
+
+
+
 
 
