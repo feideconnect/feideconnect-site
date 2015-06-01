@@ -5,8 +5,54 @@ slug: peoplesearch
 ---
 
 <div class="bs-docs-section">
-	<h1 class="page-header">Empty section</h1>
+	<h1 class="page-header">People search</h1>
 
-	<p>...</p>
+	<p>People search is an API that allows you to perform text search for end users within an organization. </p>
+
+	<p>As of now, the lack of user identifiers returned in the API is limiting how it can be used. The People Search API is used within the groups app to manage ad-hoc groups.</p>
+
+	<p>We are interesting in discussing a proper way of releasing user identifiers in this API with organizations.</p>
+
+
+	<h2>List organizations</h2>
+
+	<p>TBA</p>
+
+
+	<h2>Seach for people within an organization</h2>
+
+
+{% highlight HTTP %}
+GET /peoplesearch/search/uninett.no/andreas HTTP/1.1
+Host: {{ site.ep.core }}
+Authorization: Bearer 083a7ef0-ea97-49ec-8804-379dc1e9b54c
+{% endhighlight %}
+
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+[
+    {
+        "name": "Andreas \u00c5kre Solberg",
+        "profile_image_token": "iMl2fkcqrI95kJUwuYYPlFJW6xssZBdTFkE-biqjRsk="
+    },
+    {
+        "name": "Andreas Bach",
+        "profile_image_token": "wguj_kBKps0Q4KvwMinGaVWHnP4WxbJ_TCAI992UzwM="
+    },
+    {
+        "name": "Andreas Jaunsen",
+        "profile_image_token": "RuTBGVo8FOYz6gR0lix_r06PJcF9NzI8dfFOb_NvXNA="
+    }
+]
+{% endhighlight %}
+
+
+
+
+
+
 
 </div>
