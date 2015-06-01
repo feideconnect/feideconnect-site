@@ -7,7 +7,10 @@ slug: mobile
 <div class="bs-docs-section">
 	<h1 class="page-header">Mobile applications</h1>
 
-	<p>...</p>
+	<p>OAuth 2.0 is designed to work well with mobile applications, both native and web applications.</p>
+
+	<p>Typically the application will initate login, opening a web view where the user enters credendials, before Connect is issuing the access token and sending it back to the mobile app.</p>
+	<p>The app will use the token for looking up information about who the user is, and may be communicate with its backend through the <a href="/docs/apigatekeeper/">Connect API Gatekeeper</a>.</p>
 
 
 </div>
@@ -16,15 +19,22 @@ slug: mobile
 <div class="bs-docs-section">
 	<h1 class="page-header">Authentication</h1>
 
-	<p>...</p>
+	<p>There are more than one approach to deal with how a native app opens the authorization web view for the user. We strongly reccomend to use the native browser for this.</p>
 
 	<h2>System-wide browser and custom URL schemes</h2>
 
-	<p></p>
+	<p>To initate the OAuth 2.0 flow, open the native browser app to open the OAuth authorization URL.</p>
+	<p>Register a custom URL Scheme for the native app, such as <code>myconnectapp</code>.</p>
+	<p>In the Connect dashboard, regsiter a redirect URI such as <code>myconnectapp://</code>.</p>
+	<p>Then register a listener that is triggered when the app is opened with this scheme, and then deal with receiving the OAuth token.</p>
+
+
+
 
 	<h2>In-app browser</h2>
 
-	<p></p>
+	<p>Alternatively, the mobile OS typically offers a web component that might be used within the app. </p>
+	<p>We would not reccomend this option. Mostly because of the security flaw of the user not beeing able to verify the ssl connection to Feide, and having to trust that the app is not intercepting and stealing the password.</p>
 
 </div>
 
@@ -33,7 +43,7 @@ slug: mobile
 <div class="bs-docs-section">
 	<h1 class="page-header">Protecting access to backend APIs</h1>
 
-	<p>...</p>
+	<p>The <a href="/docs/apigatekeeper/">Connect API Gatekeeper</a> is very well suited to handle access control to the API backend of your client.</p>
 
 
 </div>
