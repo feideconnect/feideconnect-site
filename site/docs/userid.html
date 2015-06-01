@@ -10,10 +10,11 @@ slug: userid
 	<h1 id="register" class="page-header">UserIDs</h1>
 
 
-	<p class="lead">...</p>
+	<p class="lead">How to identify users, people and accounts within Connect.</p>
 
 
 	<p></p>
+
 </div>
 
 
@@ -28,8 +29,23 @@ slug: userid
 	<p class="lead">...</p>
 
 
-	<p></p>
+	<p>The primary user identifier is generated for users the first time they access Connect. It is in the UUID format, and is opaque, not releasing any additional information about the user. It is intended to be long-term, surviving merging of schools and universities.</p>
+
+
+{% highlight json %}
+{
+	"userid": "7b96eab9-b69e-4b8c-9636-1da868207864"
+}
+{% endhighlight %}
+
+
+
+
+
 </div>
+
+
+
 
 <div class="bs-docs-section">
 	<h1 id="register" class="page-header">Secondary UserIDs</h1>
@@ -39,11 +55,47 @@ slug: userid
 
 	<p></p>
 
+
+
+
 	<h3>Feide identifier</h3>
 
+{% highlight json %}
+{
+	"userid": "7b96eab9-b69e-4b8c-9636-1da868207864",
+	"userid-sec": [
+		"feide:andreas@uninett.no"
+	],
+	"name": "Andreas Åkre Solberg"
+}
+{% endhighlight %}
+
+
+<!--
 	<h3>National Identity number</h3>
 
+{% highlight json %}
+{
+	"userid": "7b96eab9-b69e-4b8c-9636-1da868207864",
+	"userid-sec": [
+		"feide:andreas@uninett.no"
+	]
+}
+{% endhighlight %}
+
+-->
+
+
 	<h3>Merged primary keys</h3>
+
+{% highlight json %}
+{
+	"userid": "7b96eab9-b69e-4b8c-9636-1da868207864",
+	"userid-sec": [
+		"uuid:0723bd04-9731-48c2-86e4-2159abd0e85f"
+	]
+}
+{% endhighlight %}
 
 
 
