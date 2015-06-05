@@ -26,8 +26,8 @@ ep:
   authhost:   auth.feideconnect.no
   api:        https://api.feideconnect.no
   apihost:    api.feideconnect.no
-  groups:     https://api-groups.feideconnect.no
-  groupshost: api-groups.feideconnect.no
+  groups:     https://groups-api.feideconnect.no
+  groupshost: groups-api.feideconnect.no
   groupsBasePath: /groups/
 
 
