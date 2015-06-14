@@ -16,7 +16,64 @@ slug: openid
 
 
 
+
+
+	<h2>Discovery and configuration</h2>
+
+
+	<p>All you need to know in order to configure your OpenID Connect client to the Connect platform, is available through the discovery endpoint:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="{{ site.ep.auth }}/.well-known/openid-configuration">https://auth.feideconnect.no/.well-known/openid-configuration</a>
+		</li>
+	</ul>
+
+	<h2>OpenID Specifications</h2>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="http://openid.net/specs/openid-connect-core-1_0.html#ImplicitAuthResponse">OpenID Connect Core </a>
+			<a href="http://openid.net/specs/openid-connect-discovery-1_0.html">OpenID Connect Discovery</a>
+		</li>
+	</ul>
+
+
+	<h2>Supported features</h2>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Authorization Code flow (response_mode: code)</li>
+		<li class="uninett-ul-li">Implicit grant flow (response_mode: token)</li>
+		<li class="uninett-ul-li">IDtoken signed with PKI (RS256)</li>
+	</ul>
+
+	<p>Dynamic registration is (not yet) supported.</p>
+
+	<h2>Authentication</h2>
+
+	<p>Connect will enable OpenID Connect functionality on the same authorization endpoint as the one used with basic OAuth, at the moment the client is requesting a token with the scope <code>openid</code>.</p>
+
+
+
+	<h2>Useful tools</h2>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="http://jwt.io">jwt.io - JWT debugger</a>
+		</li>
+	</ul>
 	
+
+
+	<h2>Client libraries</h2>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="">... </a>
+		</li>
+	</ul>
+	
+
 
 
 </div>
