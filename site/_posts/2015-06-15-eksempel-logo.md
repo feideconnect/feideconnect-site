@@ -16,11 +16,10 @@ Som tjenesteleverandør, så har man kanskje ikke mulighet å logge inn med vanl
 
 Da kan man logge inn på Connect Dashboard:
 
-* <https://dashboard.uninett.no>
+* <https://dashboard.feideconnect.no>
 
 ved å velge å logge inn med OpenIDP.
 
-![]()
 
 <img src="http://clippings.erlang.no/ZZ1171E230.jpg" class="thumbnail img-responsive">
 
