@@ -39,6 +39,8 @@ slug: openid
 	</ul>
 
 
+
+
 	<h2>Supported features</h2>
 
 	<ul class="uninett-ul">
@@ -47,11 +49,61 @@ slug: openid
 		<li class="uninett-ul-li">IDtoken signed with PKI (RS256)</li>
 	</ul>
 
-	<p>Dynamic registration is (not yet) supported.</p>
+
+	<p>Dynamic registration is not supported.</p>
+
+
 
 	<h2>Authentication</h2>
 
 	<p>Connect will enable OpenID Connect functionality on the same authorization endpoint as the one used with basic OAuth, at the moment the client is requesting a token with the scope <code>openid</code>.</p>
+
+
+
+
+	<h2>JWT Signing key</h2>
+
+	<p>The signing key may be obtained here:</p>
+
+
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="{{ site.ep.auth }}/openid/jwks">{{ site.ep.auth }}/openid/jwks</a>
+		</li>
+	</ul>
+
+
+
+
+
+	<h2>Userinfo</h2>
+
+	<p>The userinfo endpoint is:</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="{{ site.ep.auth }}/openid/jwks">{{ site.ep.auth }}/openid/userinfo</a>
+		</li>
+	</ul>
+
+	<p>Example of an userinfo response:</p>
+
+{% highlight HTTP %}
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+    "user": {
+        "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+        "userid_sec": ["feide:andreas@uninett.no"],
+        "name": "Andreas \u00c5kre Solberg",
+        "mail": "andreas.solberg@uninett.no",
+        "profilephoto": "p:a3019954-902f-45a3-b4ee-bca7b48ab507"
+    },
+    "audience": "e8160a77-58f8-4006-8ee5-ab64d17a5b1e"
+}
+{% endhighlight %}
 
 
 
