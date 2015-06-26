@@ -69,10 +69,10 @@ Content-Type: application/json; charset=utf-8
     <p>If the application has obtained the <code>profilephoto</code> public handle of the user, the application may fetch the profile photo from:</p>
 
 {% highlight plain %}
-{{ site.ep.core }}/userinfo/v1/user/media/{profilephoto handle}
+{{ site.ep.api }}/userinfo/v1/user/media/{profilephoto handle}
 {% endhighlight %}
 
-    <p>In example: <code>{{ site.ep.core }}/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507</code></p>
+    <p>In example: <code>{{ site.ep.api }}/userinfo/v1/user/media/p:a3019954-902f-45a3-b4ee-bca7b48ab507</code></p>
 
     <p>The profile photo is often square, and 128 x 128px. If the original dimension is not 1:1, the longest edge will be 128px, and other will be shorter maintaining the same aspect ratio.</p>
 
