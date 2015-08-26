@@ -11,7 +11,11 @@ slug: endusers
 
 	<ul class="uninett-ul">
 		<li class="uninett-ul-li">Tjenesten initierer pålogging, enten automatisk, eller ved at brukeren trykker på en login-lenke.</li>
-		<li class="uninett-ul-li">Dersom flere alternative påloggingsmuligheter er tilgjengelig, vil brukeren måtte velge mellom disse: f.eks. Feide og Idporten.</li>
+
+
+		<li class="uninett-ul-li">Brukeren får opp en side med konto-valg. Dersom brukeren har valgt å huske brukerkonto fra tidligere, så får man en snarvei her for å komme rett til innlogging. Den første gangen man logger på en ny datamaskin, så får man opp et valg hvor man må velge innloggingsmetode; f.eks. Feide, IDporten eller gjesetebrukerløsning.</li>
+
+		<!-- <li class="uninett-ul-li">Dersom flere alternative påloggingsmuligheter er tilgjengelig, vil brukeren måtte velge mellom disse: f.eks. Feide og Idporten.</li> -->
 		<li class="uninett-ul-li">Selve påloggingen</li>
 		<li class="uninett-ul-li">Samtykkeside</li>
 	</ul>
@@ -30,9 +34,26 @@ slug: endusers
 <div class="bs-docs-section">
 	<h1 id="disco" class="page-header">Påloggingsvalg</h1>
 
-	<p>Siden for påloggingsvalg vises kun dersom det er mer enn et alternativ som er tilgjengelig for sluttbrukeren.</p>
 
-	<p><img src="/media/screenshots/docs/1autvalg.png" class="img-responsive img-thumbnail"></p>
+	<p>Første gang en bruker logger inn på Connect på en ny datamaskin, vil brukeren velge hvilken utdanningsinstitusjon man kommer fra og vil logge inn via (med Feide). Her kan brukeren også velge alternative innlogingsmåter som IDporten og andre løsninger for gjestebrukere og brukere utenfor utdanningssektoren.</p>
+
+	<p><img src="/media/screenshots/docs/12discoselector.png" class="img-responsive "></p>
+
+	<p>Listen over utdanningsinstitusjoner i Feide er veldig lang, så Connect forsøker å tilpasse visningen slik at det skal være lett å finne rett valg effektivt. Connect:</p>
+	<ul>
+		<li>Basert på geo-IP eller HTML5 Geolocation, listes de nærmeste utdanningsinstitusjonene først.</li>
+		<li>Inkrementelt søk lar brukeren skrive inn deler av navnet, for å raskt finne sin utdanningsinstitusjon.</li>
+	</ul>
+
+
+	<h2>AccountChooser</h2>
+
+	<p>Dersom brukeren har logget på via Connect tidligere, og valgt å «huske brukerkonto», vil en eller flere brukerkontoer vises i en kontovelger. Dette vil være snarveier som sender brukeren rett til pålogging.</p>
+
+	<p><img src="/media/screenshots/docs/11accountchooser.png" class="img-responsive "></p>
+
+	<p></p>
+
 
 
 </div>
@@ -43,8 +64,26 @@ slug: endusers
 
 	<p>Selve innloggingen foregår utenfor Connect, og for de fleste brukere via det kjente innloggingsbildet til Feide. I løsningen slik den fremstår i dag, så vil Feide forteller brukeren at man logger inn på tjenesten Connect.</p>
 
-
 	<p><img src="/media/screenshots/docs/2login.png" class="img-responsive"></p>
+
+	<p>
+		Innloggingsbildet vil variere dersom man f.eks. velger å logge inn via IDporten, eller sosiale nettverk.
+	</p>
+
+
+	<h2>ID-porten</h2>
+	<p><img src="/media/screenshots/docs/15idporten.png" class="img-responsive"></p>
+
+	<h2>Facebook</h2>
+	<p><img src="/media/screenshots/docs/13facebook.png" class="img-responsive"></p>
+
+	<h2>Twitter</h2>
+	<p><img src="/media/screenshots/docs/14twitter.png" class="img-responsive"></p>
+
+	<h2>Feides gjestebrukerløsning</h2>
+	<p><img src="/media/screenshots/docs/16guest.png" class="img-responsive"></p>	
+
+
 
 </div>
 
@@ -67,6 +106,7 @@ slug: endusers
 </div>
 
 
+<!--
 
 <div class="bs-docs-section">
 	<h1 id="confirm" class="page-header">Bekreftelse for innlogging</h1>
@@ -77,6 +117,7 @@ slug: endusers
 
 </div>
 
+-->
 
 
 <div class="bs-docs-section">
