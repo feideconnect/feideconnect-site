@@ -1,0 +1,107 @@
+---
+layout: default
+title: Interne APIer
+slug: internalapi
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">Interne APIer</h1>
+	<p class="lead">Interne APIer i Connect plattformen.</p>
+
+
+
+	<h2>Client Administration API</h2>
+
+	<p><a href="https://github.com/feideconnect/core-apis/blob/master/docs/clientadm.md">documentation</a></p>
+	
+	<ul>
+		<li><code>https://api.feideconnect.no/clientadm/clients/</code> (POST) Create a client</li>
+
+		<li><code>https://api.feideconnect.no/clientadm/clients/9dd084a3-c497-4d4c-9832-a5096371a4c9</code> (PATCH) Update a client</li>
+		<li><code>https://api.feideconnect.no/clientadm/clients/9dd084a3-c497-4d4c-9832-a5096371a4c9/scopes</code> (PATCH) Update scopes for a client</li>
+		<li><code>https://api.feideconnect.no/clientadm/clients/9dd084a3-c497-4d4c-9832-a5096371a4c9</code> (GET) Info about client (can also be unauthenticated)</li>
+
+		<li><code>https://api.feideconnect.no/clientadm/clients/</code> (GET) List all clients by a user</li>
+		<li><code>https://api.feideconnect.no/clientadm/clients/?organization={org id}</code> (GET) List all clients by an org</li>
+		<li><code>https://api.feideconnect.no/clientadm/clients/?scope=clientadmin</code> (GET) Filtering list by scope</li>
+
+		<li><code>https://api.feideconnect.no/clientadm/public</code> (GET) Public information about all clients</li>
+		<li><code>https://api.feideconnect.no/clientadm/clients/9dd084a3-c497-4d4c-9832-a5096371a4c9</code> (DELETE) Delete client</li>
+
+
+
+		<li><code>https://api.feideconnect.no/clientadm/clients/9dd084a3-c497-4d4c-9832-a5096371a4c9/logo</code> Client logo</li>
+		
+		<li><code>https://api.feideconnect.no/clientadm/scopes/</code> (GET) List public scope definitions</li>
+
+		
+	</ul>
+
+
+
+	<h2>Ad Hoc Group Administration API</h2>
+
+	<p><a href="https://github.com/feideconnect/core-apis/blob/master/docs/adhocgroupadm.md">documentation</a></p>
+	
+	<ul>
+		<li><code>https://api.feideconnect.no/adhocgroups/</code> (POST) Create a group</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}</code> (PATCH) Update group</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}</code> (DELETE) Delete group</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}</code> (GET) View group info</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}/details</code> (GET) View group details</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}/members</code> (GET) View group members</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}/members</code> (PATCH) Update group members</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}/members</code> (DELETE) Update group members</li>
+
+		<li><code>https://api.feideconnect.no/adhocgroups/memberships</code> (GET) List memberships</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/memberships</code> (DELETE) Delete memberships</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/memberships</code> (PATCH) Confirm memberships</li>
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}/invitaiton</code> (POST) Join group using invitation token</li>
+
+
+		<li><code>https://api.feideconnect.no/adhocgroups/{group id}/logo</code> Group logo</li>
+		
+		
+	</ul>
+
+
+	<p></p>
+
+
+
+
+
+<!--
+
+	<h2 class="page-header">sdfsddsf</h2>
+
+	<p>Vi behøver å samle en del informasjon om tilknycodeede organisasjoner. Decodee er typisk Feides vertsorganisasjoner.</p>
+
+{% highlight json %}
+{
+	"id": "uninecode.no",
+	"title": "UNINEcode",
+	"ldap": {
+		"con": [
+			"ldaps://ldap-bs-01.uninecode.no", 
+			"ldaps://ldap-bs-02.uninecode.no", 
+			"ldaps://ldap-tb-01.uninecode.no"
+		],
+		"baseDN": "cn=internal,cn=people,dc=uninecode,dc=no",
+		"bindDN": "uid=feideconnect,dc=uninecode,dc=no",
+		"bindPwd": "12345"
+	}
+}
+{% endhighlight %}
+	
+	
+-->
+
+
+</div>
+
