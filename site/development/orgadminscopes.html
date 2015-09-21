@@ -1,0 +1,239 @@
+---
+layout: default
+title: OrgAdmin scopes
+slug: orgadminscopes
+---
+
+
+<div class="bs-docs-section">
+
+	<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+	<h1 class="page-header">OrgAdmin Scope policy i Feide Connect</h1>
+
+	<!-- <p class="lead">Definisjon av scopes i Feide Connect.</p> -->
+
+
+
+
+
+	<h2  class="page-header">API GK eier ønsker at orgadmin skal moderere tilgang til sitt API</h2>
+
+	<p>API GK eier registrerer APIet med en scope policy som dette:</p>
+
+{% highlight json %}
+{
+  "policy": {
+    "auto": true,
+    "orgadmin": {
+      "moderate": true,
+      "target": [
+        "feide|realm|ntnu.no",
+        "feide|realm|uninett.no"
+      ]
+    }
+  },
+  "title": "Basic access",
+  "descr": ""
+}
+{% endhighlight %}
+
+
+
+<div class="row">
+	<div class="col-md-4"><img class="img-thumbnail" src="http://clippings.erlang.no/ZZ16B1E672.jpg"></div>
+	<div class="col-md-8"><img class="img-thumbnail" src="http://clippings.erlang.no/ZZ1EF3CF62.jpg"></div>
+</div>
+
+
+	<p>For brukere ved NTNU og UNINETT, må administrator ved egen institusjon godkjenne hver mye klient før de kan bruke klientene mot dette APIet.</p>
+
+
+
+
+
+	<h1 class="page-header">Ny klient ber om å bruke et scope som har orgadmin scope policy</h1>
+
+
+	<p>....</p>
+
+
+<!--
+
+	<h2 id="scopepolicy" class="page-header">Scope policy</h2>
+
+
+
+
+	<p>En token som utgies knyttes <strong>alltid</strong> til en klient, og et sett med scopes. Hver av disse scopene er en av tre typer: globale scopes, API GK scopes, eller API GK subscopes.</p>
+
+	<p>I de fleste tilfeller så utstedes tokens knyttet til en bestemt autentisert bruker. Denne brukeren må vi kunne knytte til organisasjons realm på en forutsigbar måte... </p>
+
+	<p><code>auto</code> satt til true vil gi alle klienter som forespør tilgang til dette scopet få lov til å bruke det uten noen sentral moderering. Vi har ikke enda på plass noe automatikk eller arbeidsflyt rundt sentral godkjenning av forespørsler til scopes. Derfor vil i de fleste tilfeller scopes som er satt til <code>auto: false</code> også være <code>public: false</code>. Dette gjelder blandt annet interne APIer som brukes i Connect.</p>
+
+	<p><code>public</code> er et flagg som avgjør om dette scopet skal være offentlig kjent.</p>
+
+
+	<p>Scopes som har en policy <code>orgadmin.moderate=true</code> må gjennom en ekstra sjekk i Auth Engine dersom token skal knyttes til en person. Da må det først sjekkes om personens realm er blandt target organisasjonene, og så må man sjekke om klienten har fått godkjent dette realmet.</p>
+
+{% highlight json %}
+{
+	"orgadmin": {
+		"moderate": true,
+		"target": true
+	}
+}
+{% endhighlight %}
+
+	<p><code>target=true</code> uttrykker at den er tiltenkt alle institusjoner.</p>
+
+
+
+	<p>Rutine for utdeling av scopes i Auth Engine</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Både klient og bruker er autentisert</li>
+		<li class="uninett-ul-li">Begynne med alle scopes som er godkjent for denne klienten. F.eks. <code>userinfo</code>, <code>gk_fse</code></li>
+		<li class="uninett-ul-li">La oss gå igjennom scope policy for alle disse scopene. For alle scopes som har <code>orgadmin.moderate=true</code>:</li>
+		<ul class="uninett-ul">
+			<li class="uninett-ul-li">Fjern scope dersom ikke brukerens realm er i <code>orgadmin.target</code>.</li>
+			<li class="uninett-ul-li">Sjekk om klienten har fått autorisert koblingen mellom dette scopet og den aktuelle brukerens realm.</li>
+		</ul>
+		<li class="uninett-ul-li">Sjekk om brukeren har samtykket til alle de autoriserte scopene, hvis ikke be om nytt samtykke.</li>
+	</ul>
+
+
+
+	<h3>Lagring av informasjon om scopes</h3>
+
+	<p>Scope definisjonen finnes i global konfig fil for globale scopes, og for hver API GK så lagres det i <code>scopedef</code> egenskapen.</p>
+
+	<p>På klientobjektet ligger lagret informasjon om forespurte scopes i <code>scopes_requested</code> og for godkjente scopes i <code>scopes</code>.</p>
+
+	<p>Så var det orgadmin godkjenninger. Forslag er å lagre dette på klient objektet. F.eks. kan vi ha:</p>
+
+
+{% highlight json %}
+    {
+        "id": "ebc106f2-9bd0-498c-ac52-bdb2be384073",
+        "name": "Demoklient",
+        "scopes": [
+            "userinfo",
+            "gk_fse"
+        ],
+        "scopes_requested": [
+            "userinfo",
+            "gk_fse",
+            "gk_fse_rw"
+        ],
+        "orgauthorizations": {
+        	"gk_fse": ["uninett.no", "uio.no", "hioa.no"],
+        	"gk_fse_rw": ["hioa.no"]
+        }
+
+    }
+{% endhighlight %}
+
+
+	<p></p>
+
+
+
+
+	<h3 id="orgadmin" class="page-header">Orgadmin scope policy</h3>
+
+
+
+
+	<p>Eksempel på lagring av informasjon om scopes knyttet til en API GK:</p>
+
+
+{% highlight json %}
+{
+	"title": "Lesetilgang",
+	"descr": "Tilgang til eksamesresultater fra FS.",
+	"policy": {
+		"auto": true,
+		"orgadmin": {
+			"moderate": true,
+			"target": true
+		}
+	},
+	"subscopes": {
+		"rw": {
+			"title": "Utvidet tilgang",
+			"public": true,
+			"policy": {
+				"auto": true,
+				"orgadmin": {
+					"moderate": true,
+					"target": ["ntnu.no", "uninett.no", "hioa.no"]
+				}
+			}
+		}
+	}
+}
+{% endhighlight %}
+
+	<p></p>
+
+
+
+	<p>Orgadministratorer må kunne gjøre følgende:</p>
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Liste alle klienter som har blitt autorisert til denne institusjonen.</li>
+		<li class="uninett-ul-li">Liste alle klienter som har fått tildelt et scope som har denne institusjonen som target.</li>
+		<li class="uninett-ul-li">Autorisere en klient/scope kombinasjon for denne institusjonen.</li>
+	</ul>
+
+
+
+	<p><a href="/media/figures/orgadminscope.pdf" target="_blank"><i class="fa fa-download"></i> Last ned figur</a></p>
+
+
+
+
+
+
+
+	<h3 id="orgadmin" class="page-header">Client credentials flow</h3>
+
+
+	<p>For klienter som ber om å få utstedt tokens ved å bruke Client credentials flow, altså uten at token knyttes til noen bestemt bruker, så fungerer orgadmin policy litt annerledes.</p>
+
+	<p>Rutine for utdeling av scopes i Auth Engine</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">Bare klient er autentisert</li>
+		<li class="uninett-ul-li">Begynne med alle scopes som er godkjent for denne klienten. F.eks. <code>userinfo</code>, <code>gk_fse</code></li>
+		<li class="uninett-ul-li">Ingen spesiell håndtering av scopes som er satt med orgadmin policy.</li>
+	</ul>
+
+
+	<p>Ved bruk av API GK, så vil API Gatekeeper håndtere forespørsler med tokens som har fått tildelt scopes.</p>
+
+	<p>API GK vil få en innkommende forespørsel omtrent slik:</p>
+
+{% highlight http %}
+GET /foo/bar HTTP/1.1
+Host: demoapi123.gk.feideconnect.no
+Authorization: Bearer 12344567-1234-4998-1234-abbabababab
+{% endhighlight %}
+
+	<p>is passed on to your API like this:</p>
+
+{% highlight http %}
+GET /foo/bar HTTP/1.1
+Host: api.example.org
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X_FEIDECONNECT_CLIENTID: 42b0c02e-0dda-4882-9da0-882a4b1abad6
+X_FEIDECONNECT_AUTHORIZEDREALMS: uninett.no,uio.no,hioa.no
+X_FEIDECONNECT_AUTHORIZEDREALMS_fse: hioa.no
+{% endhighlight %}
+
+
+-->
+
+
+
+</div>
