@@ -1,32 +1,31 @@
 	"use strict";
 
-
-var loadOrgs = function() {
-
-	var url = "http://connect-register.andreas.uninettlabs.no/orgs";
-	var urlCount = "http://connect-register.andreas.uninettlabs.no/count";
-	
-	$.getJSON(url, function(orgs) {
-
-		var str = '<div>';
-		for(var i = 0; i < orgs.length; i++) {
-			str += ' <span class="label label-success">' + orgs[i] + '</span>';
-		}
-		str += '</div>';
-
-		$("#orgOutput").empty().append(str);
-
-	});
-
-	$.getJSON(urlCount, function(c) {
-		$("#userCounter").empty().append(c);
-	});
-
-}
+window.onload = function() {
 
 
+	var loadOrgs = function() {
 
-$(document).ready(function() {
+		var url = "http://connect-register.andreas.uninettlabs.no/orgs";
+		var urlCount = "http://connect-register.andreas.uninettlabs.no/count";
+		
+		$.getJSON(url, function(orgs) {
+
+			var str = '<div>';
+			for(var i = 0; i < orgs.length; i++) {
+				str += ' <span class="label label-success">' + orgs[i] + '</span>';
+			}
+			str += '</div>';
+
+			$("#orgOutput").empty().append(str);
+
+		});
+
+		$.getJSON(urlCount, function(c) {
+			$("#userCounter").empty().append(c);
+		});
+
+	}
+
 
 	// console.log("Ready");
 
@@ -73,5 +72,5 @@ $(document).ready(function() {
 
 
 
-});
+}
 
