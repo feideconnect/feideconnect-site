@@ -1,0 +1,86 @@
+---
+layout: default
+title: Grupper i grunnopplæringa
+slug: groupsgo
+---
+
+
+<div class="bs-docs-section">
+
+	<div style="width: 30%; float: right; padding-top: 25px; text-align: right; color: #500" >
+		Specific for education in Norway.<br />
+		<img src="/assets/img/flags/no.png" style="margin-top: -3px">   Text is in norwegian. 
+	</div>
+
+
+	<h1 id="commongroup" class="page-header">Grupper i grunnopplæringa</h1>
+
+
+
+	<p>I Feide skjema versjon 1.6 ble datamodellen for grupper i grunnopplæringa etablert.</p>
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li"><a href="https://www.feide.no/sites/feide.no/files/documents/go_attributter.pdf">Feide 1.6: Informasjonsmodell for grunnopplæringa</a></li>
+		<li class="uninett-ul-li"><a href="https://www.feide.no/sites/feide.no/files/documents/norEdu_spec.pdf">norEdu* Object Class Specification</a></li>
+	</ul>
+
+
+	<p>Spesfikasjonen beskriver hvordan man kan representere basisgrupper, undervisningsgrupper og andre grupper som kodede tekststreng-verdier i institusjonens Feide katalogtjener ved å bruke <tt>eduPersonEntitlement</tt>-attributten.</p>
+
+	<p>Gruppene er representert med prefix <code>urn:mace:feide.no:go:group</code>, etter fulgt av 8 url-enkodede informasjonselementer som er satt sammen med kolon som separator.</p>
+
+
+
+
+
+	<div class="bs-example">
+		<p>Her er et eksempel:</p>
+
+		<pre>urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15:student:Klasse%206A</pre>
+	</div>
+{% highlight plain tabsize=1 %}
+Gruppetype:           b
+Grepkode:             <tom verdi> 
+Organisasjonsnummer:  NO975278964 
+Gruppeidentifikator:  6A
+Starttidspunkt:       1. aug 2014 
+Sluttidspunkt:        15. juni 2015 
+Rolle:                Elev – "student" i Feide. 
+Beskrivende navn:     Klasse 6A
+{% endhighlight %}
+
+
+
+
+	<h2>Gruppe-identifikatorer og Connect</h2>
+
+
+	<p>Den informasjonen som unikt identifiserer en «gruppe» innad hos en skoleeier er sammenstillingen av de første 6 elementene. Da utelater man altså rolle og beskrivende navn. Disse to feltene kan med andre ord endre seg, selv om man fortsatt identifiserer den samme gruppen.</p>
+
+
+	<div class="bs-example">
+		<p>Gruppen:</p>
+
+		<pre>urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15:student:Klasse%206A</pre>
+
+		<p>kan unikt identifiseres ved hjelp av de 6 første verdiene:</p>
+
+		<pre>urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15</pre>
+	</div>
+
+	<p>For at Feide Connect skal kunne gjøre oppslag på gruppemedlemmer, må også gruppeidentifikatorene inkluderes i Feide katalogen.</p>
+
+	<p>Det betyr altså at for eksempelgruppen vår, så må man lagre begge disse verdiene i <tt>eduPersonEntitlement</tt>:</p>
+
+<pre>urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15:student:Klasse%206A
+urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15</pre>
+
+
+
+	<p>I tillegg bør man optimalisere oppslag som gjøres for å hente ut alle personer som har en gitt gruppeidentifikator. Dette kan gjøres ved å legge inn <tt>eduPersonEntitlement</tt> som en indeksert attributt.</p>
+
+
+
+</div>
+
+
