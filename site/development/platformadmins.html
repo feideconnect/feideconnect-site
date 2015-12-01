@@ -1,0 +1,129 @@
+---
+layout: default
+title: Platform adminstratorer
+slug: platformadmins
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">Platform-administratorer</h1>
+
+	<p class="lead">En egen gruppe/gruppetype for sentrale system/plattform administratorer.</p>
+
+
+
+	<p>Vi legger til en ny gruppetype <tt>fc:platformadmin</tt>, som har kun en enkelt gruppe <tt>fc:platformadmin</tt>. Listes ut for klienter via gruppeAPI-et dersom klienten har scopet <tt>groups-orgadmin</tt> (dette er et scope vi bruker allerede for orgadmin gruppene). Gruppen vil kunne listes ut omtrent slik:</p>
+
+
+{% highlight json %}
+{
+    "id": "fc:platformadmin",
+    "displayName": "Connect Platform Administrator",
+    "type": "fc:platformadmin",
+    "membership": {
+        "displayName": "Administrator",
+        "basic": "admin"
+    }
+}
+{% endhighlight %}
+	
+	<p>Vi kan velge å legge inn denne informasjonen et sted i Cassandra, eller vi kan lage en statisk konfigurasjonsfil, med noe ala:</p>
+
+
+
+{% highlight json %}
+{
+    "platformadmins": [
+    	"andreas@uninett.no", "jk@uninett.no", "sigmunda@uninett.no", "hildegunn@uninett.no"
+    ]
+}
+{% endhighlight %}
+
+
+
+
+
+	<h2>Core API: aksessrettigheter til eksisterende kall</h2>
+
+	<p>Alle API kall som krever at man er medlem i en gitt orgadmin-gruppe, vil akseptere at man er platform admin som alternativ til orgadmin-medlem.</p>
+	<p>I tillegg bør medlemmene av denne gruppen også kunne gjøre endringer for alle klienter og API gatekeepere som eies av enkeltpersoner.</p>
+
+
+
+	<h2>Core API: ny funksjonalitet</h2>
+
+	<p><a href="https://github.com/feideconnect/core-apis/blob/master/docs/orgadmin.md">Dokumentasjon Org Admin API</a></p>
+
+	<p>Organisasjonstabellen inneholder et felt services, som vi ønsker å kunne oppdatere som adminstratorer:</p>
+
+{% highlight plain %}
+cqlsh:feideconnect> select id, name,services from organizations where id = 'fc:org:uninett.no';
+
+ id                | name                               | services
+-------------------+------------------------------------+-----------------------------
+ fc:org:uninett.no | {'en': 'UNINETT', 'nb': 'UNINETT'} | {'auth', 'avtale', 'pilot'}
+
+(1 rows)
+{% endhighlight plain %}
+
+
+{% highlight http %}
+PUT {{site.ep.groupsBasePath}}orgs/{OrgID}/services/{SERVICE} HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
+{% endhighlight %}
+
+{% highlight http %}
+DELETE {{site.ep.groupsBasePath}}orgs/{OrgID}/services/{SERVICE} HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
+{% endhighlight %}
+
+
+	<p>For eksempel for å registrere registrert databehandleravtale:</p>
+
+{% highlight http %}
+PUT {{site.ep.groupsBasePath}}orgs/uio.no/services/avtale HTTP/1.1
+Host: {{site.ep.groupshost}}
+{{site.exampleAuthorizationHeader}}
+{% endhighlight %}
+
+
+
+	<h3>Oppdatere informasjon om organisasjon</h3>
+
+	<p>Mindre viktig, men som kan være aktuelt på sikt er å kunne oppdatere logo og uiinfo på organisasjoner. Inntill videre så kan dette nå gjøres via auth engine sitt enkle CLI.</p>
+
+{% highlight http %}
+PATCH {{site.ep.groupsBasePath}}orgs/uninett.no HTTP/1.1
+Host: {{site.ep.groupshost}}
+Content-Type: application/json; charset=utf-8
+{{site.exampleAuthorizationHeader}}
+
+{
+	"geo": [
+		{"lat":63.415879, "lon":10.395438}
+	]
+}
+{% endhighlight %}
+
+
+
+
+
+	<h2>Oppdatering av Dashboard applikasjonen</h2>
+
+	<p>Dersom de nødvendige rettightene er på plass i Core APIs, så burde det være relativt rett frem å lage en organisasjonsvelger som vises når man er platformadmin, som lar en åpne en orgadmin tab for en valgt organsiasjon, og derfra kunne editere alle klienter, gatekeepere, mandatory clients med mer som om man var org admin.</p>
+
+	<p>Og kunne søke opp og finne tjenester som er knyttet til enkeltpersoner burde være mulig, men litt mer arbeid.</p>
+
+	<p>I tillegg bør man kunne vise en egen side som gir organisasjonslista, og mulighet til å kunne gjøre enkle operasjoner, f.eks. legge til info om registrert databehandleravtale (med mer).</p>
+
+
+
+</div>
+
