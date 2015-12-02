@@ -80,6 +80,53 @@ urn:mace:feide.no:go:groupid:b:NO975278964:6A:2014-08-01:2015-06-15</pre>
 
 
 
+	<p>Som litt mer utfyllende dokumentasjon om gruppeidentifikatorer, har vi tatt med nedenunder teksten som ble forberedt til å være med i Feide 1.6.</p>
+
+	<h3>Format på eduPersonEntitlement-linjer for gruppeidentifiaktor</h3>
+
+<p>Dette er en utvidelse for å få til mer funksjonalitet gjennom Connect-tjenesten som er under pilotering. Disse entitlement-linjene er ikke foreslått obligatoriske i denne runden da det ennå ikke er avklart dette gir den funksjonaliteten som er etterspurt og Connect er i en piloteringsfase.</p>
+
+<p>Med disse verdiene vil det være mulig å gjøre oppslag i Feide-katalogen på hvilke personer som tilhører en spesifikk gruppe. </p>
+
+<p>Et bruksområde kan være at når en lærer logger inn i en tjeneste så får tjenesten oversendt hvilke grupper denne læreren tilhører. Tjenesten kan så spørre tilbake om hvilke andre personer som også tilhører samme gruppe og vise en gruppeliste til læreren. </p>
+
+<p>Informasjonen er mye av den samme informasjonen som er for gruppeinformasjon, men redusert til det som trengs for å identifisere gruppen entydig. Det vil si at informasjon om beskrivende navn, grepkode, og personens rolle er fjernet. Grunnen til at vi trenger egne entitlement-linjer for id er hvordan Feide-LDAPer er bygd opp, noen tekniske begrensninger i enkelte LDAP-produkter o.l. En del av piloteringen bør være å vurdere også andre måter å hente samme informasjon.</p>
+
+
+<p>For hver gruppe en elev eller lærer er medlem i vil det være en linje i entitlement-feltet til personen. Oppbygningen av linjen vil bestå av:</p>
+
+<ul>
+	<li>Et fast prefix som viser at dette er gruppeinformasjon i grunnopplæringen.
+’urn:mace:feide.no:go:groupid’ (merk ’groupid’ her, ikke ’group’ som brukes for ren gruppeinformasjon)</li>
+	<li>En verdi som viser hvilken type gruppe det er
+’b’ – basisgruppe 
+’u’ – undervisningsgruppe
+’a’ – andre grupper, for eksempel kontaktlærer-, lab-, spesialundervisningsgrupper eller lignende (valgfritt)</li>
+	<li>Organisasjonsnummer/bedriftsnummer til skolen/skoleeieren gruppen tilhører</li>
+	<li>Navn/Identifikator på gruppen</li>
+	<li>Starttidspunkt når gruppen blir aktiv/gyldig. (ISO 8601 extended format for date, YYYY-MM-DD)</li>
+	<li>Sluttidspunkt når gruppen ikke lenger er aktiv/gyldig. (ISO 8601 extended format for date, YYYY-MM-DD)</li>
+</ul>
+
+<p>Navnet, eller identifikatoren, på gruppa settes lokalt hos skoleeier. Alle de andre feltene følger nasjonale eller internasjonale standarder. </p>
+
+<p>For å trygt kunne overføre verdiene fra en system til et annet definerer RFC 2141ii og RFC 3986iii hvilke verdier som er gyldige, hvilke som benyttes direkte og hvilke som må prosent-kodesiv. </p>
+
+<p>URNer er begrenset til ASCII så de fleste spesialtegn og særnorske tegn må prosent-kodes i overføringen. Man benytter UTF-8 oversetting først og så til US-ASCII (RFC 2141 2. Syntax). Dette gjøres ved å oversette disse tegnene til %<hex><hex>. For eksempel vil det særnorske tegnet å oversettes fra UTF-8 til to oktetter som så kodes og blir %C3%A5.</p>
+
+<p>&lt;Space> er et spesialtilfelle. Mange funksjoner for prosent-koding koder dette om til + som bryter med RFC 3986. Det korrekte for URNer er %20. Vertsorganisasjoner bør påse at dette blir riktig, mens tjenesteleverandører bør ta høyde for begge formateringene av &lt;space>.</p>
+
+<p>I dette navnerommet benyttes kolon (:) som verdiseperator. Om dette tegnet benyttes inne i gruppe-verdiene, for eksempel i det beskrivende navnet eller gruppeidentifikatoren, må dette kodes, som %3A, i verdien. </p>
+
+
+<p>Eksempler</p>
+
+<pre>urn:mace:feide.no:go:groupid:b:NO975278964:6A:2014-08-01:2015-06-15
+urn:mace:feide.no:go:groupid:u:NO975278964:6A-MAT:2014-08-01:2015-06-15
+urn:mace:feide.no:go:groupid:u:NO974558386:3kja:2014-08-01:2015-06-15
+</pre>
+
+
 </div>
 
 
