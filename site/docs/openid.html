@@ -8,15 +8,20 @@ slug: openid
 	<h1 class="page-header">OpenID Connect</h1>
 
 
-	<div class="bs-callout bs-callout-danger" id="">
-		<h4>Implementation in progress</h4>
-		<p>If you are interested in playing with OpenID Connect in the pilot, contact us about this.</p>
-		<p>We plan on making OpenID Connect support publicly available during the pilot.</p>
+	<p>OpenID Connect is an simple standardized identity (authentication) layer on top of OAuth 2.0. OpenID Connect </p>
+
+<!--
+	<div class="row">
+		
+		<div class="col-md-6">
+			
+		</div>
+
+		<div class="col-md-6">
+			
+		</div>
 	</div>
-
-
-
-
+-->
 
 	<h2>Discovery and configuration</h2>
 
@@ -25,7 +30,7 @@ slug: openid
 
 	<ul class="uninett-ul">
 		<li class="uninett-ul-li">
-			<a href="{{ site.ep.auth }}/.well-known/openid-configuration">https://auth.feideconnect.no/.well-known/openid-configuration</a>
+			<a href="{{ site.ep.auth }}/.well-known/openid-configuration">{{ site.ep.auth }}/.well-known/openid-configuration</a>
 		</li>
 	</ul>
 
@@ -90,19 +95,13 @@ slug: openid
 	<p>Example of an userinfo response:</p>
 
 {% highlight HTTP %}
+GET /openid/userinfo HTTP/1.1
+{{site.exampleAuthorizationHeader}}
+
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
-{
-    "user": {
-        "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
-        "userid_sec": ["feide:andreas@uninett.no"],
-        "name": "Andreas \u00c5kre Solberg",
-        "mail": "andreas.solberg@uninett.no",
-        "profilephoto": "p:a3019954-902f-45a3-b4ee-bca7b48ab507"
-    },
-    "audience": "e8160a77-58f8-4006-8ee5-ab64d17a5b1e"
-}
+... eksempeldata...
 {% endhighlight %}
 
 
@@ -119,12 +118,17 @@ Content-Type: application/json; charset=utf-8
 
 	<h2>Client libraries</h2>
 
+	<p>Even though OpenID Connect is a relatively new technology, there already exists libraries in most programming languages.</p>
+	<p>We are interested in feedback on your experience with various client libraries, on how well they work with Connect. </p>
+	
+
+<!--
 	<ul class="uninett-ul">
 		<li class="uninett-ul-li">
 			<a href="">... </a>
 		</li>
 	</ul>
-	
+	-->
 
 
 
