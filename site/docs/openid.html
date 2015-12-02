@@ -34,6 +34,30 @@ slug: openid
 		</li>
 	</ul>
 
+	<h2>Client registration</h2>
+
+
+
+	<p class="lead">In order to access the Feide Connect APIs, you would first need to register your application, and obtain the OAuth credentials for your application.</p>
+
+	<p>You may register your application using the <a href="{{ site.dev }}">Developer Dashboard</a>.</p>
+
+	<p><a href="{{site.apps.dashboard}}" target="_blank" class="btn btn-lg btn-primary" role="button">Developer Dashboard</a></p>
+
+	<p>Register a client using the Developer Dashboard. When registering a client, you need to know the OpenID Connect redirect URI endpoint of your application.</p>
+
+
+
+	<p><img src="/media/screenshots/docs/registerclient.png" class="img-responsive img-thumbnail"></p>
+
+
+
+
+
+
+
+
+
 	<h2>OpenID Specifications</h2>
 
 	<ul class="uninett-ul">
@@ -51,8 +75,10 @@ slug: openid
 	<h2>Supported features</h2>
 
 	<ul class="uninett-ul">
-		<li class="uninett-ul-li">Authorization Code flow (response_mode: code)</li>
-		<li class="uninett-ul-li">Implicit grant flow (response_mode: token)</li>
+		<li class="uninett-ul-li">Authorization Code flow <br/>
+			response_mode: <code>code</code></li>
+		<li class="uninett-ul-li">Implicit grant flow<br />
+			response_mode: <code>id_token token</code></li>
 		<li class="uninett-ul-li">IDtoken signed with PKI (RS256)</li>
 	</ul>
 
@@ -82,6 +108,49 @@ slug: openid
 
 
 
+	<h2>ID Token</h2>
+
+	<p>The ID token is a signed information object representing the authenticated identity of the user. As part of the OpenID Connect standard the ID token is encoded as a JWT, and signed using the JWS standard.</p>
+
+
+	<div class="bs-example">
+		<p>ID Token example</p>
+	</div>
+{% highlight plain %}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXV0aC5kZXYuZmVpZGVjb25uZWN0Lm5vIiwiYXVkIjoiNWFjODc1M2YtODI5Ni00MWJmLWI5ODUtNTlkODk3NjkwMDVlIiwic3ViIjoiNzZhN2EwNjEtM2M1NS00MzBkLThlZTAtNmY4MmVjNDI1MDFmIiwiaWF0IjoxNDQ5MDY1NDMyLCJleHAiOjE0NDkwNjkwMzIsImF1dGhfdGltZSI6MTQ0OTA2NTM2NH0.bObvZ_Ampf_exj4iUcocptJwHKt_zZI4GnZ-VrXoqYlXaGGgwACzCzhSpck_z1C87gZYlOdK-TQwILHcGyObmi1rH5VCvrYL1xNyGeHYlYs8bQ8odhZAPiYjb9cet5nP1aP4ZeJu5aInWwLIaeVUgavQEVAl1xGiPRh8WjKZdP-P1WslLACnVZu84YLrOZQYnkGMpDS_VBGHVSK3VPVjRd14vhqYCoGTaKSXrp49LlejU0dzaokmGI_ZAejwVY1BCFMonEyDNwZVZKoq2GbHwqpjhucWOZRQjYzeWTEXlly18EwYg55k6awNPZt8fKp0XoRoTB4we5WGoFV6XZuaGA
+{% endhighlight %}
+
+
+
+	<div class="bs-example">
+		<p>ID Token JWT decoded</p>
+	</div>
+{% highlight json %}
+{
+  "iss": "https://auth.dev.feideconnect.no",
+  "aud": "5ac8753f-8296-41bf-b985-59d89769005e",
+  "sub": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+  "iat": 1449065432,
+  "exp": 1449069032,
+  "auth_time": 1449065364
+}
+{% endhighlight %}
+
+
+
+
+
+
+<!--	<h2>Useful tools</h2> -->
+
+	<ul class="uninett-ul">
+		<li class="uninett-ul-li">
+			<a href="http://jwt.io">jwt.io - JWT debugger - a useful tool for understanding OpenID Connect</a>
+		</li>
+	</ul>
+	
+
+
 
 
 	<h2>Userinfo</h2>
@@ -103,19 +172,20 @@ GET /openid/userinfo HTTP/1.1
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
-... eksempeldata...
+{
+    "sub": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+    "connect-userid_sec": [
+        "feide:andreas@uninett.no"
+    ],
+    "name": "Andreas \u00c5kre Solberg",
+    "email": "andreas.solberg@uninett.no",
+    "email_verified": true,
+    "picture": "https:\/\/api.feideconnect.no\/userinfo\/v1\/user\/media\/p:a3019954-902f-45a3-b4ee-bca7b48ab507"
+}
 {% endhighlight %}
 
 
-
-	<h2>Useful tools</h2>
-
-	<ul class="uninett-ul">
-		<li class="uninett-ul-li">
-			<a href="http://jwt.io">jwt.io - JWT debugger</a>
-		</li>
-	</ul>
-	
+	<p>The set of information that will be available on the userinfo depends on which scopes the client has authorized and requested in the authorization request.</p>
 
 
 	<h2>Client libraries</h2>
