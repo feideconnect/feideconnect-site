@@ -51,11 +51,10 @@ Beskrivende navn:     Klasse 6A
 
 
 
-
 	<h2>Gruppe-identifikatorer og Connect</h2>
 
 
-	<p>Den informasjonen som unikt identifiserer en «gruppe» innad hos en skoleeier er sammenstillingen av de første 6 elementene. Da utelater man altså rolle og beskrivende navn. Disse to feltene kan med andre ord endre seg, selv om man fortsatt identifiserer den samme gruppen.</p>
+	<p>Den informasjonen som unikt identifiserer en «gruppe» innad hos en skoleeier er sammenstillingen av de 5 av elementene som identifiserer gruppen. Da utelater man altså GREP kode, rolle og beskrivende navn. Disse tre feltene kan med andre ord endre seg, selv om man fortsatt identifiserer den samme gruppen.</p>
 
 
 	<div class="bs-example">
@@ -65,7 +64,7 @@ Beskrivende navn:     Klasse 6A
 
 		<p>kan unikt identifiseres ved hjelp av de 6 første verdiene:</p>
 
-		<pre>urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15</pre>
+		<pre>urn:mace:feide.no:go:groupid:b:NO975278964:6A:2014-08-01:2015-06-15</pre>
 	</div>
 
 	<p>For at Feide Connect skal kunne gjøre oppslag på gruppemedlemmer, må også gruppeidentifikatorene inkluderes i Feide katalogen.</p>
@@ -73,7 +72,7 @@ Beskrivende navn:     Klasse 6A
 	<p>Det betyr altså at for eksempelgruppen vår, så må man lagre begge disse verdiene i <tt>eduPersonEntitlement</tt>:</p>
 
 <pre>urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15:student:Klasse%206A
-urn:mace:feide.no:go:group:b::NO975278964:6A:2014-08-01:2015-06-15</pre>
+urn:mace:feide.no:go:groupid:b:NO975278964:6A:2014-08-01:2015-06-15</pre>
 
 
 
