@@ -1,0 +1,262 @@
+---
+layout: default
+title: API Gatekeeper Tokens
+slug: apigktokens
+---
+
+
+<div class="bs-docs-section">
+
+<p><a href="/status/">« Tilbake til statussiden</a></p>
+
+
+	<h1 class="page-header">API Gatekeeper Tokens</h1>
+
+	<p class="lead">Hvordan kan vi gi tilgang til ytterligere informasjon om brukeren til API-er utover det som sendes i headere.</p>
+
+
+
+
+<!-- 	<h2>Registrering av scopes på API GK objekter</h2> -->
+
+	<p>I dag har vi registrering av scope på <strong>klientobjekter</strong>:</p>
+
+
+{% highlight sql %}
+/* Clients */
+CREATE TABLE clients (
+	id uuid PRIMARY KEY,
+	client_secret text,
+
+	name text,
+	descr text,
+
+	--- CUT
+
+	scopes set<text>,
+	scopes_requested set<text>,
+
+	--- CUT
+
+	created timestamp,
+	updated timestamp
+);
+{% endhighlight %}
+
+	<p>Vi <strong>legger til</strong> de samme feltene på <strong>API GK objektet</strong>:</p>
+
+
+
+
+{% highlight sql %}
+/* API Gatekeepers */
+CREATE TABLE apigk (
+	id text PRIMARY KEY,
+
+	name text,
+	descr text,
+	systemdescr text,
+
+	--- CUT
+
+	scopes set<text>,           --- NEW!
+	scopes_requested set<text>, --- NEW!
+
+	--- CUT
+
+	created timestamp,
+	updated timestamp
+);
+{% endhighlight %}
+
+	
+	<p>For eksempel kan vi da ha en klient</p>
+
+
+
+{% highlight json %}
+{
+    "id": "610cbba7-3985-45ae-bc9f-0db0e36f71ad",
+    "name": "Foodle",
+    "owner": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+    "scopes": ["email","gk_foodle","gk_foodle_create","gk_foodle_respond","groups","longterm"]
+}
+{% endhighlight %}
+	
+	<p>Denne klienten kan kommunisere med dette API-et:</p>
+
+
+
+{% highlight json %}
+{
+    "id": "foodle",
+    "name": "Foodle",
+    "owner": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+    "expose": {
+    	"userid-sec": ["feide", "uuid"], 
+    	"scopes": true, 
+    	"clientid": true, 
+    	"userid": true,
+    	"token": true
+    },
+    "scopes": ["groups","userid"],
+    "status": ["public"]
+}
+{% endhighlight %}
+
+
+	<p>Vi kan innføre en ny verdi for <tt>expose</tt> feltet, <tt>token=true</tt> som indikerer at API-et vil få levert en access token med de aktuelle scopene i en HTTP header.</p>
+
+
+	<p>Samtykke til utstedelse av nye tokens lagres i <tt>oauth_authorizations</tt>. Hver gang en sluttbruker gir samtykke til en klient, må brukeren samtidig bekrefte at APIene klienten kan nå via API GK også godkjennes med de scopes som er registrert. Det vil så lagres et innslag i oauth_authorizations for hvert API, og for hver klient.</p>
+
+	<p>Vi må legge til et nytt felt i tabellen for å peke på API GK:</p>
+
+{% highlight sql %}
+CREATE TABLE oauth_authorizations (
+	userid uuid,
+	clientid uuid,
+	apigkid text, --- NEW!
+	issued timestamp,
+	scopes set<text>,
+	PRIMARY KEY (userid, clientid, apigkid)  --- CHANGED!
+);
+{% endhighlight %}
+
+	<p>I eksempelet over, ville vi sjekke for, be om samtykke og lagre disse innslagene i <tt>oauth_authorizations</tt>: </p>
+
+{% highlight json %}
+{
+
+    "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+    "clientid": "610cbba7-3985-45ae-bc9f-0db0e36f71ad",
+    "apigkid": null,
+    "issued": "2015-11-10T14:20:14+01:00",
+    "scopes": ["email","gk_foodle","gk_foodle_create","gk_foodle_respond","groups","longterm"]
+}
+{% endhighlight %}
+
+{% highlight json %}
+{
+
+    "userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+    "clientid": "610cbba7-3985-45ae-bc9f-0db0e36f71ad",
+    "apigkid": "foodle",
+    "issued": "2015-11-10T14:20:14+01:00",
+    "scopes": ["groups","userid"]
+}
+{% endhighlight %}
+
+
+
+	<p>For at man skal kunne utstede tokens til API-er må vi endre litt på datamodellen for tokens:</p>
+
+{% highlight sql %}
+CREATE TABLE oauth_tokens (
+	access_token uuid,
+	clientid uuid,
+	apigkid text, --- NEW!
+
+	subtokens text, --- NEW! (JSON)
+
+	userid uuid,
+
+	issued timestamp,
+
+	scope set<text>,
+	token_type text,
+	validuntil timestamp,
+	lastuse timestamp,
+
+	PRIMARY KEY(access_token)
+);
+{% endhighlight %}
+
+
+	<p>Når token skal utstedes til klienten i eksempelet vårt, vil det i utgangspunktet utstedes en token til klienten, slik:</p>
+
+{% highlight json %}
+{
+	"access_token": "4e0e28ac-f0c8-47f2-98bc-97a661ee06c3",
+	"clientid": "610cbba7-3985-45ae-bc9f-0db0e36f71ad",
+	"apigkid": null,
+	"userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+	"scope": ["email","gk_foodle","gk_foodle_create","gk_foodle_respond","groups","longterm"],
+	"token_type": "Bearer",
+	"valid_until": "2015-11-11T10:20:15+01:00",
+	"subtokens": {
+		"foodle": "cbcfeacd-84ec-4f7b-86ed-c0fae84b804b"
+	]
+}
+{% endhighlight %}
+
+	<p>Når man utsteder tokens som inneholder scopes som representerer API GKs, må man samtidig opprette tokens for disse API GKs. I dette tilfellet, ville vi også ha lagret:</p>
+
+{% highlight json %}
+{
+	"access_token": "cbcfeacd-84ec-4f7b-86ed-c0fae84b804b",
+	"clientid": "610cbba7-3985-45ae-bc9f-0db0e36f71ad",
+	"apigkid": "foodle",
+	"userid": "76a7a061-3c55-430d-8ee0-6f82ec42501f",
+	"scope": ["groups","userid"],
+	"token_type": "Bearer",
+	"valid_until": "2015-11-11T10:20:15+01:00"
+}
+{% endhighlight %}
+
+
+
+	<div class="bs-callout bs-callout-info">
+		<h4><i class="fa fa-key"></i> Sub tokens</h4>
+		<p>Det er viktig at API GK raskt og enkelt kan finne de aktuelle tokens som skal sendes videre til API-et. Det er begrenset med muligheter for å gjøre oppslag mot aksess tokens, derfor ligger det inne et forslag om å registrere <tt>subtokens</tt>-referanser i hoved token.</p>
+	</div>
+	
+	<h2>Ved kall mot API GK</h2>
+
+
+	
+
+
+	<p>Når klienten gjør et kall mot en API GK, så vil API GK sjekke om det finnes token for kombinasjonen av API GK og klient for den gjeldende brukeren:
+
+
+{% highlight http %}
+GET /foodles HTTP/1.1
+Host: foodle.gk.feideconnect.no
+Authorization: Bearer 4e0e28ac-f0c8-47f2-98bc-97a661ee06c3
+{% endhighlight %}
+
+	<p>is passed on to your API like this:</p>
+
+{% highlight http %}
+GET /foodles HTTP/1.1
+Host: foodle.example.org
+Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
+X-FeideConnect-Clientid: 610cbba7-3985-45ae-bc9f-0db0e36f71ad
+X-FeideConnect-Userid: 76a7a061-3c55-430d-8ee0-6f82ec42501f
+X-FeideConnect-Userid-sec: feide:andreas@uninett.no
+X-FeideConnect-Token: cbcfeacd-84ec-4f7b-86ed-c0fae84b804b
+{% endhighlight %}
+
+
+
+
+
+	<h2>Visning av samtykke</h2>
+
+	<p>Begrense til noen utvalgte scopes i starten.</p>
+
+	<p></p>
+
+
+	<h2>Sletting av autorisasjoner og scopes</h2>
+
+	<p>Når man sletter autorsasjoner og tokens for en klient/bruker, så må også tilsvarende autorisasjoner og tokens slettes for tilsvarende apigks.</p>
+
+	<h2>API Dashboard og Core API</h2>
+
+	<p>Må legge inn UI for å legge scopes til API GKs, og core api må la brukeren sette dette.</p>
+
+
+</div>
+
