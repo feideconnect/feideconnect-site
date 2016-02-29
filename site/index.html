@@ -24,96 +24,24 @@ title: Connect
 
 <div class="">
 
-	<div class="bs-docs-header" id="content">
-	  <div class="container">
-
-		<h1 class="bs-docs-featurette-title">Connect</h1>
-		<p class="lead">en fleksibel plattform for autentisering, grupper og datadeling</p>
-		 
-	  </div>
-	</div>
 
 
 	<div class="container">
 
-<!-- 		<div class="bs-callout bs-callout-danger" id="">
-		 <h4>Under construction</h4>
-		 <p>Connect is currently being developed. Although many components are live and operational, usage is only experimental.</p>
-		</div> -->
+
 
 
 		<div class="row">
 
-			<div class="bs-docs-section col-md-6">
-				
-				<p>Det blir stadig flere og mer avanserte tjenester, og brukerne forventer at tjenestene er tilgjengelige overalt på en integrert og sømløs måte. Samtidig både ønsker og trenger vi sikre tjenester – til en lavest mulig kostnad. </p>
-				<p>UNINETTs tjenesteplattform Connect er en løsning som forenkler autentisering og datadeling for tjenester i utdanningssektoren. Både læresteder og sluttbrukere kan enkelt holde oversikt over hvilke data de har delt med hvilke tjenester.</p>
-				<ul>
-					<li>Enkel autentisering - også for mobil- og desktop-applikasjoner - mot et bredt utvalg autentiseringskilder: Feide, ID-porten, eduGain og Kalmar, Facebook, Twitter og LinkedIn</li>
-					<li>Tjenester får tilgang på utvidet gruppeinformasjon - blant annet fra FS og utdanningsinstitusjonene direkte</li>
-					<li>Del data på en sikker måte som ivaretar personvernet</li>
-				</ul>
-
+			<div class="bs-docs-section col-md-12">
+<!--
 				<ul class="uninett-ul">
 					<li class="uninett-ul-li"><a href="/about/">Introduksjon til Connect</a></li>				
 					<li class="uninett-ul-li"><a href="/personvern/">Om Connect og personvern</a></li>
-
 				</ul>
-
-
-<!--				<div>
-					
-
-					<blockquote class="twitter-tweet" lang="en"><p>Connect from developer&#39;s perspective <a href="http://t.co/s0iuw5sAKc">http://t.co/s0iuw5sAKc</a></p>&mdash; Feide Connect (@FeideConnect) <a href="https://twitter.com/FeideConnect/status/572729658929774592">March 3, 2015</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-				</div>
 -->
 
-
-<!-- 				<div style="margin-top: 100px">
-
-					<a href="https://twitter.com/FeideConnect" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @FeideConnect</a> 
-						<script>
-							!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-						</script>
-					
-				</div> -->
-				<div style="margin-top: 20px">
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=281015265383587&version=v2.0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-				</div>
-
-
 			</div>
-
-
-			<div class=" col-md-6">
-			<div class="bs-docs-section">	
-
-				  {% for post in site.posts %}
-					<h4 style="margin-bottom: 3px"><a href="{{ post.url }}">{{ post.title }}</a></h4>
-
-					<p style="margin: 0px; color: #888; font-size: 80%">
-						<span>
-							<i class="glyphicon glyphicon-time"></i> 
-							<time datetime="{{post.date|date:"%F"}}">{{post.date|date:"%b %d, %Y"}}</time>
-						</span>
-					</p>
-					<p style="margin-top: 0px">{{ post.excerpt | remove: '<p>' | remove: '</p>' }}</p>
-					
-				  {% endfor %}
-
-			</div>
-			</div>
-
 
 		</div>
 
