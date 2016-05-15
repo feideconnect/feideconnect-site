@@ -3,6 +3,7 @@
 	"dependencies": {
 		"requirejs": "*",
 		"uninett-theme": "git@scm.uninett.no:system/uninett-theme.git",
+		"bootstrap": "*",
 		"font-awsome": "*"
 	},
 	"cwd": "site",
